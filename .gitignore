@@ -1,0 +1,7 @@
+__pycache__/
+.vscode/
+.pypirc
+
+build/
+deepnlpf.egg-info
+dist/
