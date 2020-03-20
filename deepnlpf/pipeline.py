@@ -67,7 +67,7 @@ class Pipeline(object):
             annotation = PluginManager().call_plugin(plugin_name=plugin_name, 
                 _id_pool=self._id_pool, document=document, pipeline=pipeline)
 
-            #self.save_analysis(plugin_name, annotation)
+            self.save_analysis(plugin_name, annotation)
 
     def save_analysis(self, tool, annotation):
         if self._save_annotation  is True:
