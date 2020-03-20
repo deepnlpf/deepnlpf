@@ -1,0 +1,14 @@
+pathos
+bson
+gogo
+pygogo
+tqdm
+isodate
+requests
+future
+pymongo
+mongoengine
+flask
+flask_socketio
+pandas
+plotly

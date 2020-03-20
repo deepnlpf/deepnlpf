@@ -1,0 +1,28 @@
+Metadata-Version: 2.1
+Name: deepnlpf
+Version: 1.0.0
+Summary: UNKNOWN
+Home-page: https://deepnlpf.github.io/site
+Author: RodriguesFAS
+Author-email: franciscosouzaacer@gmail.com
+License: Apache License 2.0
+Description: UNKNOWN
+Keywords: natural-language-processing nlp natural-language-understanding stanford-nlp deep-learning
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Education
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Information Technology
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Text Processing
+Classifier: Topic :: Text Processing :: Linguistic
+Classifier: Topic :: Software Development
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown

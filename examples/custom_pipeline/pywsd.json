@@ -1,0 +1,12 @@
+// no found
+{
+    "tools": [
+        {
+            "pywsd": {
+                "pipeline": [
+                    "disambiguate"
+                ]
+            }
+        }
+    ]
+}

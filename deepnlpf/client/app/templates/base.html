@@ -1,0 +1,441 @@
+<!-- base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='assets/img/apple-icon.png') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/img/favicon.png') }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='assets/css/now-ui-dashboard.css') }}" rel="stylesheet" />
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="{{ url_for('static', filename='assets/demo/demo.css') }}" rel="stylesheet" />
+
+    <!-- sweetalert -->
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link href="{{ url_for('static', filename='assets/css/file-explore.css') }}" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript">
+        function info(analyze, description) {
+            swal({
+                title: analyze,
+                type: 'info',
+                text: description
+            })
+        }
+
+        function new_Dataset() {
+            swal({
+                    title: 'Upload New Corpus',
+                    text: 'Enter the path of the corpus you want. The file must be in txt format containing one sentence per line. The corpus name will be the file name.',
+                    content: "input",
+                    button: {
+                        text: "Upload Corpus",
+                        closeModal: false,
+                    },
+                })
+                .then(path => {
+                    if (!path) throw null;
+                    return fetch('http://127.0.0.1:5001/corpus_upload?path_corpus=' + path);
+                })
+                .then(corpus => {
+                    return corpus.json();
+                })
+                .then(json => {
+                    const corpus = json.corpus;
+
+                    if (!corpus) {
+                        return swal("No corpus was found!");
+                    }
+
+                    const name = corpus.name;
+
+                    swal("Success!", 'new saved corpus.', "success");
+                })
+                .catch(err => {
+                    if (err) {
+                        swal("Oh noes!", "The AJAX request failed!", "error");
+                    } else {
+                        swal.stopLoading();
+                        swal.close();
+                    }
+                });
+        }
+
+        function download_corpus(id_corpus) {
+            swal({
+                title: 'Download Corpus?',
+                text: '',
+                icon: "info",
+                button: {
+                    text: "Download",
+                    closeModal: false,
+                },
+                dangerMode: false,
+            })
+
+            .then((willDelete) => {
+                if (willDelete) {
+                    if (!id_corpus) throw null;
+                    return fetch('http://127.0.0.1:5001/download_corpus?_id=' + id_corpus);
+                }
+            })
+
+        }
+
+        function delete_corpus(id_corpus) {
+            swal({
+                title: 'Deleted Corpus',
+                text: 'Are you sure you want to delete this corpus?',
+                icon: "warning",
+                button: {
+                    text: "Delete Corpus",
+                    closeModal: false,
+                },
+                dangerMode: true,
+            })
+
+            .then((willDelete) => {
+                if (willDelete) {
+                    if (!id_corpus) throw null;
+                    return fetch('http://127.0.0.1:5001/corpus_delete?_id=' + id_corpus);
+                }
+            })
+
+            .then(corpus => {
+                return corpus.json();
+            })
+
+            .then(json => {
+                const corpus = json.corpus;
+
+                if (!corpus) {
+                    return swal("No corpus was found!");
+                }
+
+                const status = corpus.delete;
+
+                swal("Success!", 'deleted corpus.', "success");
+            })
+
+            .catch(err => {
+                if (err) {
+                    swal("Oh noes!", "The AJAX request failed!", "error");
+                } else {
+                    swal.stopLoading();
+                    swal.close();
+                }
+            });
+        }
+
+        $("document").ready(function() {
+            $("#annotation_processing").click(function() {
+
+                swal({
+                    title: 'Processing Corpus',
+                    text: 'Processing time varies by corpus size when starting, please wait!',
+                    icon: "info",
+                    button: {
+                        text: "Start",
+                        closeModal: false,
+                    }
+                })
+
+                .then((willDelete) => {
+
+                    if (willDelete) {
+                        //var formData = $("#form-options").serialize();
+                        //var formData = JSON.stringify(jQuery('#form-options').serializeArray());
+                        var formData = JSON.parse(JSON.stringify(jQuery('#form-options').serializeArray()))
+                        return fetch('http://127.0.0.1:5001/annotation_processing', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                "options": formData
+                            })
+                        });
+                    }
+
+                })
+
+                .then(options => {
+                    return options.json();
+                })
+
+                .then(json => {
+                    const options = json.options;
+
+                    if (!options) {
+                        return swal("No was found!");
+                    }
+
+                    const status = corpus.delete;
+
+                    swal("Success!", 'Annotation Processing!.', "success");
+                })
+
+                .catch(err => {
+                    if (err) {
+                        swal("Oh noes!", "The AJAX request failed!", "error");
+                    } else {
+                        swal.stopLoading();
+                        swal.close();
+                    }
+                });
+
+            });
+        });
+    </script>
+    <!-- sweetalert -->
+
+    <!-- Check connection! -->
+    <script type="text/javascript">
+        if (navigator.onLine) {
+            // Has connection, go do something
+        }
+    </script>
+
+    <!-- JSON-Editor Viewer -->
+    <link href="{{ url_for('static', filename='assets/jsoneditor/dist/jsoneditor.css') }}" rel="stylesheet" type="text/css">
+    <script src="{{ url_for('static', filename='assets/jsoneditor/dist/jsoneditor.js') }}"></script>
+    <link href="{{ url_for('static', filename='assets/jsoneditor/examples/css/darktheme.css') }}" rel="stylesheet" type="text/css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/json5/0.5.1/json5.min.js"></script>
+
+    <!-- plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+
+</head>
+
+<body>
+    <div class="wrapper ">
+        <div class="sidebar" data-color="blue">
+            <!--
+                Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+            -->
+            <div class="logo">
+                <a href="#" class="simple-text logo-mini">
+                    Client
+                </a>
+                <a href="#" class="simple-text logo-normal">
+                    DNLP
+                </a>
+            </div>
+            <div class="sidebar-wrapper" id="sidebar-wrapper">
+                <ul class="nav">
+                    <li {% if request.path=='/' %}class="active" {% endif %}>
+                        <a href="/">
+                            <i class="now-ui-icons design-2_ruler-pencil"></i>
+                            <p>Annotation</p>
+                        </a>
+                    </li>
+                    <li {% if request.path=='/corpus' or request.path=='/corpus_view' or request.path=='/corpus_statistic' or request.path=='/corpus_analysis' %}class="active" {% endif %}>
+                        <a href="corpus">
+                            <i class="now-ui-icons files_single-copy-04"></i>
+                            <p>Corpus</p>
+                        </a>
+                    </li>
+                    <li {% if request.path=='/about' %}class="active" {% endif %}>
+                        <a href="about">
+                            <i class="now-ui-icons travel_info"></i>
+                            <p>About</p>
+                        </a>
+                    </li>
+                    <!--li {% if request.path=='/configurations' %}class="active" {% endif %}>
+                        <a href="configurations">
+                            <i class="now-ui-icons ui-1_settings-gear-63"></i>
+                            <p>Configurations</p>
+                        </a>
+                    </li -->
+                    <li class="active-pro">
+                        <a href="#">
+                            <i class="now-ui-icons sport_trophy"></i>
+                            <p>v 1.0.0 Alpha</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main-panel" id="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <div class="navbar-toggle">
+                            <button type="button" class="navbar-toggler">
+                                <span class="navbar-toggler-bar bar1"></span>
+                                <span class="navbar-toggler-bar bar2"></span>
+                                <span class="navbar-toggler-bar bar3"></span>
+                            </button>
+                        </div>
+                        <a class="navbar-brand" href="#pablo">{{ page }}</a>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#pablo">
+                                    <i class="now-ui-icons media-2_sound-wave"></i>
+                                    <p>
+                                        <span class="d-lg-none d-md-block">Stats</span>
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="now-ui-icons location_world"></i>
+                                    <p>
+                                        <span class="d-lg-none d-md-block">Some Actions</span>
+                                    </p>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="now-ui-icons users_single-02"></i>
+                                    <p>
+                                        <span class="d-lg-none d-md-block">Account</span>
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            {% block body %} {% endblock %} {% include 'footer.html' %}
+
+        </div>
+
+    </div>
+
+
+
+    <!--   Core JS Files   -->
+    <script src="{{ url_for('static', filename='assets/js/core/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/core/popper.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='assets/js/core/bootstrap.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='assets/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='assets/js/plugins/moment.min.js') }}"></script>
+
+    <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-switch.js') }}"></script>
+
+    <!--  Plugin for Sweet Alert 
+    <script src="{{ url_for('static', filename='assets/js/plugins/sweetalert2.min.js') }}"></script>
+    -->
+
+    <!-- Forms Validations Plugin -->
+    <script src="{{ url_for('static', filename='assets/js/jquery.validate.min.js') }}"></script>
+
+    <!--  Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/jquery.bootstrap-wizard.js') }}"></script>
+
+    <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-selectpicker.js') }}"></script>
+
+    <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-datetimepicker.js') }}"></script>
+
+    <!--  DataTables.net Plugin, full documentation here: https://datatables.net/    -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/jquery.dataTables.min.js') }}"></script>
+
+    <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-tagsinput.js') }}"></script>
+
+    <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/jasny-bootstrap.min.js') }}"></script>
+
+    <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/fullcalendar.min.js') }}"></script>
+
+    <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/jquery-jvectormap.js') }}"></script>
+
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/nouislider.min.js') }}"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- Chart JS -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/chartjs.min.js') }}"></script>
+
+    <!--  Notifications Plugin    -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap-notify.js') }}"></script>
+
+    <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{ url_for('static', filename='assets/js/plugins/now-ui-dashboard.min.js') }}" type="text/javascript"></script>
+
+    <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+    <script src="{{ url_for('static', filename='assets/demo/demo.js') }}"></script>
+
+    <!-- Sharrre libray -->
+    <script src="{{ url_for('static', filename='assets/demo/jquery.sharrre.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dtBasicExample').DataTable();
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialise the wizard
+            demo.initNowUiWizard();
+            setTimeout(function() {
+                $('.card.card-wizard').addClass('active');
+            }, 600);
+        });
+    </script>
+
+    <!-- plots -->
+    <script src="{{ url_for('static', filename='assets/js/plots.js') }}"></script>
+
+    <!-- jQuery file-explore.js -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/file-explore.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $(".file-tree").filetree();
+        });
+    </script>
+
+</body>
+
+</html>

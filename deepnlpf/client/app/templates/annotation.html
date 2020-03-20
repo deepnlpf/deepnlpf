@@ -1,0 +1,379 @@
+<!-- index.html-->
+
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block body %}
+
+<div class="panel-header panel-header-sm"></div>
+
+<div class="content">
+
+    <div class="col-md-12 mr-auto ml-auto">
+        <!--      Wizard container        -->
+        <div class="wizard-container">
+            <div class="card card-wizard" data-color="primary" id="wizardProfile">
+                <form action="" method="post" id="form-options" name="form-options">
+                    <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
+
+                    <div class="card-header text-center" data-background-color="orange">
+                        <h3 class="card-title">
+                            Corpus Annotation Analyses Linguistic
+                        </h3>
+
+                        <h3 class="description">To Perform The Of A Corpus Follow All The Steps.</h5>
+                            <div class="wizard-navigation">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#step0" data-toggle="tab" role="tab" aria-controls="about" aria-selected="true">
+                                            <i class="now-ui-icons users_circle-08"></i> Text Raw
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#step1" data-toggle="tab" data-toggle="tab" role="tab" aria-controls="account" aria-selected="false">
+                                            <i class="now-ui-icons ui-1_settings-gear-63"></i> Step 1
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#step2" data-toggle="tab" data-toggle="tab" role="tab" aria-controls="address" aria-selected="false">
+                                            <i class="now-ui-icons ui-1_settings-gear-63"></i> Step 2
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#step3" data-toggle="tab" data-toggle="tab" role="tab" aria-controls="address" aria-selected="false">
+                                            <i class="now-ui-icons ui-1_settings-gear-63"></i> Step 3
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="tab-content">
+
+                            <div class="tab-pane show active" id="step0">
+
+                                <h5 class="info-text"> Corpus - Let's start with the basic details</h5>
+
+                                <div class="row justify-content-center">
+
+                                    <div class="form-group">
+                                        <select class="form-control" id="corpus" name="corpus" required>
+                                            <option disabled="" selected="">- Selected Input Corpus -</option>
+                                            {% for data in corpus %}
+                                            <option value="{{ data._id }}" title="id: {{ data._id }}"> {{ data.name }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+
+                                        <br>
+                                        <h5 aling="center">OR</h5>
+
+                                        <!--
+                                            <button type="button" class="btn btn-info btn-round" onclick="new_Dataset()">
+                                                <i class="now-ui-icons arrows-1_cloud-upload-94"></i>
+                                                Upload New Dataset
+                                            </button>
+                                        -->
+                                        <button type="button" class="btn btn-info btn-round" data-toggle="modal" data-target="#exampleModal">
+                                            <i class="now-ui-icons arrows-1_cloud-upload-94"></i>
+                                            Upload New Dataset
+                                        </button>
+                                        <p>
+                                            {% with messages = get_flashed_messages() %} {% if messages %}
+                                            <ul class=flashes>
+                                                {% for message in messages %}
+                                                <li>{{ message }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% endif %} {% endwith %}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="step1">
+                                <h5 class="info-text" title="Involves segmentation of text into words, sentences, and paragraphs. The output is a group of words, phrases, or sentences.">
+                                    Lexical Analysis</h5>
+                                <div class="row">
+
+                                    {% for plugin in plugins %} {% for type in plugin.analysis %} {% if(type.lexical) %} {% if plugin.is_activated %}
+
+                                    <div class="col-md-4">
+                                        <div class="card  card-tasks">
+                                            <div class="card-header ">
+                                                <h4 class="card-title">
+                                                    {{ plugin.name }}
+                                                    <button type="button" rel="tooltip" title="Analyze" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" onclick="info('{{plugin.name}}', '{{plugin.description}}')">
+                                                        <i class="now-ui-icons business_bulb-63" title="More info!"></i>
+                                                    </button>
+                                                </h4>
+                                                <h5 class="card-category">Tasks Analysis</h5>
+                                            </div>
+                                            <div class="card-body ">
+                                                <div class="table-full-width table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            {% for analyze in type.lexical %}
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="form-check">
+                                                                        <label class="form-check-label">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox" id="{{ analyze.keyname }}"
+                                                                                name="{{ plugin.keyname + '-' + analyze.keyname }}">
+                                                                            <span class="form-check-sign"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-left">{{ analyze.name }}</td>
+                                                                <td class="td-actions text-right">
+                                                                    <button type="button" rel="tooltip" title="Analyze" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" onclick="info('{{ analyze.name }}', '{{ analyze.description }}')">
+                                                                        <i class="now-ui-icons business_bulb-63"
+                                                                            title="More info!"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endif %} {% endif %} {% endfor %} {% endfor %}
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="step2">
+                                <h5 class="info-text" title="Involves parsing of words and sentences in which grammatically incorrect strings are removed. Such a cleanup helps in building a relationship between the subject and object in a better context.">
+                                    Syntactic Analysis</h5>
+                                <div class="row">
+
+                                    {% for plugin in plugins %} {% for type in plugin.analysis %} {% if(type.syntatic) %} {% if plugin.is_activated %}
+
+                                    <div class="col-md-4">
+                                        <div class="card  card-tasks">
+                                            <div class="card-header ">
+                                                <h4 class="card-title">
+                                                    {{ plugin.name }}
+                                                    <button type="button" rel="tooltip" title="Analyze" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" onclick="info('{{ plugin.name }}', '{{ plugin.description }}')">
+                                                        <i class="now-ui-icons business_bulb-63" title="More info!"></i>
+                                                    </button>
+                                                </h4>
+                                                <h5 class="card-category">Tasks Analysis</h5>
+                                            </div>
+                                            <div class="card-body ">
+                                                <div class="table-full-width table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            {% for analyze in type.syntatic %}
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="form-check">
+                                                                        <label class="form-check-label">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox" id="{{ analyze.keyname }}"
+                                                                                name="{{ plugin.keyname + '-' + analyze.keyname }}">
+                                                                            <span class="form-check-sign"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-left">{{ analyze.name }}</td>
+                                                                <td class="td-actions text-right">
+                                                                    <button type="button" rel="tooltip" title="Analyze" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" onclick="info('{{analyze.name}}', '{{analyze.description}}')">
+                                                                        <i class="now-ui-icons business_bulb-63"
+                                                                            title="More info!"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endif %} {% endif %} {% endfor %} {% endfor %}
+
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="step3">
+                                <h5 class="info-text" title=" It draws the exact meaning or the dictionary meaning from the text. The text is checked for meaningfulness. It is done by mapping syntactic structures and objects in the task domain. The semantic analyzer disregards sentence such as “hot ice-cream”.">
+                                    Semantic Analysis</h5>
+                                <div class="row">
+
+                                    {% for plugin in plugins %} {% for type in plugin.analysis %} {% if(type.semantic) %} {% if plugin.is_activated %}
+                                    <div class="col-md-4">
+                                        <div class="card  card-tasks">
+                                            <div class="card-header ">
+                                                <h4 class="card-title">
+                                                    {{ plugin.name }}
+                                                    <button type="button" rel="tooltip" title="Analyze" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" onclick="info('{{plugin.name}}', '{{plugin.description}}')">
+                                                        <i class="now-ui-icons business_bulb-63" title="More info!"></i>
+                                                    </button>
+                                                </h4>
+                                                <h5 class="card-category">Tasks Analysis</h5>
+                                            </div>
+                                            <div class="card-body ">
+                                                <div class="table-full-width table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            {% for analyze in type.semantic %}
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="form-check">
+                                                                        <label class="form-check-label">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox" id="{{ analyze.keyname }}"
+                                                                                name="{{ plugin.keyname + '-' + analyze.keyname }}">
+                                                                            <span class="form-check-sign"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-left">{{ analyze.name }}</td>
+                                                                <td class="td-actions text-right">
+                                                                    <button type="button" rel="tooltip" title="Analyze" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" onclick="info('{{analyze.name}}', '{{analyze.description}}')">
+                                                                        <i class="now-ui-icons business_bulb-63"
+                                                                            title="More info!"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endif %} {% endif %} {% endfor %} {% endfor %}
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="pull-right">
+                            <input type='button' class='btn btn-next btn-fill btn-rose btn-wd' name='next' value='Next' />
+                            <input type='button' class='btn btn-finish btn-fill btn-rose btn-wd' name='finish' value='Finish' id="annotation_processing" />
+                        </div>
+
+                        <div class="pull-left">
+                            <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <!-- wizard container -->
+    </div>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload New Dataset</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                Your data set must be in .ZIP format and following one of the following structures to be sent.<br/>
+                <br/>
+                <div class="row">
+                    <div aling="left">
+                        Simple structure<br/>
+                        <div class="container">
+                            <ul class="file-tree">
+                                <li><a href="#">dataset_name</a>
+                                    <ul>
+                                        <li><a href="#link2">document_name.txt</a> </li>
+                                        <li><a href="#link3">document_name.txt</a> </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div aling="right">
+                        Complete Structure<br/>
+                        <div class="container">
+                            <ul class="file-tree">
+                                <li><a href="#">dataset_name</a>
+                                    <ul>
+                                        <li><a href="#">train</a>
+                                            <ul>
+                                                <li><a href="#">pos</a>
+                                                    <ul>
+                                                        <li> <a href="#link5">document_name.txt</a> </li>
+                                                        <li> <a href="#link6">document_name.txt</a> </li>
+                                                        <li> <a href="#link7">document_name.txt</a> </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">neg</a>
+                                                    <ul>
+                                                        <li> <a href="#link5">document_name.txt</a> </li>
+                                                        <li> <a href="#link6">document_name.txt</a> </li>
+                                                        <li> <a href="#link7">document_name.txt</a> </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">test</a>
+                                            <ul>
+                                                <li><a href="#">pos</a>
+                                                    <ul>
+                                                        <li> <a href="#link5">document_name.txt</a> </li>
+                                                        <li> <a href="#link6">document_name.txt</a> </li>
+                                                        <li> <a href="#link7">document_name.txt</a> </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">neg</a>
+                                                    <ul>
+                                                        <li> <a href="#link5">document_name.txt</a> </li>
+                                                        <li> <a href="#link6">document_name.txt</a> </li>
+                                                        <li> <a href="#link7">document_name.txt</a> </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <form method="post" action="/upload_file" enctype="multipart/form-data">
+                    <dl>
+                        <p>
+                            <input type="file" name="file" autocomplete="off" required>
+                        </p>
+                    </dl>
+                    <p>
+                        <input type="submit" value="UPLOAD">
+                    </p>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

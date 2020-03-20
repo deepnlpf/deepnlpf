@@ -1,0 +1,1 @@
+# [pygogo: a Python logger with super powers](https://github.com/reubano/pygogo#id8)

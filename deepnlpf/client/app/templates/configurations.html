@@ -1,0 +1,99 @@
+<!-- index.html-->
+
+{% extends "base.html" %}
+{% block title %}Configurations{% endblock %}
+{% block body %}
+
+<div class="panel-header panel-header-sm"></div>
+
+<div class="content">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Telegram Notification</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+
+                        <div class="row">
+                            <div class="col-md-6 px-1">
+                                <div class="form-group">
+                                    <label>Key Telegram</label>
+                                    <input type="text" class="form-control" placeholder="Key Telegram">
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-1">
+                                <div class="form-group">
+                                    <label for="id_telegram">Id Telegram</label>
+                                    <input type="text" class="form-control" placeholder="Id Telegram">
+                                </div>
+                            </div>
+                            <div class="form-check mt-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" checked>
+                                    <span class="form-check-sign"></span>
+                                    Status
+                                </label>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Desktop Notification</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+
+                        <div class="row">
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <div class="form-check mt-3">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox">
+                                            <span class="form-check-sign"></span>
+                                            Status
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Email Notification</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+
+                        <div class="row">
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label>Email User</label>
+                                    <input type="email" class="form-control" placeholder="fulano@rmail.com">
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

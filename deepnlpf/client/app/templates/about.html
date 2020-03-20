@@ -1,0 +1,63 @@
+<!-- index.html-->
+
+{% extends "base.html" %} {% block title %}Corpus{% endblock %} {% block body %}
+
+<div class="panel-header panel-header-sm"></div>
+
+<div class="content">
+
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">About</h4>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Nowadays companies are implementing new business models that depend heavily on Natural Language Processing (NLP) in textual documents to extract relevant informations from a variety of sources, including e-commerce, domain-specific documents, utilities,
+                        social media, etc. Implementing a NLP system requires, among other things, a considerable software engineering effort for: data structures for human language representation; the application of tools to textual representation through
+                        linguistic analysis at various levels (lexical, syntactic and semantic); reading and interpreting annotations generated from the corpus, the creation of linguistic resources, among others. While there are currently numerous NLP
+                        tools widely used in NLP language tasks, information extraction, annotation, and correction, each provides only partial coverage analysis. Besides that, these tools are developed in distinct programming languages and are made available
+                        without any standardization concerning data input and output, which makes their interoperability difficult due to incompatibility issues APIs, output data formats (representation) and basic tokenization, just to a few. Thus selecting
+                        tools and their language analysis according to a specific user interest, usually takes a plenty of time, especially when you want to use them together (tool integration). The goal of this paper is to analyze several NLP tools available
+                        in the literature and propose, implement and evaluate a new architecture that encapsulates several linguistic analyzes in one computational framework, allowing application developers not only to run linguistic analysis pipelines
+                        that involve in-depth treatment of the English language, but also an easy integration of various NLP tools. Besides that, it aims to provide a simple and intuitive graphical user interface (GUI) in order to fully exploit all language
+                        analysis already available, and that can easily be customized by the user himself later. In this way the functionality provided by the proposed DeepNLPF framework intends to help developers perform numerous textual data analyses
+                        more efficiently by guiding them in choosing the best, most appropriate and efficient language analysis task pipeline possible. The now proposed version of DeepNLPF is composed by several state-of-the-art NLP tools that were selected
+                        after a thorough literature review. Contributions of this work include: I) the selection of state-of-the-art NLP tools added to the framework; II) the proposal to standardize the inputs and outputs of NLP tools according to the
+                        linguistic annotation representation standards already established in the literature; III) the implementation of a computational architecture enabling multithreads and parallelism for the customization of NLP pipelines guided by
+                        an expressive but simple graphic interface; IV) and a module to facilitate the integration and updating of new third party NLP tools, as well as the generation of basic textual data statistics. Finally, several experiments show
+                        that DeepNLPF obtained better performance in relation to the sequential processing of the tested NLP tools when considered individually. More precisely, about 60% faster in terms of processing time.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Help</h4>
+                </div>
+                <div class="card-body">
+                    Accessing: <a href="https://deepnlpf.github.io/site/help" target="_blank">https://deepnlpf.github.io/site/help</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Changelog</h4>
+                </div>
+                <div class="card-body">
+                    August 30, 2019 <br> RodriguesFAS <br> Soon the first version of DeepNLPF will be published.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

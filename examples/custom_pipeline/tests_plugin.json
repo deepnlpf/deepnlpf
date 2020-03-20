@@ -1,0 +1,28 @@
+{
+    "id_corpus": "5e74040190fa053af333ceea",
+    "tools": [{
+            "tool1": {
+                "pipeline": [
+                    "tool1_taskone",
+                    "tool1_tasktwo"
+                ]
+            }
+        },
+        {
+            "tool2": {
+                "pipeline": [
+                    "tool2_taskone",
+                    "tool2_tasktwo"
+                ]
+            }
+        },
+        {
+            "tool3": {
+                "pipeline": [
+                    "tool3_taskone",
+                    "tool3_tasktwo"
+                ]
+            }
+        }
+    ]
+}

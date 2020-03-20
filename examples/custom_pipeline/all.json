@@ -1,0 +1,57 @@
+{
+    "id_corpus": "5e610f956f90ba7d9bf15af6",
+    "tools": [{
+            "stanfordcorenlp": {
+                "pipeline": [
+                    "tokenize",
+                    "ssplit",
+                    "pos",
+                    "lemma",
+                    "ner",
+                    "parse",
+                    "depparse",
+                    "truecase",
+                    "dcoref"
+                ]
+            }
+        },
+        {
+            "semafor": {
+                "pipeline": [
+                    "parsing"
+                ]
+            }
+        },
+        {
+            "cogcomp": {
+                "pipeline": [
+                    "SHALLOW_PARSE",
+                    "NER_ONTONOTES",
+                    "SRL_NOM",
+                    "SRL_VERB",
+                    "SRL_PREP"
+                ]
+            }
+        },
+        {
+            "spacy": {
+                "pipeline": [
+                    "pos",
+                    "tag",
+                    "shape",
+                    "is_alpha",
+                    "is_title",
+                    "like_num",
+                    "label"
+                ]
+            }
+        },
+        {
+            "supwsd": {
+                "pipeline": [
+                    "wsd"
+                ]
+            }
+        }
+    ]
+}

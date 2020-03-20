@@ -1,0 +1,11 @@
+{
+    "tools": [
+        {
+            "quanteda": {
+                "pipeline": [
+                    "frequency"
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "id_corpus": "5d9e70dfe19f3db26d5a5086",
+    "lang": "en",
+    "tools": [{
+        "supwsd": {
+            "pipeline": ["wsd"]
+        }
+    }]
+}

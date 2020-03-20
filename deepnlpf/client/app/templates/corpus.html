@@ -1,0 +1,76 @@
+<!-- index.html-->
+
+{% extends "base.html" %} {% block title %}Corpus{% endblock %} {% block body %}
+
+<div class="panel-header panel-header-sm"></div>
+
+<div class="content">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">List Corpus</h4>
+                </div>
+                <div class="card-body">
+                    {% if corpus %}
+                    <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead class=" text-primary">
+                            <th>#</th>
+                            <th>Corpus</th>
+                            <th>Register</th>
+                            <th class="text-right">Options</th>
+                        </thead>
+                        <tbody>
+
+                            {% for data in corpus %}
+                            <tr>
+                                <td>
+                                    {{data._id}}
+                                </td>
+                                <td>
+                                    {{data.name}}
+                                </td>
+                                <td>
+                                    {{data.last_modified}}
+                                </td>
+                                <td class="text-right">
+                                    <div class="dropdown">
+                                        <button class="dropdown-toggle btn btn-info btn-round btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Actions
+                                            </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <h6 class="dropdown-header">Choose an option</h6>
+                                            <a class="dropdown-item" href="{{ url_for('corpus_view', _id=data._id ) }}">View Corpus</a>
+                                            <a class="dropdown-item" href="{{ url_for('corpus_download', _id=data._id ) }}">Download Raw Corpus</a>
+                                            <a class="dropdown-item" href="#" onclick="delete_corpus('{{data.id}}')">Delete Corpus</a>
+                                            <hr/>
+                                            <a class="dropdown-item" href="{{ url_for('corpus_statistic', _id=data._id ) }}">Statistic Corpus</a>
+                                            <a class="dropdown-item" href="{{ url_for('corpus_analysis', _id=data._id ) }}">Annotations Corpus</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="image" aling="center">
+                        <h5 class="info-text">No corpus found!</h5>
+                        <img src="{{ url_for('static', filename='assets/img/no_data_found.png') }}" width="100%">
+                        <br>
+                        <button type="button" class="btn btn-primary btn-round" onclick="new_Dataset()">
+                            <i class="now-ui-icons arrows-1_cloud-upload-94"></i>
+                            Upload Corpus Now!
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

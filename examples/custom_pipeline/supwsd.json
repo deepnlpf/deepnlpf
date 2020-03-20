@@ -1,0 +1,11 @@
+{
+    "tools": [
+        {
+            "supwsd": {
+                "pipeline": [
+                    "wsd"
+                ]
+            }
+        }
+    ]
+}

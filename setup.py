@@ -1,48 +1,67 @@
-from setuptools import setup
+# -*- coding: utf-8 -*-
+from setuptools import setup, find_packages
+from codecs import open
+from os import path
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+here = path.abspath(path.dirname(__file__))
 
+# Get the long description from the README file
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
+# This call to setup() does all the work
 setup(
-    name='deepnlpf',
-    packages=['deepnlpf', 'stanfordcorenlp'],
-    version='2.0.0',
-    description='A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.',
+    name="deepnlpf",
+    version="1.0.0",
+    description="",
+    long_description_content_type="text/markdown",
+    url="https://deepnlpf.github.io/site",
+    author="RodriguesFAS",
+    author_email="franciscosouzaacer@gmail.com",
 
-    author='RodriguesFAS',
-    author_email='fasr@cin.ufpe.br',
-
-    url='https://deepnlpf.github.io/site/',
-    keywords=['NLP', 'natural language processing', 'computational linguistics'],
-    install_requires=['psutil', 'requests'],
+    # What does your project relate to?
+    keywords='natural-language-processing nlp natural-language-understanding stanford-nlp deep-learning',
+    
+    # Choose your license
+    license="Apache License 2.0",
 
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        # How mature is this project? Common values are
+        #   3 - Alpha
+        #   4 - Beta
+        #   5 - Production/Stable
+        'Development Status :: 4 - Beta',
+
+        # Indicate who your project is intended for
         'Intended Audience :: Developers',
         'Intended Audience :: Education',
-        'Intended Audience :: Information Technology',
         'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        'Intended Audience :: Information Technology',
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
         'Topic :: Scientific/Engineering :: Information Analysis',
         'Topic :: Text Processing',
         'Topic :: Text Processing :: Linguistic',
+        'Topic :: Software Development',
+        'Topic :: Software Development :: Libraries',
+
+        # Specify the Python versions you support here. In particular, ensure
+        # that you indicate whether you support Python 2, Python 3 or both.
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
+    packages=find_packages(),
+    include_package_data=True,
 
-    license="MIT License",
+    install_requires=["pathos", "bson", "gogo", "pygogo", "tqdm", "isodate", "requests", "future", "pymongo", "mongoengine", "flask", "flask_socketio", "pandas", "plotly"],
+    
+     # List required Python versions
+    python_requires='>=3.6',
 
-    entry_points = {
-		'console_scripts': [
-			'deepnlpf = deepnlpf.__main__:main'
-			]
-		}
-
+    entry_points={
+        "console_scripts": [
+            "deepnlpf=deepnlpf.__main__:main"
+        ]
+    },
 )
