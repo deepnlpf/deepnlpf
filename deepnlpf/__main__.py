@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-import argparse
+import argparse, re
+from os import path
+from codecs import open
+
+here = path.abspath(path.dirname(__file__))
 
 def install(args):
     """Install
@@ -20,9 +24,11 @@ def main():
         epilog='🐙 >>Enjoy the program! :)'
     )
 
-    my_parser.version = '🐙 DeepNLPF v.0.0.2 α'
+    version_file_contents = open(path.join(here, '_version.py'), encoding='utf-8').read()
+    VERSION = re.compile('__version__ = \"(.*)\"').search(version_file_contents).group(1)
+    my_parser.version = '🐙 DeepNLPF V' + VERSION
 
-    my_parser.add_argument('--version',
+    my_parser.add_argument('-v', '--version',
                            help='show version.',
                            action='version')
 

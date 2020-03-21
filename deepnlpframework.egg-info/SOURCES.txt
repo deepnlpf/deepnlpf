@@ -7,12 +7,6 @@ deepnlpf/api.py
 deepnlpf/mongoflask.py
 deepnlpf/pipeline.py
 deepnlpf/statistics.py
-deepnlpf.egg-info/PKG-INFO
-deepnlpf.egg-info/SOURCES.txt
-deepnlpf.egg-info/dependency_links.txt
-deepnlpf.egg-info/entry_points.txt
-deepnlpf.egg-info/requires.txt
-deepnlpf.egg-info/top_level.txt
 deepnlpf/config/__init__.py
 deepnlpf/config/config.py
 deepnlpf/config/database.py
@@ -60,3 +54,9 @@ deepnlpf/modules/utils/preprocessing.py
 deepnlpf/templates/AdapterFormat.py
 deepnlpf/templates/__init__.py
 deepnlpf/templates/out_format.py
+deepnlpframework.egg-info/PKG-INFO
+deepnlpframework.egg-info/SOURCES.txt
+deepnlpframework.egg-info/dependency_links.txt
+deepnlpframework.egg-info/entry_points.txt
+deepnlpframework.egg-info/requires.txt
+deepnlpframework.egg-info/top_level.txt

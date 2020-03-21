@@ -1,14 +1,14 @@
-# install package locally
-    
-    python setup.py install --user
-
 # Kill processing
 
     sudo lsof -t -i tcp:5001 | xargs kill -9
 
+# install package locally
+    
+    python setup.py install --user
+
 # create even conda
 
-    conda create -n deepnlpf2 python=3.7 anaconda
+    conda create -n deepnlpf2_t python=3.7 anaconda
 
 # Commit PyPI
 

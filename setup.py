@@ -17,7 +17,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 # This call to setup() does all the work
 setup(
-    name="deepnlpf",
+    name="deepnlpframework",
     version=VERSION,
     description="A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.",
     long_description=README, 
@@ -58,7 +58,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    packages=find_packages(exclude=("tests")),
+    packages=find_packages(exclude=("tests", "images", "examples")),
     include_package_data=True,
 
     # create directory plugins.

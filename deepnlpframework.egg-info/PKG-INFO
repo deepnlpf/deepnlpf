@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
-Name: deepnlpf
-Version: 1.0.0
+Name: deepnlpframework
+Version: 1.0.2
 Summary: A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.
 Home-page: https://deepnlpf.github.io/site
 Author: RodriguesFAS

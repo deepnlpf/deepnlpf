@@ -46,27 +46,31 @@ class PluginManager:
         PATH_DOWNLOAD_PLUGIN = HOME + FOLDER_PLUGINS + PLUGIN_NAME + EXTENSION
 
         try:
+            #check folder plugin exist.
+            if not os.path.exists(HOME + FOLDER_PLUGINS):
+                os.makedirs(HOME + FOLDER_PLUGINS)
+
             # Download plugin.
             print("Downloading the plugin", PLUGIN_NAME, "..")
             download(url=URL, path=PATH_DOWNLOAD_PLUGIN)
         except Exception as err:
             print("Plugin no exist!")
             print(err)
+            sys.exit(0)
 
         try:
-            # Extracting plugin.
-            print("Extracting files", PLUGIN_NAME, "..")
+            # Extracting files plugin.
             fantasy_zip = zipfile.ZipFile(PATH_DOWNLOAD_PLUGIN)
-            fantasy_zip.extractall(HOME + FOLDER_PLUGINS + PLUGIN_NAME)
+            fantasy_zip.extractall(HOME + FOLDER_PLUGINS)
             fantasy_zip.close()
         except Exception as err:
             print("Err extraction file!")
             print(err)
 
-        print("Clear install..")
-        os.remove(PATH_DOWNLOAD_PLUGIN)
+        os.remove(PATH_DOWNLOAD_PLUGIN) # clear file zip.
 
-        print("Plugin intalled!")
+        print("Plugin", PLUGIN_NAME, "intalled!")
+        print("Path of installed plugins:", HOME + FOLDER_PLUGINS)
 
         
 
