@@ -4,6 +4,7 @@ from codecs import open
 from os import path
 
 here = path.abspath(path.dirname(__file__))
+HOME = os.environ['HOME']
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
@@ -54,6 +55,9 @@ setup(
     packages=find_packages(),
     include_package_data=True,
 
+    # create directory plugins.
+    data_files=[(HOME+'/deepnlpf_plugins', [])],
+
     install_requires=["pathos", "bson", "gogo", "pygogo", "tqdm", "isodate", "requests", "future", "pymongo", "mongoengine", "flask", "flask_socketio", "pandas", "plotly"],
     
      # List required Python versions
@@ -64,4 +68,5 @@ setup(
             "deepnlpf=deepnlpf.__main__:main"
         ]
     },
+    
 )

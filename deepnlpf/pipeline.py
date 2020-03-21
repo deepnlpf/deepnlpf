@@ -16,7 +16,7 @@ from deepnlpf.config import config
 from deepnlpf.core.boost import Boost
 from deepnlpf.models.document import Document
 from deepnlpf.models.analysis import Analysis
-from deepnlpf.core.plugin_external import PluginManager
+from deepnlpf.core.plugin_manager import PluginManager
 
 class Pipeline(object):
     """

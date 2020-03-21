@@ -30,7 +30,7 @@ deepnlpf/core/execute.py
 deepnlpf/core/gazzetter.py
 deepnlpf/core/iplugin.py
 deepnlpf/core/plugin.py
-deepnlpf/core/plugin_external.py
+deepnlpf/core/plugin_manager.py
 deepnlpf/core/tasks.py
 deepnlpf/core/util.py
 deepnlpf/helpers/__init__.py
