@@ -2,9 +2,14 @@
 from setuptools import setup, find_packages
 from codecs import open
 from os import path
+import os, re
 
 here = path.abspath(path.dirname(__file__))
 HOME = os.environ['HOME']
+
+# read the version from stanza/_version.py
+version_file_contents = open(path.join(here, 'deepnlpf/_version.py'), encoding='utf-8').read()
+VERSION = re.compile('__version__ = \"(.*)\"').search(version_file_contents).group(1)
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
@@ -13,7 +18,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 # This call to setup() does all the work
 setup(
     name="deepnlpf",
-    version="1.0.0",
+    version=VERSION,
     description="",
     long_description_content_type="text/markdown",
     url="https://deepnlpf.github.io/site",
@@ -58,7 +63,10 @@ setup(
     # create directory plugins.
     data_files=[(HOME+'/deepnlpf_plugins', [])],
 
-    install_requires=["pathos", "bson", "gogo", "pygogo", "tqdm", "isodate", "requests", "future", "pymongo", "mongoengine", "flask", "flask_socketio", "pandas", "plotly"],
+    install_requires=[
+        "homura","pathos", "bson", "gogo", "pygogo", "tqdm", 
+        "isodate", "requests", "future", "pymongo", "mongoengine", 
+        "flask", "flask_socketio", "pandas", "plotly"],
     
      # List required Python versions
     python_requires='>=3.6',

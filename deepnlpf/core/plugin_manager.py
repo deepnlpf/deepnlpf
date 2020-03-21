@@ -7,7 +7,6 @@
 """
 
 import os, sys, requests
-from tqdm import tqdm
 
 class PluginManager:
 
@@ -32,37 +31,43 @@ class PluginManager:
         return plugin.Plugin(_id_pool, document, pipeline).run()
 
     def download(self, plugin_name):
+        import zipfile
+        from homura import download
+
         # URL for download of plugin.
-        URL_BEGIN = 'https://github.com/deepnlpf/'
-        PLUGIN_NAME = 'plugin_stanfordcorenlp'
-        URL_END = '/archive/master.zip'
-        URL = URL_BEGIN + PLUGIN_NAME + URL_END 
+        URL_BEGIN = 'https://rodriguesfas.com.br/deepnlpf/plugins/'
+        PLUGIN_NAME = plugin_name
+        EXTENSION = '.zip'
+        URL = URL_BEGIN + PLUGIN_NAME + EXTENSION 
 
         # Path for save plugin.
         HOME = os.environ['HOME']
         FOLDER_PLUGINS = '/deepnlpf_plugins/'
-        PATH_DOWNLOAD_PLUGIN = HOME + FOLDER_PLUGINS + PLUGIN_NAME
+        PATH_DOWNLOAD_PLUGIN = HOME + FOLDER_PLUGINS + PLUGIN_NAME + EXTENSION
 
-        # check directory plugin exits else create.
-        if not os.path.exists(HOME + FOLDER_PLUGINS):
-            os.makedirs(HOME + FOLDER_PLUGINS)
+        try:
+            # Download plugin.
+            print("Downloading the plugin", PLUGIN_NAME, "..")
+            download(url=URL, path=PATH_DOWNLOAD_PLUGIN)
+        except Exception as err:
+            print("Plugin no exist!")
+            print(err)
 
-        # download file
-        r = requests.get(URL, stream=True)
+        try:
+            # Extracting plugin.
+            print("Extracting files", PLUGIN_NAME, "..")
+            fantasy_zip = zipfile.ZipFile(PATH_DOWNLOAD_PLUGIN)
+            fantasy_zip.extractall(HOME + FOLDER_PLUGINS + PLUGIN_NAME)
+            fantasy_zip.close()
+        except Exception as err:
+            print("Err extraction file!")
+            print(err)
 
-        # Total size in bytes.
-        total_size = int(r.headers.get('content-length', 0))
-        block_size = 1024 # 1 Kibibyte
+        print("Clear install..")
+        os.remove(PATH_DOWNLOAD_PLUGIN)
 
-        # progress download.
-        t = tqdm(total=total_size, unit='iB', unit_scale=True)
+        print("Plugin intalled!")
 
-        # check download.
-        with open(PATH_DOWNLOAD_PLUGIN+'.zip', 'wb') as f:
-            for data in r.iter_content(block_size):
-                t.update(len(data))
-                f.write(data)
-        t.close()
+        
 
-        if total_size != 0 and t.n != total_size:
-            print("ERROR, something went wrong")
+

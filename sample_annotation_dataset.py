@@ -1,13 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-from deepnlpf.core.util import Util
 from deepnlpf.pipeline import Pipeline
 
-path_custom_pipeline = "/home/fasr/Mestrado/Workspace/deepnlpf2/examples/custom_pipeline/stanfordcorenlp.json"
+json_file = "/home/fasr/Mestrado/Workspace/deepnlpf2/examples/custom_pipeline/stanfordcorenlp.json"
+
+json_string = """
+{
+    "tools": [{
+        "stanfordcorenlp": {
+            "pipeline": [
+                "tokenize",
+                "ssplit",
+                "pos",
+                "lemma",
+                "ner",
+                "parse",
+                "depparse",
+                "truecase",
+                "dcoref"
+            ]
+        }
+    }]
+}
+"""
+
 id_dataset = "5e74040190fa053af333ceea"
 
-custom_pipeline = Util().openfile_json(path_custom_pipeline)
-
-nlp = Pipeline(id_dataset, custom_pipeline, True)
+nlp = Pipeline(json_file=json_file)
 nlp.annotate()
