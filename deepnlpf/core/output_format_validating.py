@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-    Class: ValidatingJSON
+""" ValidatingJSON
     Descrption:
-    Date: 06/03/2019
+    Create: 06/03/2019
     Library Baseline: https://github.com/Julian/jsonschema
 """
 
@@ -10,5 +9,5 @@ import json
 
 class ValidatingJSON(object):
     
-    def parse(self):
-       try:
+    def __init__(self):
+       pass

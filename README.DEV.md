@@ -5,3 +5,7 @@
 # Kill processing
 
     sudo lsof -t -i tcp:5001 | xargs kill -9
+
+# Commit PyPI
+
+    

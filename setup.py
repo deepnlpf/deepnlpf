@@ -66,7 +66,7 @@ setup(
     install_requires=[
         "homura","pathos", "bson", "gogo", "pygogo", "tqdm", 
         "isodate", "requests", "future", "pymongo", "mongoengine", 
-        "flask", "flask_socketio", "pandas", "plotly"],
+        "flask", "flask_socketio", "pandas", "plotly", "names", "json2xml"],
     
      # List required Python versions
     python_requires='>=3.6',

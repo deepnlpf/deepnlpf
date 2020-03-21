@@ -12,28 +12,32 @@ from bson.objectid import ObjectId
 
 from deepnlpf.config import config
 
+from deepnlpf.models.dataset import Dataset
 from deepnlpf.models.document import Document
 from deepnlpf.models.analysis import Analysis
 
 from deepnlpf.core.util import Util
 from deepnlpf.core.boost import Boost
+from deepnlpf.core.json_encoder import JSONEncoder
+from deepnlpf.core.output_format import OutputFormat
 from deepnlpf.core.plugin_manager import PluginManager
 
 class Pipeline(object):
     """
         Description: Pipeline class is ..
     """
-
-    self.type_input_data = NULL
     
-    def __init__(self, id_dataset=None, raw_text=None, json_string=None, json_file=None, save_analysis=True):
-        
+    def __init__(self, id_dataset=None, raw_text=None, json_string=None, json_file=None, 
+        save_analysis=True, _print='terminal', output_format='json'):
+
+        self.documents = None
+
         if id_dataset != None and raw_text is None:
             self.id_dataset = id_dataset
-            self.type_input_data = "dataset"
+            self.type_input_data = True
         elif raw_text != None and id_dataset is None:
             self.raw_text = raw_text
-            self.type_input_data = "raw_text"
+            self.type_input_data = False
         elif id_dataset != None and raw_text != None:
             print("You cannot enter two data entry parameters.")
             sys.exit(0) 
@@ -53,15 +57,49 @@ class Pipeline(object):
             sys.exit(0)
 
         self._save_annotation = save_analysis
+        self._print = _print
+        self._output_format = output_format
+
         self._id_pool = ObjectId(b'foo-bar-quux')
 
     def annotate(self):
-        """
-            Description: The main method for initiating the process of 
-                         the linguisticas tools and analyzes to be executed.
-        """
-        # Runs the tools using multiprocessor parallelism techniques.
+        if self.type_input_data:
+            self.documents = Document().select_all({"_id_dataset": ObjectId(self.id_dataset)})
+        else:
+            #load sentences.
+            document = json.loads(json.dumps({'sentences':[self.raw_text]}))
+            
+            # preprocessing ssplit.
+            self.documents = PluginManager().call_plugin(plugin_name='stanfordcorenlp', 
+                _id_pool=self._id_pool, document=document, pipeline=['ssplit'])
 
+            # parsing join tokens in sentence.
+            sentences = list()
+            for sent in self.documents[0]['sentences']:
+                sentence = list()
+                for token in sent['tokens']:
+                    sentence.append(token['word'])   
+                sentences.append(" ".join(sentence))
+
+            import names, datetime
+            
+            # save database.
+            _id_dataset = Dataset().save({
+                "name": names.get_first_name(),
+                "last_modified": datetime.datetime.now()
+                })
+
+            # save document.
+            Document().save({
+                "_id_dataset": _id_dataset,
+                "name": names.get_first_name(),
+                "sentences": [sentence for sentence in sentences ]
+                })
+
+            # get documents database.
+            self.documents = Document().select_all({"_id_dataset": ObjectId(_id_dataset)})
+
+        # Runs the tools using multiprocessor parallelism techniques.
         # get tools names
         self.list_tools = [','.join(tool.keys()) for tool in self._custom_pipeline['tools']]
 
@@ -83,14 +121,7 @@ class Pipeline(object):
         # extraction index number in tools, get args.
         plugin_name, index = _tool_name.split('-')
 
-        if self.type_input_data == "dataset":
-            # load documents.
-            documents = Document().select_all({"_id_dataset": ObjectId(self.id_dataset)})
-        else:
-            # ssplit
-            pass
-
-        for document in tqdm(documents):
+        for document in tqdm(self.documents):
             pipeline = self._custom_pipeline['tools'][int(index)][plugin_name]['pipeline']
 
             annotation = PluginManager().call_plugin(plugin_name=plugin_name, 
@@ -98,9 +129,33 @@ class Pipeline(object):
 
             self.save_analysis(plugin_name, annotation)
 
+            remove_object_id = JSONEncoder().encode(annotation)
+            data_json = json.loads(remove_object_id)
+            data_formating = self.output_format(data_json)
+            self.output(data_formating)
+
     def save_analysis(self, tool, annotation):
-        if self._save_annotation  is True:
+        if self._save_annotation:
             if(Analysis().save(annotation)):
                 return annotation
         else:
             return annotation
+
+    def output_format(self, annotation):
+        if self._output_format == "xml":
+            return OutputFormat().json2xml(annotation)
+        return json.dumps(annotation, indent=4)
+
+    def output(self, annotation):
+        if self._print == 'terminal': 
+            print(annotation)
+        elif self._print == 'browser':
+            from flask import Flask, escape, request
+            app = Flask(__name__)
+            
+            @app.route('/')
+            def hello():
+                name = request.args.get("name", annotation)
+                return f'Hello, {escape(name)}!'
+
+            app.run(debug=True)

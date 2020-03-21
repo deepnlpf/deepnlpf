@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 from deepnlpf.pipeline import Pipeline
 
-json_file = "/home/fasr/Mestrado/Workspace/deepnlpf2/examples/custom_pipeline/stanfordcorenlp.json"
+custom_pipeline_file = "/home/fasr/Mestrado/Workspace/deepnlpf2/examples/custom_pipeline/stanfordcorenlp.json"
 
-json_string = """
+custom_pipeline_string = """
 {
     "tools": [{
         "stanfordcorenlp": {
@@ -26,5 +26,10 @@ json_string = """
 
 id_dataset = "5e74040190fa053af333ceea"
 
-nlp = Pipeline(json_file=json_file)
+sentence = "Barack Obama was born in Hawaii. Hello, how are you. I am doing fine."
+
+nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline_string)
+#nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline_string, output_format='xml')
+
+#nlp = Pipeline(id_dataset=id_dataset, json_string=custom_pipeline_string)
 nlp.annotate()
