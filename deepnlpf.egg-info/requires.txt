@@ -4,7 +4,6 @@ bson
 gogo
 pygogo
 tqdm
-numba
 isodate
 requests
 future

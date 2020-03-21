@@ -16,8 +16,6 @@ from deepnlpf.models.document import Document
 
 from deepnlpf.core.boost import Boost
 
-from stanfordcorenlp import StanfordCoreNLP
-
 class Util(object):
 
     def __init__(self):

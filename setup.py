@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
+from setuptools import setup, Extension, find_packages
 from codecs import open
 from os import path
 import os, re
@@ -13,13 +13,14 @@ VERSION = re.compile('__version__ = \"(.*)\"').search(version_file_contents).gro
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+    README = f.read()
 
 # This call to setup() does all the work
 setup(
     name="deepnlpf",
     version=VERSION,
-    description="",
+    description="A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.",
+    long_description=README, 
     long_description_content_type="text/markdown",
     url="https://deepnlpf.github.io/site",
     author="RodriguesFAS",
@@ -57,7 +58,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    packages=find_packages(),
+    packages=find_packages(exclude=("tests")),
     include_package_data=True,
 
     # create directory plugins.

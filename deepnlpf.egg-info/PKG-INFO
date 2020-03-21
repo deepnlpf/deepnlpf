@@ -1,12 +1,27 @@
 Metadata-Version: 2.1
 Name: deepnlpf
 Version: 1.0.0
-Summary: UNKNOWN
+Summary: A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.
 Home-page: https://deepnlpf.github.io/site
 Author: RodriguesFAS
 Author-email: franciscosouzaacer@gmail.com
 License: Apache License 2.0
-Description: UNKNOWN
+Description: # DeepNLPF
+        
+        <div align="center">
+            <a href="#">
+                <img alt="License" src="https://img.shields.io/github/license/deepnlpf/deepnlpf">
+            </a>
+            <a href="https://pypi.org/project/deepnlpf/">
+                <img alt="PyPI Version" src="https://img.shields.io/pypi/v/deepnlpf?color=blue">
+            </a>
+            <a href="https://anaconda.org/deepnlpf">
+                <img alt="Conda Versions" src="https://img.shields.io/conda/vn/deepnlpf?color=blue&label=conda">
+            </a>
+            <a href="https://pypi.org/project/deepnlpf/">
+                <img alt="Python Versions" src="https://img.shields.io/pypi/pyversions/deepnlpf?colorB=blue">
+            </a>
+        </div>
 Keywords: natural-language-processing nlp natural-language-understanding stanford-nlp deep-learning
 Platform: UNKNOWN
 Classifier: Development Status :: 4 - Beta
