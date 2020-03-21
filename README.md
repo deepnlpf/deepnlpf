@@ -1,6 +1,6 @@
 # Project description
 
-<div align="center"><img src="https://github.com/deepnlpf/deepnlpf/images/deepnlpf-logo.png" height="100px"/></div>
+<div align="center"><img src="https://github.com/deepnlpf/deepnlpf/blob/master/images/deepnlpf-logo.png" height="100px"/></div>
 
 <h2 align="center">DeepNLPF: A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.</h2>
 
@@ -70,4 +70,4 @@ To see DeepnlpF custom pipeline in action, you can launch the Python interactive
     >>> nlp.annotate()
 
 # LICENSE
-DeepNLPF is released under the Apache License, Version 2.0. See the LICENSE file for more details.
+DeepNLPF is released under the Apache License, Version 2.0. See the [LICENSE](https://github.com/deepnlpf/deepnlpf/blob/master/README.md) file for more details.
