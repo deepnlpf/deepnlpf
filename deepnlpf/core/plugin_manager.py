@@ -45,18 +45,14 @@ class PluginManager:
         FOLDER_PLUGINS = '/deepnlpf_plugins/'
         PATH_DOWNLOAD_PLUGIN = HOME + FOLDER_PLUGINS + PLUGIN_NAME + EXTENSION
 
-        try:
-            #check folder plugin exist.
-            if not os.path.exists(HOME + FOLDER_PLUGINS):
-                os.makedirs(HOME + FOLDER_PLUGINS)
+        #check folder plugin exist.
+        if not os.path.exists(HOME + FOLDER_PLUGINS):
+            os.makedirs(HOME + FOLDER_PLUGINS)
 
-            # Download plugin.
-            print("Downloading the plugin", PLUGIN_NAME, "..")
-            download(url=URL, path=PATH_DOWNLOAD_PLUGIN)
-        except Exception as err:
-            print("Plugin no exist!")
-            print(err)
-            sys.exit(0)
+        # Download plugin.
+        print("Downloading the plugin", PLUGIN_NAME, "..")
+
+        download(url=URL, path=PATH_DOWNLOAD_PLUGIN)
 
         try:
             # Extracting files plugin.
@@ -64,13 +60,15 @@ class PluginManager:
             fantasy_zip.extractall(HOME + FOLDER_PLUGINS)
             fantasy_zip.close()
         except Exception as err:
-            print("Err extraction file!")
-            print(err)
-
-        os.remove(PATH_DOWNLOAD_PLUGIN) # clear file zip.
+            os.remove(PATH_DOWNLOAD_PLUGIN) # clear file zip.
+            print("Plugin no exist!")
+            sys.exit(0)
 
         print("Plugin", PLUGIN_NAME, "intalled!")
         print("Path of installed plugins:", HOME + FOLDER_PLUGINS)
+        
+        os.remove(PATH_DOWNLOAD_PLUGIN) # clear file zip.
+        sys.exit(0)
 
         
 

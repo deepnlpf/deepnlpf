@@ -15,3 +15,11 @@
     https://python-packaging-tutorial.readthedocs.io/en/latest/uploading_pypi.html
     https://medium.com/@thucnc/how-to-publish-your-own-python-package-to-pypi-4318868210f9
 
+
+    update
+        python setup.py install --user
+
+        python3 setup.py sdist bdist_wheel
+
+        twine upload dist/*
+

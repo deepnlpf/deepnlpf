@@ -1,5 +1,3 @@
-# Project description
-
 <div align="center"><img src="https://github.com/deepnlpf/deepnlpf/blob/master/images/deepnlpf-logo.png" height="100px"/></div>
 
 <h2 align="center">DeepNLPF: A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.</h2>
@@ -30,15 +28,16 @@ DeepNLPF has been implemented and tested using the [Ubuntu](https://ubuntu.com/)
 * Disk Space: ~ MB (does not include disk space for IDE/tools).
 
 <b>Software</b>
-* Operating Systems: Linux [Ubuntu 19.04](https://ubuntu.com/) (64-bit).
-* [Python version 3.7]() 
-* [Java version 8]()
-* [Required MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
+* [Download Ubuntu 19.04](https://ubuntu.com/) (64-bit).
+* [Intall Python 3.7](https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/) 
+* [Install Java 8](https://tecadmin.net/install-oracle-java-8-ubuntu-via-ppa/)
+* [Intall MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
 
 ## [Pip](https://pypi.org/project/pip/) install
 
-        $ pip install deepnlpf
-        $ deepnlpf --install stanfordcorenlp
+        $ pip install deepnlpframework
+        
+        $ deepnlpf --install stanfordcorenlp #install plugin base stanford corenlp.
 
 ## Getting Started
 
@@ -69,5 +68,5 @@ To see DeepnlpF custom pipeline in action, you can launch the Python interactive
     >>> nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline)
     >>> nlp.annotate()
 
-# LICENSE
+## LICENSE
 DeepNLPF is released under the Apache License, Version 2.0. See the [LICENSE](https://github.com/deepnlpf/deepnlpf/blob/master/README.md) file for more details.
