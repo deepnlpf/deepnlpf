@@ -4,6 +4,7 @@ bson
 gogo
 pygogo
 tqdm
+rpy2
 isodate
 requests
 future

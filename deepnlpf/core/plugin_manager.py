@@ -30,9 +30,9 @@ class PluginManager:
         plugin = self.load_plugin(plugin_name)
         return plugin.Plugin(_id_pool, document, pipeline).run()
 
-    def download(self, plugin_name):
+    def install(self, plugin_name):
         import zipfile
-        from homura import download
+        from homura import download # gestor fast download file. 
 
         # URL for download of plugin.
         URL_BEGIN = 'https://rodriguesfas.com.br/deepnlpf/plugins/'
@@ -50,7 +50,7 @@ class PluginManager:
             os.makedirs(HOME + FOLDER_PLUGINS)
 
         # Download plugin.
-        print("Downloading the plugin", PLUGIN_NAME, "..")
+        print("Downloading plugin", PLUGIN_NAME, "..")
 
         download(url=URL, path=PATH_DOWNLOAD_PLUGIN)
 
@@ -61,15 +61,28 @@ class PluginManager:
             fantasy_zip.close()
         except Exception as err:
             os.remove(PATH_DOWNLOAD_PLUGIN) # clear file zip.
-            print("Plugin no exist!")
+            print("Plugin not found!")
             sys.exit(0)
 
-        print("Plugin", PLUGIN_NAME, "intalled!")
+        print("Plugin", PLUGIN_NAME, "installed!")
         print("Path of installed plugins:", HOME + FOLDER_PLUGINS)
         
         os.remove(PATH_DOWNLOAD_PLUGIN) # clear file zip.
         sys.exit(0)
 
-        
+    def uninstall(self, plugin_name):
+        # Path for save plugin.
+        HOME = os.environ['HOME']
+        PLUGIN_NAME = plugin_name
+        FOLDER_PLUGINS = '/deepnlpf_plugins/'
+        PATH_DOWNLOAD_PLUGIN = HOME + FOLDER_PLUGINS + PLUGIN_NAME
+
+        try:
+            print("Uninstall plugin", PLUGIN_NAME, "..")
+            os.remove(PATH_DOWNLOAD_PLUGIN)
+            print("Plugin", PLUGIN_NAME, "unistalled!")
+        except Exception as err:
+            print("Plugin not found!")
+                
 
 

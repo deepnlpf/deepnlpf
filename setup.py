@@ -58,14 +58,14 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    packages=find_packages(exclude=("tests", "images", "examples")),
+    packages=find_packages(exclude=("tests", "images")),
     include_package_data=True,
 
     # create directory plugins.
     data_files=[(HOME+'/deepnlpf_plugins', [])],
 
     install_requires=[
-        "homura","pathos", "bson", "gogo", "pygogo", "tqdm", 
+        "homura","pathos", "bson", "gogo", "pygogo", "tqdm", "rpy2",
         "isodate", "requests", "future", "pymongo", "mongoengine", 
         "flask", "flask_socketio", "pandas", "plotly", "names", "json2xml"],
     

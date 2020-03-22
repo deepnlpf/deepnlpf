@@ -17,21 +17,22 @@ from flask_socketio import SocketIO, emit
 #import sys
 #sys.path.append('../deepnlpf')
 
-from deepnlpf.pipeline import Annotation
+from deepnlpf.pipeline import Pipeline
 
-from deepnlpf.core.plugin import PluginManager
+from deepnlpf.core.util import Util
+from deepnlpf.core.plugin_manager import PluginManager
 
 from deepnlpf.models.logs import Logs
 from deepnlpf.models.mongodb import DataBase
 from deepnlpf.models.dataset import Dataset
 from deepnlpf.models.document import Document
 from deepnlpf.models.analysis import Analysis
-from deepnlpf.core.util import Util, PreProcessing
 
-from .mongoflask import MongoJSONEncoder, ObjectIdConverter
+from deepnlpf.mongoflask import MongoJSONEncoder, ObjectIdConverter
 
 # Initialize the app.
 app = Flask(__name__, instance_relative_config=True)
+
 
 app.config['SECRET_KEY'] = 'JebwpwqaiXdmqteOmjUxpJdVufWJyneL'
 app.json_encoder = MongoJSONEncoder
@@ -282,3 +283,5 @@ def index():
 app.config['DEBUG'] = True
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+print(">>> AQUI!")

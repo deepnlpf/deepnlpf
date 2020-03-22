@@ -18,12 +18,6 @@ HOME = os.environ['HOME']
 PATH_BASE = str(pathlib.Path.cwd())
 NLPTOOLS = "/nlptools/"
 
-CONFIG = {
-    'host': '127.0.0.1',
-    'port_server': 5000,
-    'port_dashboard': 5001,
-}
-
 DEBUG = {
     'log': False,
 }

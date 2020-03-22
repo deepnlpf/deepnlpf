@@ -3,7 +3,6 @@ setup.py
 deepnlpf/__init__.py
 deepnlpf/__main__.py
 deepnlpf/_version.py
-deepnlpf/api.py
 deepnlpf/mongoflask.py
 deepnlpf/pipeline.py
 deepnlpf/statistics.py
@@ -12,6 +11,7 @@ deepnlpf/config/config.py
 deepnlpf/config/database.py
 deepnlpf/config/notification.py
 deepnlpf/core/__init__.py
+deepnlpf/core/api.py
 deepnlpf/core/boost.py
 deepnlpf/core/execute.py
 deepnlpf/core/gazzetter.py
@@ -53,7 +53,6 @@ deepnlpf/modules/utils/log.py
 deepnlpf/modules/utils/preprocessing.py
 deepnlpf/templates/AdapterFormat.py
 deepnlpf/templates/__init__.py
-deepnlpf/templates/out_format.py
 deepnlpframework.egg-info/PKG-INFO
 deepnlpframework.egg-info/SOURCES.txt
 deepnlpframework.egg-info/dependency_links.txt

@@ -44,8 +44,12 @@ Description: <div align="center"><img src="https://github.com/deepnlpf/deepnlpf/
         ## [Pip](https://pypi.org/project/pip/) install
         
                 $ pip install deepnlpframework
+        
+        ## Install plugin base
+        
+        For DeepNLPF to work it needs a natural language processing tool at its base that we take from Stanford CoreNLP.
                 
-                $ deepnlpf --install stanfordcorenlp #install plugin base stanford corenlp.
+                $ deepnlpf --install stanfordcorenlp
         
         ## Getting Started
         

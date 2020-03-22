@@ -1,9 +1,0 @@
-{
-    "tools": [
-        {
-            "cogcomp": {
-                "pipeline": ["SRL_NOM", "SRL_VERB", "SRL_PREP"]
-            }
-        }
-    ]
-}

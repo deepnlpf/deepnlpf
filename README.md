@@ -28,16 +28,24 @@ DeepNLPF has been implemented and tested using the [Ubuntu](https://ubuntu.com/)
 * Disk Space: ~ MB (does not include disk space for IDE/tools).
 
 <b>Software</b>
-* [Download Ubuntu 19.04](https://ubuntu.com/) (64-bit).
+* [Ubuntu 19.04](https://ubuntu.com/) (64-bit).
 * [Intall Python 3.7](https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/) 
 * [Install Java 8](https://tecadmin.net/install-oracle-java-8-ubuntu-via-ppa/)
 * [Intall MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
 
+If you prefer, download and install the dependencies from our [script](https://github.com/deepnlpf/scripts-install/blob/master/script/install_requeriments_deepnlpf.sh).
+
+    $ bash install_requeriments_deepnlpf.sh
+
 ## [Pip](https://pypi.org/project/pip/) install
 
         $ pip install deepnlpframework
+
+## Install plugin base
+
+For DeepNLPF to work it needs a natural language processing tool at its base that we take from Stanford CoreNLP.
         
-        $ deepnlpf --install stanfordcorenlp #install plugin base stanford corenlp.
+        $ deepnlpf --install stanfordcorenlp
 
 ## Getting Started
 
@@ -67,6 +75,10 @@ To see DeepnlpF custom pipeline in action, you can launch the Python interactive
     >>> sentence = "Barack Obama was born in Hawaii."
     >>> nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline)
     >>> nlp.annotate()
+
+## Plugins
+
+Access the [official plugin repository](https://deepnlpf.github.io/site/docs/plugins) and try out other NLP tools.
 
 ## LICENSE
 DeepNLPF is released under the Apache License, Version 2.0. See the [LICENSE](https://github.com/deepnlpf/deepnlpf/blob/master/README.md) file for more details.
