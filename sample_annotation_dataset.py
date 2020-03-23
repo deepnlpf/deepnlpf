@@ -36,4 +36,4 @@ nlp = Pipeline(raw_text=sentences, json_string=custom_pipeline_string)
 
 #nlp = Pipeline(id_dataset=id_dataset, json_string=custom_pipeline_string)
 annotation = nlp.annotate()
-#print(json.dumps(annotation, indent=4))
+print(json.dumps(annotation, indent=4))

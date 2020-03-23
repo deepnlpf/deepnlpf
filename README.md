@@ -76,6 +76,16 @@ To see DeepnlpF custom pipeline in action, you can launch the Python interactive
     >>> nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline)
     >>> nlp.annotate()
 
+To print the output you can use as follows:
+
+    >>> annotation = nlp.annotate()
+    >>> print(annotation)
+
+or indented
+
+    >>> import json
+    >>> print(json.dumps(annotation, indent=4))
+
 ## Plugins
 
 Access the [official plugin repository](https://deepnlpf.github.io/site/docs/plugins) and try out other NLP tools.

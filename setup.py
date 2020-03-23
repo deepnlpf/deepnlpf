@@ -15,6 +15,9 @@ VERSION = re.compile('__version__ = \"(.*)\"').search(version_file_contents).gro
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     README = f.read()
 
+with open(path.join(here, 'requirements.txt')) as fp:
+    REQUIRED = fp.read().splitlines()
+
 # This call to setup() does all the work
 setup(
     name="deepnlpframework",
@@ -64,10 +67,14 @@ setup(
     # create directory plugins.
     data_files=[(HOME+'/deepnlpf_plugins', [])],
 
-    install_requires=[
-        "homura","pathos", "bson", "gogo", "pygogo", "tqdm", "rpy2",
-        "isodate", "requests", "future", "pymongo", "mongoengine", 
-        "flask", "flask_socketio", "pandas", "plotly", "names", "json2xml"],
+    install_requires=REQUIRED,
+    
+    #install_requires=[
+    #    "tqdm", "bson", "pygogo", "homura","pathos", "gogo", "pymongo", "isodate", "requests", 
+    #    "future", "mongoengine", "flask", "pandas", "plotly", "names", "psutil", "path", 
+    #    "json2xml"
+    #    ],
+    
     
      # List required Python versions
     python_requires='>=3.6',
