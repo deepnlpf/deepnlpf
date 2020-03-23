@@ -35,3 +35,7 @@ class Boost(object):
         #Telegram().send_message("⛏️ Processing... ForkProcess: {}, {}".format(str(process), str(tool)))
         
         return [_ for _ in tqdm(pool.map(function, tools), total=len(tools))]
+
+    def parallelpool_ray(self, function, tools):
+        #import ray
+        pass

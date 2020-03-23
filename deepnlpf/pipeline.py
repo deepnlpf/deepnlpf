@@ -106,9 +106,7 @@ class Pipeline(object):
         # set index number in tools.
         new_list_tools = [str(tool)+'-'+str(index) for index, tool in enumerate(self.list_tools)]
 
-        result = Boost().parallelpool(self.run, new_list_tools)
-
-        return result
+        return Boost().parallelpool(self.run, new_list_tools)
 
     def run(self, _tool_name):
         """
@@ -132,23 +130,22 @@ class Pipeline(object):
             remove_object_id = JSONEncoder().encode(annotation)
             data_json = json.loads(remove_object_id)
             data_formating = self.output_format(data_json)
-            self.output(data_formating)
+            return self.output(data_formating)
 
     def save_analysis(self, tool, annotation):
         if self._save_annotation:
-            if(Analysis().save(annotation)):
-                return annotation
+            Analysis().save(annotation)
         else:
             return annotation
 
     def output_format(self, annotation):
         if self._output_format == "xml":
             return OutputFormat().json2xml(annotation)
-        return json.dumps(annotation, indent=4)
+        return annotation
 
     def output(self, annotation):
         if self._print == 'terminal': 
-            print(annotation)
+            return annotation
         elif self._print == 'browser':
             from flask import Flask, escape, request
             app = Flask(__name__)

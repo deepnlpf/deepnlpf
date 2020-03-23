@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: deepnlpframework
-Version: 1.0.5
+Version: 1.0.7
 Summary: A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.
 Home-page: https://deepnlpf.github.io/site
 Author: RodriguesFAS
@@ -36,10 +36,14 @@ Description: <div align="center"><img src="https://github.com/deepnlpf/deepnlpf/
         * Disk Space: ~ MB (does not include disk space for IDE/tools).
         
         <b>Software</b>
-        * [Download Ubuntu 19.04](https://ubuntu.com/) (64-bit).
+        * [Ubuntu 19.04](https://ubuntu.com/) (64-bit).
         * [Intall Python 3.7](https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/) 
         * [Install Java 8](https://tecadmin.net/install-oracle-java-8-ubuntu-via-ppa/)
         * [Intall MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
+        
+        If you prefer, download and install the dependencies from our [script](https://github.com/deepnlpf/scripts-install/blob/master/script/install_requeriments_deepnlpf.sh).
+        
+            $ bash install_requeriments_deepnlpf.sh
         
         ## [Pip](https://pypi.org/project/pip/) install
         
@@ -79,6 +83,10 @@ Description: <div align="center"><img src="https://github.com/deepnlpf/deepnlpf/
             >>> sentence = "Barack Obama was born in Hawaii."
             >>> nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline)
             >>> nlp.annotate()
+        
+        ## Plugins
+        
+        Access the [official plugin repository](https://deepnlpf.github.io/site/docs/plugins) and try out other NLP tools.
         
         ## LICENSE
         DeepNLPF is released under the Apache License, Version 2.0. See the [LICENSE](https://github.com/deepnlpf/deepnlpf/blob/master/README.md) file for more details.

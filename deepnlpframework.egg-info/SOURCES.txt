@@ -17,6 +17,7 @@ deepnlpf/core/execute.py
 deepnlpf/core/gazzetter.py
 deepnlpf/core/iplugin.py
 deepnlpf/core/json_encoder.py
+deepnlpf/core/new_api.py
 deepnlpf/core/output_format.py
 deepnlpf/core/output_format_validating.py
 deepnlpf/core/plugin_manager.py
@@ -51,8 +52,6 @@ deepnlpf/modules/utils/Email.py
 deepnlpf/modules/utils/__init__.py
 deepnlpf/modules/utils/log.py
 deepnlpf/modules/utils/preprocessing.py
-deepnlpf/templates/AdapterFormat.py
-deepnlpf/templates/__init__.py
 deepnlpframework.egg-info/PKG-INFO
 deepnlpframework.egg-info/SOURCES.txt
 deepnlpframework.egg-info/dependency_links.txt

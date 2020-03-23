@@ -1,22 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import json
 from deepnlpf.pipeline import Pipeline
 
 custom_pipeline_file = ""
 
 custom_pipeline_string = """
 {
-    "lang": "en",
-    "threads": 4,
-    "tools": [
-        {
-            "semafor": {
-                "pipeline": [
-                    "parsing"
-                ]
-            }
+    "tools": [{
+        "stanfordcorenlp": {
+            "pipeline": [
+                "tokenize",
+                "ssplit",
+                "pos",
+                "lemma",
+                "ner",
+                "parse",
+                "depparse",
+                "truecase",
+                "dcoref"
+            ]
         }
-    ]
+    }]
 }
 """
 
@@ -30,4 +35,5 @@ nlp = Pipeline(raw_text=sentences, json_string=custom_pipeline_string)
 # nlp = Pipeline(raw_text=sentences, json_file=custom_pipeline_file)
 
 #nlp = Pipeline(id_dataset=id_dataset, json_string=custom_pipeline_string)
-nlp.annotate()
+annotation = nlp.annotate()
+#print(json.dumps(annotation, indent=4))

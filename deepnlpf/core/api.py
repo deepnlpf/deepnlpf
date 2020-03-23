@@ -57,12 +57,12 @@ def annotation_processing():
     if request.method == 'POST':
         jsondata = request.get_json()
         custom_pipeline = json.loads(jsondata)
-        annotation = Annotation(custom_pipeline['id_corpus'], custom_pipeline, True)
+        annotation = Pipeline(custom_pipeline['id_corpus'], custom_pipeline, True)
     else:
         id_corpus = request.args.get('id_corpus')
         tools = request.args.get('tools')
         custom_pipeline = json.loads(tools)
-        annotation = Annotation(id_corpus, custom_pipeline, True)
+        annotation = Pipeline(id_corpus, custom_pipeline, True)
 
     response = annotation.annotate()
     
@@ -283,5 +283,3 @@ def index():
 app.config['DEBUG'] = True
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-
-print(">>> AQUI!")

@@ -23,9 +23,9 @@ def uninstall(args):
 
 def api(args):
     if args:
-        from deepnlpf.core.api import app, socketio
+        from deepnlpf.core.new_api import app
         if(args == 'start'):
-            socketio.run(app, host='127.0.0.1', port=5000)
+            app.run(debug=True)
     else:
         print("Wrong command!")
         print("Try the command: deepnlpf --api start")
