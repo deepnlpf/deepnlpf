@@ -12,7 +12,10 @@ app.jinja_env.auto_reload = True
 
 @app.route('/')
 def index():
-    return jsonify({'DeepNLPF': 'Hello API REST!'})
+    return jsonify({
+        "deepnlpf": "Welcome API REST",
+        "version": "1.0.11"
+        })
 
 @app.route('/processing_dataset', methods=['POST', 'GET'])
 def processing_dataset():

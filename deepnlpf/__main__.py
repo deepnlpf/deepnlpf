@@ -21,11 +21,19 @@ def uninstall(args):
         print("Wrong command!")
         print("Try the command: deepnlpf --uninstall <name_plugin>")
 
+def listplugins(args):
+    if args:
+        from deepnlpf.core.plugin_manager import PluginManager
+        PluginManager().listplugins(args)
+    else:
+        print("Wrong command!")
+        print("Try the command: deepnlpf --listplugins all")
+
 def api(args):
     if args:
         from deepnlpf.core.new_api import app
         if(args == 'start'):
-            app.run(debug=True)
+            app.run(host='0.0.0.0', port=5000, debug=True)
     else:
         print("Wrong command!")
         print("Try the command: deepnlpf --api start")
@@ -54,6 +62,11 @@ def main():
                     help="Command for uninstall plugin.",
                     type=install,
                     action='store')
+
+    my_parser.add_argument('-listplugins', '--listplugins',
+                help="Command for listplugins plugin.",
+                type=listplugins,
+                action='store')
 
     my_parser.add_argument('-api', '--api',
                         help="Command run api.",

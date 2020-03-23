@@ -6,7 +6,7 @@
 
 # Kill processing
 
-    sudo lsof -t -i tcp:5001 | xargs kill -9
+    sudo lsof -t -i tcp:5000 | xargs kill -9
 
 # install package locally
     
@@ -32,11 +32,10 @@
 
 # Errors
 
-    ImportError: cannot import name 'abc'
+    ANACONDA
+    ImportError: cannot import name 'abc' from 'bson.py3compat'
 
-        pip uninstall bson
-        pip uninstall pymongo
-        conda install -c anaconda pymongo 
+        pip uninstall bson && pip uninstall pymongo && conda install -c anaconda pymongo 
 
 # Deploy App Flask Enginx in AWS EC2 or Azure
 
@@ -55,3 +54,8 @@
     }
 
     $ sudo service nginx restart
+
+
+# Execute task backgroud server terminal
+
+    nohup <command>

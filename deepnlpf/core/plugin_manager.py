@@ -83,6 +83,13 @@ class PluginManager:
             print("Plugin", PLUGIN_NAME, "unistalled!")
         except Exception as err:
             print("Plugin not found!")
+
+    def listplugins(self):
+        # Path for save plugin.
+        HOME = os.environ['HOME']
+        FOLDER_PLUGINS = '/deepnlpf_plugins/'
+        PATH_DOWNLOAD_PLUGIN = HOME + FOLDER_PLUGINS
+        pass
                 
 
 

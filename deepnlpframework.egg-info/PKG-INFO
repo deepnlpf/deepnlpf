@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: deepnlpframework
-Version: 1.0.10
+Version: 1.0.11
 Summary: A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.
 Home-page: https://deepnlpf.github.io/site
 Author: RodriguesFAS
@@ -83,6 +83,16 @@ Description: <div align="center"><img src="https://github.com/deepnlpf/deepnlpf/
             >>> sentence = "Barack Obama was born in Hawaii."
             >>> nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline)
             >>> nlp.annotate()
+        
+        To print the output you can use as follows:
+        
+            >>> annotation = nlp.annotate()
+            >>> print(annotation)
+        
+        or indented
+        
+            >>> import json
+            >>> print(json.dumps(annotation, indent=4))
         
         ## Plugins
         
