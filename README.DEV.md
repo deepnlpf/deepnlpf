@@ -59,3 +59,9 @@
 # Execute task backgroud server terminal
 
     nohup <command>
+
+
+
+# Install Script Sample
+
+    bash <(curl -Ss https://raw.githubusercontent.com/deepnlpf/scripts-install/master/script/install_requeriments_deepnlpf.sh)

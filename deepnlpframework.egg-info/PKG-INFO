@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: deepnlpframework
-Version: 1.0.11
+Version: 1.0.12
 Summary: A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.
 Home-page: https://deepnlpf.github.io/site
 Author: RodriguesFAS
@@ -100,6 +100,8 @@ Description: <div align="center"><img src="https://github.com/deepnlpf/deepnlpf/
         
         ## LICENSE
         DeepNLPF is released under the Apache License, Version 2.0. See the [LICENSE](https://github.com/deepnlpf/deepnlpf/blob/master/README.md) file for more details.
+        
+        
 Keywords: natural-language-processing nlp natural-language-understanding stanford-nlp deep-learning
 Platform: UNKNOWN
 Classifier: Development Status :: 4 - Beta
@@ -114,8 +116,8 @@ Classifier: Topic :: Text Processing
 Classifier: Topic :: Text Processing :: Linguistic
 Classifier: Topic :: Software Development
 Classifier: Topic :: Software Development :: Libraries
-Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.0
 Classifier: Programming Language :: Python :: 3.7
 Classifier: Programming Language :: Python :: 3.8
-Requires-Python: >=3.6
+Requires-Python: >=3.7
 Description-Content-Type: text/markdown

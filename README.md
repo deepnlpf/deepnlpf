@@ -92,3 +92,4 @@ Access the [official plugin repository](https://deepnlpf.github.io/site/docs/plu
 
 ## LICENSE
 DeepNLPF is released under the Apache License, Version 2.0. See the [LICENSE](https://github.com/deepnlpf/deepnlpf/blob/master/README.md) file for more details.
+

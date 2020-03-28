@@ -6,12 +6,13 @@
     Date: 20/03/2020
 """
 
+from deepnlpf.core.util import Util
 import os, sys, requests
 
 class PluginManager:
 
     def __init__(self):
-        self.PATH_PLUGINS= os.environ['HOME'] + "/deepnlpf_plugins/"
+        self.PATH_PLUGINS = os.environ['HOME'] + "/deepnlpf_plugins/"
 
     def load_plugin(self, plugin_name):
         directory, module_name = os.path.split(plugin_name)
@@ -25,6 +26,19 @@ class PluginManager:
         finally:
             sys.path[:] = path # restore.
         return module
+    
+    def load_plugin_manifest(self):
+        file_manifest = 'manifest'
+        plugins = []
+
+        for plugin in os.listdir(self.PATH_PLUGINS):
+            location = os.path.join(self.PATH_PLUGINS, plugin)
+            if not os.path.isdir(location) or not file_manifest + ".json" in os.listdir(location):
+                continue
+            path = self.PATH_PLUGINS + '/' + plugin + '/' + file_manifest + ".json"
+            plugins.append(Util().openfile_json(path))
+
+        return plugins
 
     def call_plugin(self, plugin_name, _id_pool, document, pipeline):
         plugin = self.load_plugin(plugin_name)

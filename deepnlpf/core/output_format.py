@@ -6,7 +6,10 @@
     Lib.: https://json2xml.readthedocs.io/en/latest/
 """
 
+import json
+from datetime import date, datetime
 from json2xml import json2xml
+from deepnlpf.core.encoder import DTEncoder
 
 class OutputFormat:
 
@@ -14,8 +17,7 @@ class OutputFormat:
         pass
 
     def data_time(self):
-        from datetime import datetime
-        return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        return json.dumps(datetime.now().strftime('%d/%m/%Y - %H:%M:%S'))
 
     def doc_annotation(self, _id_pool, _id_dataset, _id_document, tool, annotation):
         return {
@@ -24,11 +26,21 @@ class OutputFormat:
             "_id_document": _id_document,
             "tool": tool,
             "annotation": annotation,
-            "last_modified": self.data_time()
+            "data_time": self.data_time()
         }
 
     def json2xml(self, json_data):
-        return json2xml.Json2xml(json_data).to_xml()
+        return json2xml.Json2xml(json_data, wrapper="all", pretty=True).to_xml()
+
+
+
+class ValidatingJSON(object):
+    # https://github.com/Julian/jsonschema
+
+    def __init__(self):
+       pass
+
+
 
 # tests
 if __name__ == "__main__":

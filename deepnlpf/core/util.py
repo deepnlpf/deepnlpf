@@ -36,7 +36,7 @@ class Util(object):
                 # save corpus
                 _id_dataset = Dataset().save({
                     "name": dataset_name,
-                    "last_modified": datetime.datetime.now()
+                    "data_time": datetime.datetime.now()
                 })
 
                 # get all files' and folders' names in the current directory.
@@ -97,7 +97,7 @@ class Util(object):
                         "_id_dataset": _id_dataset,
                         "info": "Save Dataset.",
                         "data": data,
-                        "last_modified": datetime.datetime.now()
+                        "data_time": datetime.datetime.now()
                     }
 
                 elif files:
@@ -134,7 +134,7 @@ class Util(object):
                         "_id_dataset": _id_dataset,
                         "info": "Save Datset.",
                         "data": data,
-                        "last_modified": datetime.datetime.now()
+                        "data_time": datetime.datetime.now()
                     }
                 
                 Logs().save(log)

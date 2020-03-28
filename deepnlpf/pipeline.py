@@ -18,7 +18,7 @@ from deepnlpf.models.analysis import Analysis
 
 from deepnlpf.core.util import Util
 from deepnlpf.core.boost import Boost
-from deepnlpf.core.json_encoder import JSONEncoder
+from deepnlpf.core.encoder import JSONEncoder
 from deepnlpf.core.output_format import OutputFormat
 from deepnlpf.core.plugin_manager import PluginManager
 
@@ -86,7 +86,7 @@ class Pipeline(object):
             # save database.
             _id_dataset = Dataset().save({
                 "name": names.get_first_name(),
-                "last_modified": datetime.datetime.now()
+                "data_time": OutputFormat.data_time(self)
                 })
 
             # save document.

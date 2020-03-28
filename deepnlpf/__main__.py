@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
-import argparse, re
+import argparse, re, json
 from os import path
 from codecs import open
 
-here = path.abspath(path.dirname(__file__))
+HERE = path.abspath(path.dirname(__file__))
+
+def get_config():
+    print(">>>>>>>", path.join(HERE, 'config.txt'))
+    with open(path.join(HERE, 'config.txt')) as json_file:
+        data = json.load(json_file)
+        print(">>>>>>", data['host'], data['port'], data['debug'])
+        return data['host'], data['port'], data['debug']
 
 def install(args):
     if args:
@@ -32,8 +39,10 @@ def listplugins(args):
 def api(args):
     if args:
         from deepnlpf.core.new_api import app
+        #host, port, debug = get_config()
         if(args == 'start'):
             app.run(host='0.0.0.0', port=5000, debug=True)
+            #app.run(host=host, port=host, debug=debug)
     else:
         print("Wrong command!")
         print("Try the command: deepnlpf --api start")
@@ -45,7 +54,7 @@ def main():
         epilog='🐙 Enjoy the program! :)'
     )
 
-    version_file_contents = open(path.join(here, '_version.py'), encoding='utf-8').read()
+    version_file_contents = open(path.join(HERE, '_version.py'), encoding='utf-8').read()
     VERSION = re.compile('__version__ = \"(.*)\"').search(version_file_contents).group(1)
     my_parser.version = '🐙 DeepNLPF v' + VERSION
 

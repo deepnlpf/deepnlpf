@@ -11,15 +11,14 @@ deepnlpf/config/config.py
 deepnlpf/config/database.py
 deepnlpf/config/notification.py
 deepnlpf/core/__init__.py
-deepnlpf/core/api.py
+deepnlpf/core/api_antiga.py
 deepnlpf/core/boost.py
+deepnlpf/core/encoder.py
 deepnlpf/core/execute.py
 deepnlpf/core/gazzetter.py
 deepnlpf/core/iplugin.py
-deepnlpf/core/json_encoder.py
 deepnlpf/core/new_api.py
 deepnlpf/core/output_format.py
-deepnlpf/core/output_format_validating.py
 deepnlpf/core/plugin_manager.py
 deepnlpf/core/tasks.py
 deepnlpf/core/util.py
