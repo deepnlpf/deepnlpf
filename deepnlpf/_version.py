@@ -1,4 +1,4 @@
 """ Single source of truth for version number """
 
-__version__ = "1.0.12"
-__resources_version__ = '1.0.12'
+__version__ = "0.0.1"
+__resources_version__ = '0.0.1'

@@ -20,7 +20,7 @@ with open(path.join(here, 'requirements.txt')) as fp:
 
 # This call to setup() does all the work
 setup(
-    name="deepnlpframework",
+    name="deepnlpf",
     version=VERSION,
     description="A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.",
     long_description=README, 
@@ -70,9 +70,9 @@ setup(
     install_requires=REQUIRED,
     
     #install_requires=[
-    #    "tqdm", "bson", "pygogo", "homura","pathos", "gogo", "pymongo", "isodate", "requests", 
-    #    "future", "mongoengine", "flask", "pandas", "plotly", "names", "psutil", "path", 
-    #    "json2xml"
+    #    'tqdm', 'bson', 'pygogo', 'homura','pathos', 'gogo', 'pymongo', 'isodate', 'requests', 
+    #    'future', 'mongoengine', 'flask', 'pandas', 'plotly', 'names', 'psutil', 'path', 
+    #    'json2xml', 'stanza'
     #    ],
     
     

@@ -8,17 +8,14 @@ custom_pipeline_file = ""
 custom_pipeline_string = """
 {
     "tools": [{
-        "stanfordcorenlp": {
+        "stanza": {
             "pipeline": [
                 "tokenize",
-                "ssplit",
+                "mwt",
                 "pos",
                 "lemma",
                 "ner",
-                "parse",
-                "depparse",
-                "truecase",
-                "dcoref"
+                "depparse"
             ]
         }
     }]

@@ -31,7 +31,7 @@ DeepNLPF has been implemented and tested using the [Ubuntu](https://ubuntu.com/)
 * [Ubuntu 19.04](https://ubuntu.com/) (64-bit).
 * [Intall Python 3.7](https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/) 
 * [Install Java 8](https://tecadmin.net/install-oracle-java-8-ubuntu-via-ppa/)
-* [Intall MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
+* [Install MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
 
 If you prefer, download and install the dependencies from our [script](https://github.com/deepnlpf/scripts-install/blob/master/script/install_requeriments_deepnlpf.sh).
 
@@ -41,55 +41,5 @@ If you prefer, download and install the dependencies from our [script](https://g
 
         $ pip install deepnlpframework
 
-## Install plugin base
-
-For DeepNLPF to work it needs a natural language processing tool at its base that we take from Stanford CoreNLP.
-        
-        $ deepnlpf --install stanfordcorenlp
-
-## Getting Started
-
-To see DeepnlpF custom pipeline in action, you can launch the Python interactive interpreter, and try the following commands:
-
-    >>> from deepnlpf.pipeline import Pipeline
-    >>> custom_pipeline = """
-        {
-            "tools": [{
-                "stanfordcorenlp": {
-                    "pipeline": [
-                        "tokenize",
-                        "ssplit",
-                        "pos",
-                        "lemma",
-                        "ner",
-                        "parse",
-                        "depparse",
-                        "truecase",
-                        "dcoref"
-                    ]
-                }
-            }]
-        }
-        """
-
-    >>> sentence = "Barack Obama was born in Hawaii."
-    >>> nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline)
-    >>> nlp.annotate()
-
-To print the output you can use as follows:
-
-    >>> annotation = nlp.annotate()
-    >>> print(annotation)
-
-or indented
-
-    >>> import json
-    >>> print(json.dumps(annotation, indent=4))
-
-## Plugins
-
-Access the [official plugin repository](https://deepnlpf.github.io/site/docs/plugins) and try out other NLP tools.
-
-## LICENSE
-DeepNLPF is released under the Apache License, Version 2.0. See the [LICENSE](https://github.com/deepnlpf/deepnlpf/blob/master/README.md) file for more details.
+## [User Guide](https://deepnlpf.github.io/site/docs/install)
 

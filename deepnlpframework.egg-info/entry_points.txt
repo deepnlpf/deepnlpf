@@ -1,3 +1,0 @@
-[console_scripts]
-deepnlpf = deepnlpf.__main__:main
-

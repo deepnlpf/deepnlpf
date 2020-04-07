@@ -5,7 +5,7 @@
     Date: 03/03/2019
 """
 
-import os, sys, json, uuid
+import os, sys, json, uuid, names, datetime
 
 from tqdm import tqdm
 from bson.objectid import ObjectId
@@ -22,15 +22,16 @@ from deepnlpf.core.encoder import JSONEncoder
 from deepnlpf.core.output_format import OutputFormat
 from deepnlpf.core.plugin_manager import PluginManager
 
+
 class Pipeline(object):
-    """
-        Description: Pipeline class is ..
-    """
     
-    def __init__(self, id_dataset=None, raw_text=None, json_string=None, json_file=None, 
-        save_analysis=True, _print='terminal', output_format='json'):
+    def __init__(self, plugin_base='stanza', id_dataset=None, raw_text=None,
+                 json_string=None, json_file=None, save_analysis=True, _print='terminal',
+                 output_format='json'):
 
         self.documents = None
+
+        self._plugin_base = plugin_base
 
         if id_dataset != None and raw_text is None:
             self.id_dataset = id_dataset
@@ -40,7 +41,7 @@ class Pipeline(object):
             self.type_input_data = False
         elif id_dataset != None and raw_text != None:
             print("You cannot enter two data entry parameters.")
-            sys.exit(0) 
+            sys.exit(0)
         else:
             print("Enter an ID of some dataset or some text to be processed!")
             sys.exit(0)
@@ -59,45 +60,67 @@ class Pipeline(object):
         self._save_annotation = save_analysis
         self._print = _print
         self._output_format = output_format
-
         self._id_pool = ObjectId(b'foo-bar-quux')
 
     def annotate(self):
+        # check type input date.
         if self.type_input_data:
-            self.documents = Document().select_all({"_id_dataset": ObjectId(self.id_dataset)})
+            self.documents = Document().select_all(
+                {"_id_dataset": ObjectId(self.id_dataset)})
         else:
-            #load sentences.
-            document = json.loads(json.dumps({'sentences':[self.raw_text]}))
-            
-            # preprocessing ssplit.
-            self.documents = PluginManager().call_plugin(plugin_name='stanfordcorenlp', 
-                _id_pool=self._id_pool, document=document, pipeline=['ssplit'])
-
             # parsing join tokens in sentence.
             sentences = list()
-            for sent in self.documents[0]['sentences']:
-                sentence = list()
-                for token in sent['tokens']:
-                    sentence.append(token['word'])   
-                sentences.append(" ".join(sentence))
 
-            import names, datetime
-            
+            # load sentences.
+            document = json.loads(json.dumps({'sentences': [self.raw_text]}))
+
+            # pre-processing tokenization and ssplit using plugin base selected.
+            if self._plugin_base == "stanza":
+                self.documents = PluginManager().call_plugin(
+                    plugin_name='stanza',
+                    _id_pool=self._id_pool, 
+                    document=document, 
+                    pipeline=['tokenize']
+                    )
+                
+                # loop - go through the json and assemble the sentences.
+                for item in self.documents[0]:
+                    sentence = list()
+                    for data in item:
+                        sentence.append(data['text'])
+                    sentences.append(" ".join(sentence))
+
+            if self._plugin_base == "stanfordcorenlp":
+                self.documents = PluginManager().call_plugin(
+                    plugin_name='stanfordcorenlp',
+                    _id_pool=self._id_pool, 
+                    document=document, 
+                    pipeline=['ssplit']
+                    )
+
+                # loop - go through the json and assemble the sentences.
+                for item in self.documents[0]['sentences']:
+                    sentence = list()
+                    for token in item['tokens']:
+                        sentence.append(token['word'])
+                    sentences.append(" ".join(sentence))        
+
             # save database.
             _id_dataset = Dataset().save({
                 "name": names.get_first_name(),
                 "data_time": OutputFormat.data_time(self)
-                })
+            })
 
-            # save document.
+            # save documents.
             Document().save({
                 "_id_dataset": _id_dataset,
                 "name": names.get_first_name(),
-                "sentences": [sentence for sentence in sentences ]
-                })
+                "sentences": [sentence for sentence in sentences]
+            })
 
-            # get documents database.
-            self.documents = Document().select_all({"_id_dataset": ObjectId(_id_dataset)})
+            # get documents.
+            self.documents = Document().select_all(
+                {"_id_dataset": ObjectId(_id_dataset)})
 
         # Runs the tools using multiprocessor parallelism techniques.
         # get tools names
@@ -120,10 +143,15 @@ class Pipeline(object):
         plugin_name, index = _tool_name.split('-')
 
         for document in tqdm(self.documents):
-            pipeline = self._custom_pipeline['tools'][int(index)][plugin_name]['pipeline']
+            pipeline = self._custom_pipeline['tools'][int(
+                index)][plugin_name]['pipeline']
 
-            annotation = PluginManager().call_plugin(plugin_name=plugin_name, 
-                _id_pool=self._id_pool, document=document, pipeline=pipeline)
+            annotation = PluginManager().call_plugin(
+                plugin_name=plugin_name,
+                _id_pool=self._id_pool, 
+                document=document, 
+                pipeline=pipeline
+                )
 
             self.save_analysis(plugin_name, annotation)
 
@@ -144,12 +172,12 @@ class Pipeline(object):
         return annotation
 
     def output(self, annotation):
-        if self._print == 'terminal': 
+        if self._print == 'terminal':
             return annotation
         elif self._print == 'browser':
             from flask import Flask, escape, request
             app = Flask(__name__)
-            
+
             @app.route('/')
             def hello():
                 name = request.args.get("name", annotation)

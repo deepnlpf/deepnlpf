@@ -44,12 +44,10 @@ def add_headers(response):
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     return response
 
-
 @app.route('/get_all_plugins', methods=['POST', 'GET'])
 def get_all_plugins():
-    if request.method == 'POST':
-        response = {'plugins': PluginManager().load_plugin_manifest()}
-        return jsonify(response)
+    response = {'plugins': PluginManager().load_plugin_manifest()}
+    return jsonify(response)
 
 @app.route('/get_all_datasets', methods=['POST', 'GET'])
 def get_all_dataset():
@@ -62,14 +60,61 @@ def get_all_dataset():
 @app.route('/processing', methods=['POST', 'GET'])
 def processing():
     if request.method == 'POST':
-        response = request.get_json()
-        jsondata = json.loads(response)
+        tools_name = set()
+        tools = []
+        id_dataset = ''
+        raw_text = ''
 
-        raw_text = jsondata['raw_text']
-        pipeline = jsondata['pipeline']
+        # get json-form.
+        response = request.get_json()
+
+         # get tools_name in json-form.
+        for index, item in enumerate(response):
+            if index == 0:
+                if item['name'] == 'id_dataset':
+                    id_dataset = item['value']
+                elif item['name'] == 'raw_text':
+                    raw_text = item['value']
+
+            if index > 0:
+                tool, analyze = item['name'].split('-')
+                tools_name.add(tool)
+
+        # get analyse in json-form.
+        for tool in tools_name:
+            analyze = {'pipeline': []}
+
+            for index, item in enumerate(response):
+                # remove corpus.
+                if index > 0:
+                    t, a = item['name'].split('-')
+                    if(tool == t):
+                        analyze['pipeline'].append(a)
+
+        #print(">>> AQUI!")
+
+        # config properties.
+        item = {tool: analyze}
+        tools.append(item)
+
+        if id_dataset != '':
+            conv = {'id_dateset': id_dataset, 'tools': tools}
+        elif raw_text != '':
+            conv = {'raw_text': raw_text, 'tools': tools}
         
-        if jsondata['output_format'] != None:
-            output_format = jsondata['output_format']
+        jsondata = json.dumps(conv)
+        print(jsondata)
+
+        # split 
+        raw_text = conv['raw_text']
+        pipeline = conv['tools']
+        output_format = ''
+        
+        #raw_text = jsondata['raw_text']
+        #pipeline = jsondata['pipeline']
+        
+        #if jsondata['output_format'] != None:
+        #    output_format = jsondata['output_format']
             
     else:#GET
         #_id_dataset = request.args.get('_id_dataset')
@@ -78,7 +123,7 @@ def processing():
         output_format = request.args.get('output_format')
     
     try:
-        print(">>> OK!")
+        print(pipeline)
         nlp = Pipeline(raw_text=raw_text, json_string=pipeline, output_format=output_format)
         return jsonify(nlp.annotate())
     except Exception as err:
