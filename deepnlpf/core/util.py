@@ -81,7 +81,7 @@ class Util(object):
                                         "sentences": text_raw
                                     }
 
-                                    # Boost().parallelpool(self.run, new_list_tools)
+                                    # Boost().multiprocessing(self.run, new_list_tools)
 
                                     Document().save(item)
 

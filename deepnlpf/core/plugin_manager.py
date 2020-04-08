@@ -40,9 +40,9 @@ class PluginManager:
 
         return plugins
 
-    def call_plugin(self, plugin_name, _id_pool, document, pipeline):
+    def call_plugin(self, plugin_name, _id_pool, lang, document, pipeline, **args):
         plugin = self.load_plugin(plugin_name)
-        return plugin.Plugin(_id_pool, document, pipeline).run()
+        return plugin.Plugin(_id_pool, lang, document, pipeline).run()
 
     def install(self, plugin_name):
         import zipfile

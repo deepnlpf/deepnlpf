@@ -6,7 +6,7 @@ from abc import abstractmethod, ABCMeta
 class IPlugin(object, metaclass=ABCMeta):
 
     @abstractmethod
-    def __init__(self, corpus, tasks):
+    def __init__(self, id_pool, lang, document, pipeline, **args):
         raise NotImplementedError('subclasses must override __init__() !')
 
     @abstractmethod

@@ -8,6 +8,7 @@
 import os, sys, json, uuid, names, datetime
 
 from tqdm import tqdm
+
 from bson.objectid import ObjectId
 
 from deepnlpf.config import config
@@ -27,7 +28,7 @@ class Pipeline(object):
     
     def __init__(self, plugin_base='stanza', id_dataset=None, raw_text=None,
                  json_string=None, json_file=None, save_analysis=True, _print='terminal',
-                 output_format='json'):
+                 output_format='json', boost='pathos'):
 
         self.documents = None
 
@@ -60,14 +61,17 @@ class Pipeline(object):
         self._save_annotation = save_analysis
         self._print = _print
         self._output_format = output_format
+        
+        self._boost = boost
         self._id_pool = ObjectId(b'foo-bar-quux')
 
     def annotate(self):
-        # check type input date.
+        # check type input data.
         if self.type_input_data:
             self.documents = Document().select_all(
                 {"_id_dataset": ObjectId(self.id_dataset)})
         else:
+            # PreProcessing (tokenaze, sentence split)
             # parsing join tokens in sentence.
             sentences = list()
 
@@ -77,11 +81,9 @@ class Pipeline(object):
             # pre-processing tokenization and ssplit using plugin base selected.
             if self._plugin_base == "stanza":
                 self.documents = PluginManager().call_plugin(
-                    plugin_name='stanza',
-                    _id_pool=self._id_pool, 
-                    document=document, 
-                    pipeline=['tokenize']
-                    )
+                    plugin_name='stanza', _id_pool=self._id_pool, 
+                    lang=self._custom_pipeline['lang'],
+                    document=document, pipeline=['tokenize'])
                 
                 # loop - go through the json and assemble the sentences.
                 for item in self.documents[0]:
@@ -92,11 +94,9 @@ class Pipeline(object):
 
             if self._plugin_base == "stanfordcorenlp":
                 self.documents = PluginManager().call_plugin(
-                    plugin_name='stanfordcorenlp',
-                    _id_pool=self._id_pool, 
-                    document=document, 
-                    pipeline=['ssplit']
-                    )
+                    plugin_name='stanfordcorenlp', _id_pool=self._id_pool,
+                    lang=self._custom_pipeline['lang'], 
+                    document=document, pipeline=['ssplit'])
 
                 # loop - go through the json and assemble the sentences.
                 for item in self.documents[0]['sentences']:
@@ -129,7 +129,12 @@ class Pipeline(object):
         # set index number in tools.
         new_list_tools = [str(tool)+'-'+str(index) for index, tool in enumerate(self.list_tools)]
 
-        return Boost().parallelpool(self.run, new_list_tools)
+        if self._boost == 'pathos':
+            r = Boost().multiprocessing(self.run, new_list_tools)
+        else: # is ray
+            r = Boost().parallel(self.run, new_list_tools)
+
+        return r
 
     def run(self, _tool_name):
         """
@@ -143,14 +148,10 @@ class Pipeline(object):
         plugin_name, index = _tool_name.split('-')
 
         for document in tqdm(self.documents):
-            pipeline = self._custom_pipeline['tools'][int(
-                index)][plugin_name]['pipeline']
-
             annotation = PluginManager().call_plugin(
-                plugin_name=plugin_name,
-                _id_pool=self._id_pool, 
-                document=document, 
-                pipeline=pipeline
+                plugin_name=plugin_name, _id_pool=self._id_pool, 
+                lang=self._custom_pipeline['lang'], document=document, 
+                pipeline=self._custom_pipeline['tools'][int(index)][plugin_name]['pipeline']
                 )
 
             self.save_analysis(plugin_name, annotation)

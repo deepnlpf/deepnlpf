@@ -33,7 +33,11 @@ DeepNLPF has been implemented and tested using the [Ubuntu](https://ubuntu.com/)
 * [Install Java 8](https://tecadmin.net/install-oracle-java-8-ubuntu-via-ppa/)
 * [Install MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/)
 
-If you prefer, download and install the dependencies from our [script](https://github.com/deepnlpf/scripts-install/blob/master/script/install_requeriments_deepnlpf.sh).
+To install the system dependencies, execute the command in the terminal.
+
+    $ bash <(curl -Ss https://github.com/deepnlpf/deepnlpf/blob/master/install_requeriments_system.sh)
+
+If you prefer, download and install the dependencies from our [script](https://github.com/deepnlpf/deepnlpf/blob/master/install_requeriments_system.sh).
 
     $ bash install_requeriments_deepnlpf.sh
 

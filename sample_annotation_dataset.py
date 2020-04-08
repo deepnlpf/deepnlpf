@@ -7,26 +7,44 @@ custom_pipeline_file = ""
 
 custom_pipeline_string = """
 {
-    "tools": [{
-        "stanza": {
-            "pipeline": [
-                "tokenize",
-                "mwt",
-                "pos",
-                "lemma",
-                "ner",
-                "depparse"
-            ]
-        }
-    }]
+  "lang": "en",
+  "tools": [
+    {
+      "stanza": {
+        "pipeline": [
+          "tokenize",
+          "mwt",
+          "pos",
+          "lemma",
+          "ner",
+          "depparse"
+        ]
+      }
+    },
+    {
+      "spacy": {
+        "pipeline": [
+          "pos",
+          "tag",
+          "shape",
+          "is_alpha",
+          "is_title",
+          "like_num",
+          "label"
+        ]
+      }
+    }
+  ]
 }
 """
 
 id_dataset = "5e74040190fa053af333ceea"
 
+sentences_pt = "Eu amo mais você do que eu!"
 sentences = "Barack Obama was born in Hawaii. Hello, how are you. I am doing fine."
+sentence = "Barack Obama was born in Hawaii."
 
-nlp = Pipeline(raw_text=sentences, json_string=custom_pipeline_string)
+nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline_string, boost='ray')
 #nlp = Pipeline(raw_text=sentences, json_string=custom_pipeline_string, output_format='xml')
 
 # nlp = Pipeline(raw_text=sentences, json_file=custom_pipeline_file)

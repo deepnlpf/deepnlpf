@@ -4,17 +4,15 @@
     https://realpython.com/python-concurrency/
 """
 
+import psutil, pathos, ray
+import pathos.pools as pp
+
 from tqdm import tqdm
 
 class Boost(object):
 
     def __init__(self):
-        import psutil
-        #import multiprocessing as mp
-        
-        #self._cpu_count = psutil.cpu_count(logical=False)
-        self._cpu_count = psutil.cpu_count()
-        #self._cpu_count = mp.cpu_count()
+        self.cpu_count = psutil.cpu_count(logical=False)
 
     def multithreading(self, function, args, threads=4):
         from concurrent.futures import ThreadPoolExecutor
@@ -24,11 +22,8 @@ class Boost(object):
             
         return result
 
-    def parallelpool(self, function, tools):
-        import pathos
-        import pathos.pools as pp
-
-        pool = pp.ProcessPool(self._cpu_count)
+    def multiprocessing(self, function, tools):
+        pool = pp.ProcessPool(self.cpu_count)
         
         #process = str(pathos.helpers.mp.current_process())
         #logs.logger.info("{}, {}".format(process, tool))
@@ -36,6 +31,14 @@ class Boost(object):
         
         return [_ for _ in tqdm(pool.map(function, tools), total=len(tools))]
 
-    def parallelpool_ray(self, function, tools):
-        #import ray
-        pass
+    def parallel(self, function, tools):
+        ray.init(num_cpus=self.cpu_count)
+        
+        @ray.remote
+        def f(function, tools):
+            return [_ for _ in tqdm(map(function, tools), total=len(tools))]
+
+        #futures = [f.remote(tool) for tool in tools]
+        return ray.get(f.remote(function, tools))
+    
+    
