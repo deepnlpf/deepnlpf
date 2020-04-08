@@ -6,4 +6,5 @@ __pycache__
 deepnlpf.egg-info
 
 build/
+deepnlpf_env/
 

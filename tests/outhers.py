@@ -20,19 +20,6 @@ custom_pipeline_string = """
           "depparse"
         ]
       }
-    },
-    {
-      "spacy": {
-        "pipeline": [
-          "pos",
-          "tag",
-          "shape",
-          "is_alpha",
-          "is_title",
-          "like_num",
-          "label"
-        ]
-      }
     }
   ]
 }

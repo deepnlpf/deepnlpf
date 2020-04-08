@@ -57,11 +57,9 @@ setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 3.0',
         'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
     ],
-    packages=find_packages(exclude=("tests", "images")),
+    packages=find_packages(exclude=("tests", "images", "deepnlpf_env")),
     include_package_data=True,
 
     # create directory plugins.
@@ -70,11 +68,13 @@ setup(
     install_requires=REQUIRED,
     
     #install_requires=[
-    #    'tqdm', 'bson', 'pygogo', 'homura','pathos', 'gogo', 'pymongo', 'isodate', 'requests', 
-    #    'future', 'mongoengine', 'flask', 'pandas', 'plotly', 'names', 'psutil', 'path', 
-    #    'json2xml', 'stanza'
+    #    'mongoengine', 'pymongo', 'pygogo', 'gogo', 'bson', 'isodate', 'names',
+    #    'tqdm', 'homura', 'future', 'json2xml', 'path',
+    #    'flask', 'requests',
+    #    'pandas', 'plotly',
+    #    'stanza',
+    #    'pathos', 'ray', 'google', 'redis', 'funcsigs', 'aiohttp', 'psutil', 'setproctitle', 'grpcio'
     #    ],
-    
     
      # List required Python versions
     python_requires='>=3.7',
