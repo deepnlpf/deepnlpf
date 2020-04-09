@@ -67,16 +67,7 @@ setup(
 
     install_requires=REQUIRED,
     
-    #install_requires=[
-    #    'mongoengine', 'pymongo', 'pygogo', 'gogo', 'bson', 'isodate', 'names',
-    #    'tqdm', 'homura', 'future', 'json2xml', 'path',
-    #    'flask', 'requests',
-    #    'pandas', 'plotly',
-    #    'stanza',
-    #    'pathos', 'ray', 'google', 'redis', 'funcsigs', 'aiohttp', 'psutil', 'setproctitle', 'grpcio'
-    #    ],
-    
-     # List required Python versions
+    # List required Python versions
     python_requires='>=3.7',
 
     entry_points={
