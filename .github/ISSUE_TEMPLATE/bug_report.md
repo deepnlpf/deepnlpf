@@ -21,9 +21,9 @@ Steps to reproduce the behavior:
 A clear and concise description of what you expected to happen.
 
 **Environment (please complete the following information):**
- - OS: [e.g. Windows, Ubuntu, CentOS, MacOS]
+ - OS: [e.g. Windows, Ubuntu, MacOS]
  - Python version: [e.g. Python 3.6.8 from Anaconda]
- - Stanza version: [e.g., 1.0.0]
+ - DeepNLPF version: [e.g., 1.0.0]
 
 **Additional context**
 Add any other context about the problem here.
