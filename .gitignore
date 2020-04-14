@@ -7,4 +7,5 @@ deepnlpf.egg-info
 
 build/
 deepnlpf_env/
+deepnlpf_env_tests/
 

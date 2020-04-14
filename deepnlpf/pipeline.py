@@ -1,17 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-    Date: 03/03/2019
-"""
-
 import os, sys, json, uuid, names, datetime
 
 from tqdm import tqdm
-
 from bson.objectid import ObjectId
-
-from deepnlpf.config import config
 
 from deepnlpf.models.dataset import Dataset
 from deepnlpf.models.document import Document
@@ -23,105 +16,42 @@ from deepnlpf.core.encoder import JSONEncoder
 from deepnlpf.core.output_format import OutputFormat
 from deepnlpf.core.plugin_manager import PluginManager
 
-
 class Pipeline(object):
     
-    def __init__(self, plugin_base='stanza', id_dataset=None, raw_text=None,
-                 json_string=None, json_file=None, save_analysis=True, _print='terminal',
-                 output_format='json', boost='pathos'):
+    def __init__(self, _input=None, pipeline=None, _output=None, _format=None,
+        using_db=True, plugin_base=None, boost=None):
 
-        self.documents = None
-
-        self._plugin_base = plugin_base
-
-        if id_dataset != None and raw_text is None:
-            self.id_dataset = id_dataset
-            self.type_input_data = True
-        elif raw_text != None and id_dataset is None:
-            self.raw_text = raw_text
-            self.type_input_data = False
-        elif id_dataset != None and raw_text != None:
-            print("You cannot enter two data entry parameters.")
-            sys.exit(0)
+        # auto select type input data.
+        if _input != None:
+            if os.path.isdir(_input):
+                self.type_input_data = 'path_dataset'
+            elif type(_input) ==  ObjectId:
+                self.type_input_data = 'id_dataset'
+            elif type(_input) == str:
+                self.type_input_data = 'raw_text'
+            
+            self._input = _input
         else:
-            print("Enter an ID of some dataset or some text to be processed!")
+            print("Enter a parameter from a valid dataset <path_dataset> or <id_dataset> or <raw_text> !")
             sys.exit(0)
 
-        if json_string != None and json_file is None:
-            self._custom_pipeline = json.loads(json_string)
-        elif json_file != None and json_string is None:
-            self._custom_pipeline = Util().openfile_json(json_file)
-        elif json_file != None and json_string != None:
-            print("You cannot enter parameters for simultaneous pipelines, choose one!")
-            sys.exit(0)
+        if pipeline != None:
+            # True = Path file , False = String json.
+            self._custom_pipeline = Util().openfile_json(pipeline) if os.path.isfile(pipeline) else json.loads(pipeline)
         else:
             print("Enter a parameter from a valid pipeline.")
             sys.exit(0)
 
-        self._save_annotation = save_analysis
-        self._print = _print
-        self._output_format = output_format
+        self._using_db = using_db
+        self._output = _output
+        self._format = _format
         
+        self._plugin_base = plugin_base
         self._boost = boost
+
         self._id_pool = ObjectId(b'foo-bar-quux')
 
     def annotate(self):
-        # check type input data.
-        if self.type_input_data:
-            self.documents = Document().select_all(
-                {"_id_dataset": ObjectId(self.id_dataset)})
-        else:
-            # PreProcessing (tokenaze, sentence split)
-            # parsing join tokens in sentence.
-            sentences = list()
-
-            # load sentences.
-            document = json.loads(json.dumps({'sentences': [self.raw_text]}))
-
-            # pre-processing tokenization and ssplit using plugin base selected.
-            if self._plugin_base == "stanza":
-                self.documents = PluginManager().call_plugin(
-                    plugin_name='stanza', _id_pool=self._id_pool, 
-                    lang=self._custom_pipeline['lang'],
-                    document=document, pipeline=['tokenize'])
-                
-                # loop - go through the json and assemble the sentences.
-                for item in self.documents[0]:
-                    sentence = list()
-                    for data in item:
-                        sentence.append(data['text'])
-                    sentences.append(" ".join(sentence))
-
-            if self._plugin_base == "stanfordcorenlp":
-                self.documents = PluginManager().call_plugin(
-                    plugin_name='stanfordcorenlp', _id_pool=self._id_pool,
-                    lang=self._custom_pipeline['lang'], 
-                    document=document, pipeline=['ssplit'])
-
-                # loop - go through the json and assemble the sentences.
-                for item in self.documents[0]['sentences']:
-                    sentence = list()
-                    for token in item['tokens']:
-                        sentence.append(token['word'])
-                    sentences.append(" ".join(sentence))        
-
-            # save database.
-            _id_dataset = Dataset().save({
-                "name": names.get_first_name(),
-                "data_time": OutputFormat.data_time(self)
-            })
-
-            # save documents.
-            Document().save({
-                "_id_dataset": _id_dataset,
-                "name": names.get_first_name(),
-                "sentences": [sentence for sentence in sentences]
-            })
-
-            # get documents.
-            self.documents = Document().select_all(
-                {"_id_dataset": ObjectId(_id_dataset)})
-
         # Runs the tools using multiprocessor parallelism techniques.
         # get tools names
         self.list_tools = [','.join(tool.keys()) for tool in self._custom_pipeline['tools']]
@@ -129,12 +59,8 @@ class Pipeline(object):
         # set index number in tools.
         new_list_tools = [str(tool)+'-'+str(index) for index, tool in enumerate(self.list_tools)]
 
-        if self._boost == 'pathos':
-            r = Boost().multiprocessing(self.run, new_list_tools)
-        else: # is ray
-            r = Boost().parallel(self.run, new_list_tools)
-
-        return r
+        # If True boost = pathos Else boost = ray
+        return Boost().multiprocessing(self.run, new_list_tools) if self._boost is None else Boost().parallel(self.run, new_list_tools)
 
     def run(self, _tool_name):
         """
@@ -147,7 +73,13 @@ class Pipeline(object):
         # extraction index number in tools, get args.
         plugin_name, index = _tool_name.split('-')
 
-        for document in tqdm(self.documents):
+        # get _id_dataset
+        _id_dataset = self.option_input_text_selected(self.type_input_data)
+
+        # get documents.
+        self.documents = Document().select_all({"_id_dataset": ObjectId(_id_dataset)})
+
+        for document in tqdm(self.documents, desc='Processing document(s)'):
             annotation = PluginManager().call_plugin(
                 plugin_name=plugin_name, _id_pool=self._id_pool, 
                 lang=self._custom_pipeline['lang'], document=document, 
@@ -159,23 +91,27 @@ class Pipeline(object):
             remove_object_id = JSONEncoder().encode(annotation)
             data_json = json.loads(remove_object_id)
             data_formating = self.output_format(data_json)
-            return self.output(data_formating)
+            return self.output(data_formating, _id_dataset)
 
     def save_analysis(self, tool, annotation):
-        if self._save_annotation:
+        if self._using_db:
             Analysis().save(annotation)
         else:
             return annotation
 
     def output_format(self, annotation):
-        if self._output_format == "xml":
+        if self._format == "xml":
             return OutputFormat().json2xml(annotation)
         return annotation
 
-    def output(self, annotation):
-        if self._print == 'terminal':
+    def output(self, annotation, _id_dataset):
+        if self._output is None: # terminal
             return annotation
-        elif self._print == 'browser':
+        elif self._output == 'file':
+            EXT = '.xml' if self._format else '.json'
+            PATH = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)+EXT
+            return Util().save_file(PATH, str(annotation))
+        elif self._output == 'browser':
             from flask import Flask, escape, request
             app = Flask(__name__)
 
@@ -185,3 +121,187 @@ class Pipeline(object):
                 return f'Hello, {escape(name)}!'
 
             app.run(debug=True)
+
+    def option_input_text_selected(self, type_input_data):
+        # check type input data selected.
+        if type_input_data == 'id_dataset':
+            return self._input
+        elif type_input_data == 'raw_text':
+            document = json.loads(json.dumps({'sentences': [self._input]}))
+            return self.ssplit(document)
+        elif type_input_data == 'path_dataset':          
+            return self.processing_path_dataset(self._input)
+
+    def ssplit(self, document):
+        sentences = list()
+        
+        # pre-processing tokenization and ssplit using plugin base selected.
+        if self._plugin_base is None: #stanza
+            self.documents = PluginManager().call_plugin(
+                plugin_name='stanza', _id_pool=self._id_pool, 
+                lang=self._custom_pipeline['lang'],
+                document=document, pipeline=['tokenize'])
+            
+            # loop - go through the json and assemble the sentences.
+            for item in self.documents[0]:
+                sentence = list()
+                for data in item:
+                    sentence.append(data['text'])
+                sentences.append(" ".join(sentence))
+
+        if self._plugin_base == "stanfordcorenlp":
+            self.documents = PluginManager().call_plugin(
+                plugin_name='stanfordcorenlp', _id_pool=self._id_pool,
+                lang=self._custom_pipeline['lang'], 
+                document=document, pipeline=['ssplit'])
+
+            for item in self.documents[0]['sentences']:
+                sentence = list()
+                for token in item['tokens']:
+                    sentence.append(token['word'])
+                sentences.append(" ".join(sentence))        
+
+        # save database.
+        _id_dataset = Dataset().save({
+            "name": names.get_first_name(),
+            "data_time": OutputFormat.data_time(self)
+        })
+
+        # save documents.
+        Document().save({
+            "_id_dataset": _id_dataset,
+            "name": names.get_first_name(),
+            "sentences": [sentence for sentence in sentences]
+        })
+
+        return _id_dataset
+
+    def processing_path_dataset(self, path_dataset, ssplit=False):
+        """
+            Get the path of the informed dataset, go through the entire directory tree, 
+            checking the files to be saved in the database.
+        """
+        dataset_name = ''
+
+        # check is path dir validate.
+        if(os.path.isdir(path_dataset)):
+
+            # check if folder empty.
+            if os.listdir(path_dataset) == []:
+                print('Folder empty!')
+            else:
+                # get name corpus
+                dataset_name = os.path.basename(os.path.normpath(path_dataset))
+                    
+                # save corpus
+                _id_dataset = Dataset().save({
+                    "name": dataset_name,
+                    "data_time": datetime.datetime.now()
+                })
+
+                # get all files' and folders' names in the current directory.
+                dirContents = os.listdir(path_dataset)
+
+                files = []
+                subfolders = [] # train or test.
+
+                for filename in dirContents:
+                    # check whether the current object is a folder or not.
+                    if os.path.isdir(os.path.join(os.path.abspath(path_dataset), filename)):
+                        subfolders.append(filename)
+                    elif os.path.isfile(os.path.join(os.path.abspath(path_dataset), filename)):
+                        files.append(filename)
+
+                if subfolders: # check exist folders
+                    data = []
+
+                    for folders_type in subfolders:
+                        print("├── {}:".format(folders_type))
+
+                        folders_labels = os.listdir(path_dataset+"/"+folders_type)
+
+                        for _label in folders_labels:
+                            cont_doc = 0
+
+                            if os.path.isdir(os.path.join(os.path.abspath(path_dataset+"/"+folders_type), _label)):
+
+                                for file_name in tqdm(os.listdir(path_dataset+"/"+folders_type+"/"+_label+"/"), desc="│   └── documents [{}]".format(_label)):
+                                    cont_doc += 1
+
+                                    text_raw = Util().open_txt(path_dataset+"/"+folders_type+"/"+_label+"/"+file_name)
+                                    
+                                    # Sentence Split.
+                                    #sentences = PreProcessing('ssplit', text_raw).run()
+
+                                    item = {
+                                        "_id_dataset": _id_dataset,
+                                        "name": file_name,
+                                        "type": folders_type,
+                                        "label": _label,
+                                        "sentences": text_raw
+                                    }
+
+                                    # Boost().multiprocessing(self.run, new_list_tools)
+
+                                    Document().save(item)
+
+                                f = {
+                                    "type": folders_type,
+                                    "label": _label,
+                                    "doc": cont_doc
+                                }
+
+                                data.append(f)
+
+                    log = {
+                        "_id_dataset": _id_dataset,
+                        "info": "Save Dataset.",
+                        "data": data,
+                        "data_time": datetime.datetime.now()
+                    }
+
+                elif files:
+                    data = []
+                    cont_doc = 0
+
+                    for file_name in tqdm(os.listdir(path_dataset), desc="Document(s) save"):
+                        cont_doc += 1
+
+                        # open file
+                        text_raw = Util().open_txt(path_dataset+"/"+file_name)
+
+                        if (ssplit):
+                            print(">> PreProcessing")
+                            text_raw = self.ssplit(text_raw)
+                            
+                            item = {
+                                "_id_dataset": _id_dataset,
+                                "name": file_name,
+                                "sentences": [sentence for sentence in text_raw ]
+                                }
+
+                        else:                
+                            item = {
+                                "_id_dataset": _id_dataset,
+                                "name": file_name,
+                                "sentences": text_raw
+                                }
+                        
+                        Document().save(item)
+
+                    data.append({"doc": cont_doc})
+
+                    log = {
+                        "_id_dataset": _id_dataset,
+                        "info": "Save Datset.",
+                        "data": data,
+                        "data_time": datetime.datetime.now()
+                    }
+                
+                #Logs().save(log)
+
+        else:
+            print("This path does not contain a valid directory!")
+            sys.exit(0)
+
+        return _id_dataset

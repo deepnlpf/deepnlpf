@@ -1,5 +1,8 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 import argparse, re, json
+
 from os import path
 from codecs import open
 

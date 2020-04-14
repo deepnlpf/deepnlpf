@@ -12,7 +12,7 @@ import os, sys, requests
 class PluginManager:
 
     def __init__(self):
-        self.PATH_PLUGINS = os.environ['HOME'] + "/deepnlpf_plugins/"
+        self.PATH_PLUGINS = os.environ['HOME'] + "/deepnlpf_data/plugins/"
 
     def load_plugin(self, plugin_name):
         directory, module_name = os.path.split(plugin_name)
@@ -56,7 +56,7 @@ class PluginManager:
 
         # Path for save plugin.
         HOME = os.environ['HOME']
-        FOLDER_PLUGINS = '/deepnlpf_plugins/'
+        FOLDER_PLUGINS = '/deepnlpf_data/plugins/'
         PATH_DOWNLOAD_PLUGIN = HOME + FOLDER_PLUGINS + PLUGIN_NAME + EXTENSION
 
         #check folder plugin exist.
@@ -88,7 +88,7 @@ class PluginManager:
         # Path for save plugin.
         HOME = os.environ['HOME']
         PLUGIN_NAME = plugin_name
-        FOLDER_PLUGINS = '/deepnlpf_plugins/'
+        FOLDER_PLUGINS = '/deepnlpf_data/plugins/'
         PATH_DOWNLOAD_PLUGIN = HOME + FOLDER_PLUGINS + PLUGIN_NAME
 
         try:
@@ -101,7 +101,7 @@ class PluginManager:
     def listplugins(self):
         # Path for save plugin.
         HOME = os.environ['HOME']
-        FOLDER_PLUGINS = '/deepnlpf_plugins/'
+        FOLDER_PLUGINS = '/deepnlpf_data/plugins/'
         PATH_DOWNLOAD_PLUGIN = HOME + FOLDER_PLUGINS
         pass
                 

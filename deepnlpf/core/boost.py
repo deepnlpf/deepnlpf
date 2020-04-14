@@ -18,7 +18,7 @@ class Boost(object):
         from concurrent.futures import ThreadPoolExecutor
         
         with ThreadPoolExecutor(max_workers=threads) as executor:
-            result = list(tqdm(executor.map(function, args)))
+            result = list(tqdm(executor.map(function, args), desc='Processing sentence(s)'))
             
         return result
 
@@ -29,14 +29,14 @@ class Boost(object):
         #logs.logger.info("{}, {}".format(process, tool))
         #Telegram().send_message("⛏️ Processing... ForkProcess: {}, {}".format(str(process), str(tool)))
         
-        return [_ for _ in tqdm(pool.map(function, tools), total=len(tools))]
+        return [_ for _ in tqdm(pool.map(function, tools), total=len(tools), desc='NLP Tool(s)')]
 
     def parallel(self, function, tools):
         ray.init(num_cpus=self.cpu_count)
         
         @ray.remote
         def f(function, tools):
-            return [_ for _ in tqdm(map(function, tools), total=len(tools))]
+            return [_ for _ in tqdm(map(function, tools), total=len(tools), desc='NLP Tool(s)')]
 
         #futures = [f.remote(tool) for tool in tools]
         return ray.get(f.remote(function, tools))

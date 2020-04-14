@@ -29,7 +29,6 @@
 
     pip freeze > requirements.txt
 
-
 # Errors
 
     ANACONDA

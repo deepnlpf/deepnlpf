@@ -1,0 +1,17 @@
+{
+    "lang": "en",
+    "tools": [{
+        "stanfordcorenlp": {
+            "pipeline": [
+                "tokenize",
+                "ssplit",
+                "pos",
+                "lemma",
+                "ner",
+                "truecase",
+                "parse",
+                "depparse"
+            ]
+        }
+    }]
+}
