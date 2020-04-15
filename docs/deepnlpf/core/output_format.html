@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>output_format.py</title>
+  <link rel="stylesheet" href="../../pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>output_format.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">json2xml</span> <span class="kn">import</span> <span class="n">json2xml</span>
+<span class="kn">from</span> <span class="nn">deepnlpf.core.encoder</span> <span class="kn">import</span> <span class="n">DTEncoder</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">OutputFormat</span><span class="p">:</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">data_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/%m/%Y - %H:%M:%S&#39;</span><span class="p">))</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">doc_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_id_pool</span><span class="p">,</span> <span class="n">_id_dataset</span><span class="p">,</span> <span class="n">_id_document</span><span class="p">,</span> <span class="n">tool</span><span class="p">,</span> <span class="n">annotation</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;_id_pool&quot;</span><span class="p">:</span> <span class="n">_id_pool</span><span class="p">,</span>
+            <span class="s2">&quot;_id_dataset&quot;</span><span class="p">:</span> <span class="n">_id_dataset</span><span class="p">,</span>
+            <span class="s2">&quot;_id_document&quot;</span><span class="p">:</span> <span class="n">_id_document</span><span class="p">,</span>
+            <span class="s2">&quot;tool&quot;</span><span class="p">:</span> <span class="n">tool</span><span class="p">,</span>
+            <span class="s2">&quot;annotation&quot;</span><span class="p">:</span> <span class="n">annotation</span><span class="p">,</span>
+            <span class="s2">&quot;data_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_time</span><span class="p">()</span>
+        <span class="p">}</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">json2xml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">json2xml</span><span class="o">.</span><span class="n">Json2xml</span><span class="p">(</span><span class="n">json_data</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">pretty</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to_xml</span><span class="p">()</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">xml2json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xml_file</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">xmltodict</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">xml_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">xmltodict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">yaml2json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yaml_file</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">yaml</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">yaml_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">doc</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">class</span> <span class="nc">ValidatingJSON</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      <p>https://github.com/Julian/jsonschema</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-10'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-10'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+       <span class="k">pass</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-11'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-11'>#</a>
+      </div>
+      <p>tests</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">json_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;tool&#39;</span><span class="p">:</span> <span class="s1">&#39;semaifor&#39;</span><span class="p">,</span> <span class="s1">&#39;dataset&#39;</span><span class="p">:</span> <span class="s1">&#39;test1&#39;</span><span class="p">,</span> <span class="s1">&#39;sentences&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;frames&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Substance&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;juice&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">25.388448698934354</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Substance&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;juice&#39;</span><span class="p">}]}]}]},</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Degree&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;very&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">3.602812903981236</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Gradable_attribute&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;savory&#39;</span><span class="p">}]}]}]},</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Chemical-sense_description&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;savory&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">9.733314310523166</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[]}]}],</span> <span class="s1">&#39;tokens&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;This&#39;</span><span class="p">,</span> <span class="s1">&#39;mango&#39;</span><span class="p">,</span> <span class="s1">&#39;juice&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;very&#39;</span><span class="p">,</span> <span class="s1">&#39;savory&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;frames&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Desiring&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;want&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">78.66847857754101</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Experiencer&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;I&#39;</span><span class="p">}]},</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Event&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;to play with the horse&#39;</span><span class="p">}]}]}]},</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Performers_and_roles&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;play&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">42.4740879307544</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Performance&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;with the horse&#39;</span><span class="p">}]}]}]}],</span> <span class="s1">&#39;tokens&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;want&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="s1">&#39;play&#39;</span><span class="p">,</span> <span class="s1">&#39;with&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;horse&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;frames&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Substance&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;juice&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">25.388448698934354</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Substance&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;juice&#39;</span><span class="p">}]}]}]},</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Degree&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;very&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">3.602812903981236</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Gradable_attribute&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;savory&#39;</span><span class="p">}]}]}]},</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Chemical-sense_description&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;savory&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">9.733314310523166</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[]}]}],</span> <span class="s1">&#39;tokens&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;This&#39;</span><span class="p">,</span> <span class="s1">&#39;mango&#39;</span><span class="p">,</span> <span class="s1">&#39;juice&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;very&#39;</span><span class="p">,</span> <span class="s1">&#39;savory&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;frames&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Calendric_unit&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;Today&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">28.292225395221365</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Unit&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;Today&#39;</span><span class="p">}]}]}]},</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Calendric_unit&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;day&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">26.08802997724397</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Unit&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;day&#39;</span><span class="p">}]}]}]}],</span> <span class="s1">&#39;tokens&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Today&#39;</span><span class="p">,</span> <span class="s1">&#39;10/25/2018&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;day&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;cloudy&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">]},</span> <span class="p">{</span><span class="s1">&#39;frames&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Ingestion&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;drank&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">34.42346833051987</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[]}]},</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Finish_competition&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;Victor&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">47.58351955145408</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[]}]},</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Causation&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;caused&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">64.43905312888936</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Effect&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;the greatest confusion&#39;</span><span class="p">}]}]}]},</span> <span class="p">{</span><span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Desirability&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;greatest&#39;</span><span class="p">}]},</span> <span class="s1">&#39;annotationSets&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;rank&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="mf">29.774720873859444</span><span class="p">,</span> <span class="s1">&#39;frameElements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Evaluee&#39;</span><span class="p">,</span> <span class="s1">&#39;spans&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="s1">&#39;confusion&#39;</span><span class="p">}]}]}]}],</span> <span class="s1">&#39;tokens&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Camila&#39;</span><span class="p">,</span> <span class="s1">&#39;drank&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;soda&#39;</span><span class="p">,</span> <span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;Victor&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;caused&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;greatest&#39;</span><span class="p">,</span> <span class="s1">&#39;confusion&#39;</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">]}]}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">OutputFormat</span><span class="p">()</span><span class="o">.</span><span class="n">json2xml</span><span class="p">(</span><span class="n">json_data</span><span class="p">))</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>

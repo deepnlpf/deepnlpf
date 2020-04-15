@@ -3,7 +3,7 @@ __pycache__
 .log
 .vscode/*
 
-deepnlpf.egg-info
+deepnlpf.egg-info/*
 
 dist/*
 build/*

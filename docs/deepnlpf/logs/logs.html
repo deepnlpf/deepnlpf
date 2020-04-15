@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>logs.py</title>
+  <link rel="stylesheet" href="../../pycco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div class='section'>
+    <div class='docs'><h1>logs.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      <p>[logs]</p>
+<pre><code>https://realpython.com/python-logging/
+
+logging.debug('This is a debug message')
+logging.info('This is an info message')
+logging.warning('This is a warning message')
+logging.error('This is an error message')
+logging.critical('This is a critical message')
+
+# Tutorial: https://realpython.com/python-time-module/
+</code></pre>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">pygogo</span> <span class="k">as</span> <span class="nn">gogo</span>
+
+<span class="n">ROOT_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>os.environ.update({&lsquo;ROOT_PATH&rsquo;: ROOT_PATH})
+sys.path.append(os.path.join(ROOT_PATH, &lsquo;logs&rsquo;))</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">log_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">log_format</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">gogo</span><span class="o">.</span><span class="n">Gogo</span><span class="p">(</span>
+    <span class="s1">&#39;deepnlf.&#39;</span><span class="p">,</span>
+    <span class="n">low_hdlr</span><span class="o">=</span><span class="n">gogo</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">file_hdlr</span><span class="p">(</span><span class="s1">&#39;data.log&#39;</span><span class="p">),</span>
+    <span class="n">low_formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">,</span>
+    <span class="n">high_level</span><span class="o">=</span><span class="s1">&#39;error&#39;</span><span class="p">,</span>
+    <span class="n">high_formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">)</span><span class="o">.</span><span class="n">logger</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>

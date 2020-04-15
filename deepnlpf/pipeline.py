@@ -17,9 +17,9 @@ from deepnlpf.core.output_format import OutputFormat
 from deepnlpf.core.plugin_manager import PluginManager
 
 class Pipeline(object):
-    
-    def __init__(self, _input=None, pipeline=None, _output=None, _format=None,
-        use_db=True, tool_base=None, boost=None):
+
+    def __init__(self, _input=None, pipeline=None, _output='terminal', _format='json',
+        use_db=True, tool_base='stanza', boost='pathos'):
 
         # auto select type input data.
         if _input != None:
@@ -28,7 +28,6 @@ class Pipeline(object):
             elif type(_input) ==  ObjectId:
                 self.type_input_data = 'id_dataset'
             elif type(_input) == str:
-                print("OK!")
                 self.type_input_data = 'raw_text'
             
             self._input = _input
@@ -45,8 +44,11 @@ class Pipeline(object):
                     self._custom_pipeline = OutputFormat().yaml2json(pipeline)
                 elif (ext == 'xml'):
                     self._custom_pipeline = OutputFormat().xml2json(pipeline)
-            else:
-                self._custom_pipeline = json.loads(pipeline) # String Json
+            else: # String Json
+                try:
+                    self._custom_pipeline = json.loads(pipeline)
+                except Exception as err:
+                    print("Enter a parameter from a valid pipeline.")
         else:
             print("Enter a parameter from a valid pipeline.")
             sys.exit(0)
@@ -69,7 +71,7 @@ class Pipeline(object):
         new_list_tools = [str(tool)+'-'+str(index) for index, tool in enumerate(self.list_tools)]
 
         # If True boost = pathos Else boost = ray
-        return Boost().multiprocessing(self.run, new_list_tools) if self._boost is None else Boost().parallel(self.run, new_list_tools)
+        return Boost().multiprocessing(self.run, new_list_tools) if self._boost == 'pathos' else Boost().parallel(self.run, new_list_tools)
 
     def run(self, _tool_name):
         """
@@ -114,11 +116,12 @@ class Pipeline(object):
         return annotation
 
     def output(self, annotation, _id_dataset):
-        if self._output is None: # terminal
+        if self._output == 'terminal':
             return annotation
         elif self._output == 'file':
             EXT = '.xml' if self._format else '.json'
             PATH = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)+EXT
+            print("File output:", PATH)
             return Util().save_file(PATH, str(annotation))
         elif self._output == 'browser':
             from flask import Flask, escape, request
@@ -145,7 +148,7 @@ class Pipeline(object):
         sentences = list()
         
         # pre-processing tokenization and ssplit using plugin base selected.
-        if self._tool_base is None: #stanza
+        if self._tool_base == 'stanza':
             self.documents = PluginManager().call_plugin(
                 plugin_name='stanza', _id_pool=self._id_pool, 
                 lang=self._custom_pipeline['lang'],
