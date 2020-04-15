@@ -35,7 +35,7 @@ setup(
     author_email="franciscosouzaacer@gmail.com",
 
     # What does your project relate to?
-    keywords='natural-language-processing nlp natural-language-understanding stanford-nlp deep-learning',
+    keywords='natural-language-processing nlp natural-language-understanding deepnlp deep-learning',
 
     # Choose your license
     license="Apache License 2.0",
@@ -84,15 +84,15 @@ setup(
         (HOME+'/deepnlpf_data/output', [])
     ],
 
-    install_requires=REQUIRED,
+    #install_requires=REQUIRED,
 
-    #install_requires=[
-    #    'bson==0.5.9', 'Flask==1.1.2', 'gogo==1.1.1', 'google==2.0.3', 'homura==0.1.5',
-    #    'isodate==0.6.0', 'Jinja2==2.11.1', 'json2xml==3.3.2', 'mongoengine==0.19.1',
-    #    'names==0.3.0', 'pandas==1.0.3', 'path==13.2.0', 'pathos==0.2.5', 'plotly==4.6.0',
-    #    'psutil==5.7.0', 'pygogo==0.12.0', 'pymongo==3.10.1', 'ray==0.8.4', 'redis==3.4.1',
-    #    'requests==2.23.0', 'stanza==1.0.0', 'tqdm==4.45.0', 'rpy2', 'pyyaml'
-    #],
+    install_requires=[
+        'bson==0.5.9', 'Flask==1.1.2', 'gogo==1.1.1', 'google==2.0.3', 'homura==0.1.5',
+        'isodate==0.6.0', 'Jinja2==2.11.1', 'json2xml==3.3.2', 'mongoengine==0.19.1',
+        'names==0.3.0', 'pandas==1.0.3', 'path==13.2.0', 'pathos==0.2.5', 'plotly==4.6.0',
+        'psutil==5.7.0', 'pygogo==0.12.0', 'pymongo==3.10.1', 'ray==0.8.4', 'redis==3.4.1',
+        'requests==2.23.0', 'stanza==1.0.0', 'tqdm==4.45.0', 'rpy2', 'pyyaml'
+    ],
 
     # List required Python versions.
     python_requires='>=3.7',

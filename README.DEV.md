@@ -23,7 +23,7 @@
 
 
     update
-        python setup.py install --user && python3 setup.py sdist bdist_wheel && twine upload dist/*
+        python setup.py install --user && python setup.py sdist bdist_wheel && twine upload dist/*
 
 # Requeriment
 
@@ -63,3 +63,9 @@
 # Install Script Sample
 
     bash <(curl -Ss https://raw.githubusercontent.com/deepnlpf/scripts-install/master/script/install_requeriments_deepnlpf.sh)
+
+# Generating Code Documentation with Pycco
+Auto-Generating Documentation for an Entire Project
+
+    pycco deepnlpf/**/*.py -p
+    pycco deepnlpf/**/*.py -p --watch

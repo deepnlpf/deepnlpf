@@ -8,12 +8,14 @@ from codecs import open
 
 HERE = path.abspath(path.dirname(__file__))
 
+'''
 def get_config():
     print(">>>>>>>", path.join(HERE, 'config.txt'))
     with open(path.join(HERE, 'config.txt')) as json_file:
         data = json.load(json_file)
         print(">>>>>>", data['host'], data['port'], data['debug'])
         return data['host'], data['port'], data['debug']
+'''
 
 def install(args):
     if args:
@@ -41,7 +43,7 @@ def listplugins(args):
 
 def api(args):
     if args:
-        from deepnlpf.core.new_api import app
+        from deepnlpf.api import app
         #host, port, debug = get_config()
         if(args == 'start'):
             app.run(host='0.0.0.0', port=5000, debug=True)

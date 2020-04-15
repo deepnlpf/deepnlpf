@@ -1,11 +1,11 @@
 __pycache__
 
 .log
-.vscode/
+.vscode/*
 
 deepnlpf.egg-info
 
-build/
-deepnlpf_env/
-deepnlpf_env_tests/
-
+dist/*
+build/*
+deepnlpf_env/*
+deepnlpf_env_tests/*

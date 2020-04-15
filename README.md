@@ -41,9 +41,5 @@ If you prefer, download and install the dependencies from our [script](https://g
 
     $ bash install_requeriments_deepnlpf.sh
 
-## [Pip](https://pypi.org/project/pip/) install
-
-        $ pip install deepnlpframework
-
 ## [User Guide](https://deepnlpf.github.io/site/docs/install)
 

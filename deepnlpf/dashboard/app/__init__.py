@@ -24,7 +24,7 @@ app.config['UPLOAD_FOLDER'] = os.environ['HOME'] + '/datasets/uploads'
 # Load the views
 
 
-server = 'http://'+config.CONFIG['host']+':'+str(config.CONFIG['port_server'])
+server = ''
 
 
 def allowed_file(filename):

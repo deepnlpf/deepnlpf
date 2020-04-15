@@ -19,7 +19,7 @@ from deepnlpf.core.plugin_manager import PluginManager
 class Pipeline(object):
     
     def __init__(self, _input=None, pipeline=None, _output=None, _format=None,
-        using_db=True, tool_base=None, boost=None):
+        use_db=True, tool_base=None, boost=None):
 
         # auto select type input data.
         if _input != None:
@@ -51,7 +51,7 @@ class Pipeline(object):
             print("Enter a parameter from a valid pipeline.")
             sys.exit(0)
 
-        self._using_db = using_db
+        self._use_db = use_db
         self._output = _output
         self._format = _format
         
@@ -85,7 +85,7 @@ class Pipeline(object):
         # get _id_dataset
         _id_dataset = self.option_input_text_selected(self.type_input_data)
 
-        # get documents.
+        # get all documents.
         self.documents = Document().select_all({"_id_dataset": ObjectId(_id_dataset)})
 
         for document in tqdm(self.documents, desc='Processing document(s)'):
@@ -103,7 +103,7 @@ class Pipeline(object):
             return self.output(data_formating, _id_dataset)
 
     def save_analysis(self, tool, annotation):
-        if self._using_db:
+        if self._use_db:
             Analysis().save(annotation)
         else:
             return annotation
