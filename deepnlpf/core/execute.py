@@ -12,9 +12,10 @@ class Execute (object):
 
     def run_r(self, script, *args):
         import rpy2.robjects as ro
+        
         r = ro.r
-        print(">>>>", script)
         r.source(script)
+        
         return r.main(*args)
 
     def run_java(self, jar_file, *args):

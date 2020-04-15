@@ -6,10 +6,6 @@ import os, sys, json, uuid, names, datetime
 from tqdm import tqdm
 from bson.objectid import ObjectId
 
-from deepnlpf.models.dataset import Dataset
-from deepnlpf.models.document import Document
-from deepnlpf.models.analysis import Analysis
-
 from deepnlpf.core.util import Util
 from deepnlpf.core.boost import Boost
 from deepnlpf.core.encoder import JSONEncoder
@@ -19,7 +15,7 @@ from deepnlpf.core.plugin_manager import PluginManager
 class Pipeline(object):
 
     def __init__(self, _input=None, pipeline=None, _output='terminal', _format='json',
-        use_db=True, tool_base='stanza', boost='pathos'):
+        use_db=None, tool_base='stanza', boost='pathos'):
 
         # auto select type input data.
         if _input != None:
@@ -87,8 +83,14 @@ class Pipeline(object):
         # get _id_dataset
         _id_dataset = self.option_input_text_selected(self.type_input_data)
 
-        # get all documents.
-        self.documents = Document().select_all({"_id_dataset": ObjectId(_id_dataset)})
+        if self._use_db != None:
+            # get all documents.
+            self.documents = PluginManager().call_plugin_db(
+                plugin_name=self._use_db, 
+                operation='select_all_key', 
+                collection='document', 
+                key={"_id_dataset": ObjectId(_id_dataset)}
+            )
 
         for document in tqdm(self.documents, desc='Processing document(s)'):
             annotation = PluginManager().call_plugin(
@@ -96,19 +98,23 @@ class Pipeline(object):
                 lang=self._custom_pipeline['lang'], document=document, 
                 pipeline=self._custom_pipeline['tools'][int(index)][plugin_name]['pipeline']
                 )
-
-            self.save_analysis(plugin_name, annotation)
+                
+            if self._use_db != None:
+                # save annotation in db used.
+                PluginManager().call_plugin_db(
+                    plugin_name=self._use_db, 
+                    operation='insert', 
+                    collection='analysi', 
+                    document=annotation
+                )
+            else:
+                return annotation
 
             remove_object_id = JSONEncoder().encode(annotation)
             data_json = json.loads(remove_object_id)
             data_formating = self.output_format(data_json)
+            
             return self.output(data_formating, _id_dataset)
-
-    def save_analysis(self, tool, annotation):
-        if self._use_db:
-            Analysis().save(annotation)
-        else:
-            return annotation
 
     def output_format(self, annotation):
         if self._format == "xml":
@@ -119,7 +125,7 @@ class Pipeline(object):
         if self._output == 'terminal':
             return annotation
         elif self._output == 'file':
-            EXT = '.xml' if self._format else '.json'
+            EXT = '.xml' if self._format == 'xml' else '.json'
             PATH = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)+EXT
             print("File output:", PATH)
             return Util().save_file(PATH, str(annotation))
@@ -173,18 +179,33 @@ class Pipeline(object):
                     sentence.append(token['word'])
                 sentences.append(" ".join(sentence))        
 
-        # save database.
-        _id_dataset = Dataset().save({
-            "name": names.get_first_name(),
-            "data_time": OutputFormat.data_time(self)
-        })
+        if self._use_db != None:
+            # insert dataset in database.
+            dataset_document = {
+                "name": names.get_first_name(),
+                "data_time": OutputFormat.data_time(self)
+            }
 
-        # save documents.
-        Document().save({
-            "_id_dataset": _id_dataset,
-            "name": names.get_first_name(),
-            "sentences": [sentence for sentence in sentences]
-        })
+            _id_dataset = PluginManager().call_plugin_db(
+                plugin_name=self._use_db, 
+                operation='insert', 
+                collection='dataset', 
+                document=dataset_document
+            )
+
+            # insert document(s) in database.
+            document = {
+                "_id_dataset": _id_dataset,
+                "name": names.get_first_name(),
+                "sentences": [sentence for sentence in sentences]
+            }
+
+            PluginManager().call_plugin_db(
+                plugin_name=self._use_db, 
+                operation='insert', 
+                collection='dataset', 
+                document=document
+            )
 
         return _id_dataset
 
@@ -202,14 +223,21 @@ class Pipeline(object):
             if os.listdir(path_dataset) == []:
                 print('Folder empty!')
             else:
-                # get name corpus
+                # get name dataset.
                 dataset_name = os.path.basename(os.path.normpath(path_dataset))
+
+                if self._use_db != None:   
+                    dataset_document = {
+                        "name": dataset_name,
+                        "data_time": datetime.datetime.now()
+                    }
                     
-                # save corpus
-                _id_dataset = Dataset().save({
-                    "name": dataset_name,
-                    "data_time": datetime.datetime.now()
-                })
+                    _id_dataset = PluginManager().call_plugin_db(
+                        plugin_name=self._use_db, 
+                        operation='insert', 
+                        collection='dataset', 
+                        document=dataset_document
+                    )
 
                 # get all files' and folders' names in the current directory.
                 dirContents = os.listdir(path_dataset)
@@ -245,7 +273,7 @@ class Pipeline(object):
                                     # Sentence Split.
                                     #sentences = PreProcessing('ssplit', text_raw).run()
 
-                                    item = {
+                                    document = {
                                         "_id_dataset": _id_dataset,
                                         "name": file_name,
                                         "type": folders_type,
@@ -255,7 +283,12 @@ class Pipeline(object):
 
                                     # Boost().multiprocessing(self.run, new_list_tools)
 
-                                    Document().save(item)
+                                    PluginManager().call_plugin_db(
+                                        plugin_name=self._use_db,
+                                        operation='insert',
+                                        collection='document',
+                                        document=document
+                                    )
 
                                 f = {
                                     "type": folders_type,
@@ -283,7 +316,6 @@ class Pipeline(object):
                         text_raw = Util().open_txt(path_dataset+"/"+file_name)
 
                         if (ssplit):
-                            print(">> PreProcessing")
                             text_raw = self.ssplit(text_raw)
                             
                             item = {
@@ -293,24 +325,32 @@ class Pipeline(object):
                                 }
 
                         else:                
-                            item = {
+                            document = {
                                 "_id_dataset": _id_dataset,
                                 "name": file_name,
                                 "sentences": text_raw
                                 }
-                        
-                        Document().save(item)
+
+                            PluginManager().call_plugin_db(
+                                plugin_name=self._use_db, 
+                                operation='insert', collection='document', document=document
+                            )
 
                     data.append({"doc": cont_doc})
 
-                    log = {
+                    log_document = {
                         "_id_dataset": _id_dataset,
-                        "info": "Save Datset.",
+                        "info": "Save Dataset.",
                         "data": data,
                         "data_time": datetime.datetime.now()
                     }
                 
-                #Logs().save(log)
+                PluginManager().call_plugin_db(
+                    plugin_name=self._use_db,
+                    operation='insert',
+                    collection='log',
+                    document=log_document
+                )
 
         else:
             print("This path does not contain a valid directory!")

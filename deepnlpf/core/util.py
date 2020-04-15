@@ -10,11 +10,6 @@ from tqdm import tqdm
 
 from deepnlpf.core.boost import Boost
 
-from deepnlpf.models.logs import Logs
-from deepnlpf.models.dataset import Dataset
-from deepnlpf.models.document import Document
-
-
 class Util(object):
 
     def __init__(self):

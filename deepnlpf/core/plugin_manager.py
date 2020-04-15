@@ -44,6 +44,24 @@ class PluginManager:
         plugin = self.load_plugin(plugin_name)
         return plugin.Plugin(_id_pool, lang, document, pipeline).run()
 
+    def call_plugin_db(self, plugin_name, operation, collection, document=None, key=None):
+        plugin = self.load_plugin(plugin_name)
+
+        if operation is 'insert':
+            result = plugin.Plugin().insert(collection, document)
+        elif operation is 'select_one':
+            result = plugin.Plugin().select_one(collection, key)
+        elif operation is 'select_all':
+            result = plugin.Plugin().select_all(collection)
+        elif operation is 'select_all_key':
+            result = plugin.Plugin().select_all_key(collection, key)
+        elif operation is 'update':
+            result = plugin.Plugin().update(collection, key, document)
+        elif operation is 'delete':
+            result = plugin.Plugin().delete(collection, key)
+
+        return result
+
     def install(self, plugin_name):
         import zipfile
         from homura import download # gestor fast download file. 
