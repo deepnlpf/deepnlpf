@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
-""" OutputFormat
-    Description:
-    Create: 30/03/2019
-    Update: 21/03/2020
-    Lib.: https://json2xml.readthedocs.io/en/latest/
-"""
 
 import json
+
 from datetime import date, datetime
 from json2xml import json2xml
 from deepnlpf.core.encoder import DTEncoder
@@ -31,6 +26,24 @@ class OutputFormat:
 
     def json2xml(self, json_data):
         return json2xml.Json2xml(json_data, wrapper="all", pretty=True).to_xml()
+
+    def xml2json(self, xml_file):
+        import xmltodict
+
+        with open(xml_file) as file:
+            doc = xmltodict.parse(file.read())
+
+        print(json.dumps(doc))
+
+        return json.dumps(doc)
+
+    def yaml2json(self, yaml_file):
+        import yaml
+
+        with open(yaml_file) as file:
+            doc = json.dumps(yaml.load(file))
+
+        return json.loads(doc)
 
 
 

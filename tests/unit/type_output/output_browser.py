@@ -4,7 +4,7 @@
 from deepnlpf.pipeline import Pipeline
 
 path_pipeline = '/home/fasr/Mestrado/Workspace/deepnlpf2/tests/unit/pipeline/custom_pipeline.json'
-raw_text = 'I went to the bank to deposit my money.'
+path_dataset = '/home/fasr/Mestrado/Workspace/deepnlpf2/tests/data/dataset_1doc_1sent'
 
-nlp = Pipeline(_input=raw_text, pipeline=path_pipeline, _output='file')
+nlp = Pipeline(_input=path_dataset, pipeline=path_pipeline, _output='browser')
 annotation = nlp.annotate()

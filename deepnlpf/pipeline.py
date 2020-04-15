@@ -19,7 +19,7 @@ from deepnlpf.core.plugin_manager import PluginManager
 class Pipeline(object):
     
     def __init__(self, _input=None, pipeline=None, _output=None, _format=None,
-        using_db=True, plugin_base=None, boost=None):
+        using_db=True, tool_base=None, boost=None):
 
         # auto select type input data.
         if _input != None:
@@ -28,6 +28,7 @@ class Pipeline(object):
             elif type(_input) ==  ObjectId:
                 self.type_input_data = 'id_dataset'
             elif type(_input) == str:
+                print("OK!")
                 self.type_input_data = 'raw_text'
             
             self._input = _input
@@ -36,8 +37,16 @@ class Pipeline(object):
             sys.exit(0)
 
         if pipeline != None:
-            # True = Path file , False = String json.
-            self._custom_pipeline = Util().openfile_json(pipeline) if os.path.isfile(pipeline) else json.loads(pipeline)
+            if os.path.isfile(pipeline):
+                _ , ext = pipeline.split('.')
+                if (ext == 'json'):
+                    self._custom_pipeline = Util().openfile_json(pipeline)
+                elif (ext == 'yaml'):
+                    self._custom_pipeline = OutputFormat().yaml2json(pipeline)
+                elif (ext == 'xml'):
+                    self._custom_pipeline = OutputFormat().xml2json(pipeline)
+            else:
+                self._custom_pipeline = json.loads(pipeline) # String Json
         else:
             print("Enter a parameter from a valid pipeline.")
             sys.exit(0)
@@ -46,7 +55,7 @@ class Pipeline(object):
         self._output = _output
         self._format = _format
         
-        self._plugin_base = plugin_base
+        self._tool_base = tool_base
         self._boost = boost
 
         self._id_pool = ObjectId(b'foo-bar-quux')
@@ -136,7 +145,7 @@ class Pipeline(object):
         sentences = list()
         
         # pre-processing tokenization and ssplit using plugin base selected.
-        if self._plugin_base is None: #stanza
+        if self._tool_base is None: #stanza
             self.documents = PluginManager().call_plugin(
                 plugin_name='stanza', _id_pool=self._id_pool, 
                 lang=self._custom_pipeline['lang'],
@@ -149,7 +158,7 @@ class Pipeline(object):
                     sentence.append(data['text'])
                 sentences.append(" ".join(sentence))
 
-        if self._plugin_base == "stanfordcorenlp":
+        if self._tool_base == "stanfordcorenlp":
             self.documents = PluginManager().call_plugin(
                 plugin_name='stanfordcorenlp', _id_pool=self._id_pool,
                 lang=self._custom_pipeline['lang'], 

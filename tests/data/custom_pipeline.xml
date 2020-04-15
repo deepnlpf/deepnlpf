@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <lang>en</lang>
+   <tools>
+      <element>
+         <stanza>
+            <pipeline>
+               <element>tokenize</element>
+               <element>mwt</element>
+               <element>pos</element>
+               <element>lemma</element>
+               <element>ner</element>
+               <element>depparse</element>
+            </pipeline>
+         </stanza>
+      </element>
+      <element>
+         <spacy>
+            <pipeline>
+               <element>pos</element>
+               <element>tag</element>
+               <element>shape</element>
+               <element>is_alpha</element>
+               <element>is_title</element>
+               <element>like_num</element>
+               <element>label</element>
+            </pipeline>
+         </spacy>
+      </element>
+   </tools>
+</root>
