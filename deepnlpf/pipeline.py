@@ -6,6 +6,8 @@ import os, sys, json, uuid, names, datetime
 from tqdm import tqdm
 from bson.objectid import ObjectId
 
+from deepnlpf.util.random_object_id import RandomObjectId
+
 from deepnlpf.core.util import Util
 from deepnlpf.core.boost import Boost
 from deepnlpf.core.encoder import JSONEncoder
@@ -80,10 +82,10 @@ class Pipeline(object):
         # extraction index number in tools, get args.
         plugin_name, index = _tool_name.split('-')
 
-        # get _id_dataset
-        _id_dataset = self.option_input_text_selected(self.type_input_data)
-
         if self._use_db != None:
+            # get _id_dataset
+            _id_dataset = self.option_input_text_selected(self.type_input_data)
+
             # get all documents.
             self.documents = PluginManager().call_plugin_db(
                 plugin_name=self._use_db, 
@@ -91,8 +93,11 @@ class Pipeline(object):
                 collection='document', 
                 key={"_id_dataset": ObjectId(_id_dataset)}
             )
+        else:
+            self.documents = self.option_input_text_selected(self.type_input_data)
 
         for document in tqdm(self.documents, desc='Processing document(s)'):
+
             annotation = PluginManager().call_plugin(
                 plugin_name=plugin_name, _id_pool=self._id_pool, 
                 lang=self._custom_pipeline['lang'], document=document, 
@@ -215,6 +220,7 @@ class Pipeline(object):
             checking the files to be saved in the database.
         """
         dataset_name = ''
+        _id_dataset = ''
 
         # check is path dir validate.
         if(os.path.isdir(path_dataset)):
@@ -238,6 +244,8 @@ class Pipeline(object):
                         collection='dataset', 
                         document=dataset_document
                     )
+                else:
+                    _id_dataset = RandomObjectId.gen_random_object_id(self)
 
                 # get all files' and folders' names in the current directory.
                 dirContents = os.listdir(path_dataset)
@@ -283,12 +291,13 @@ class Pipeline(object):
 
                                     # Boost().multiprocessing(self.run, new_list_tools)
 
-                                    PluginManager().call_plugin_db(
-                                        plugin_name=self._use_db,
-                                        operation='insert',
-                                        collection='document',
-                                        document=document
-                                    )
+                                    if self._use_db != None:
+                                        PluginManager().call_plugin_db(
+                                            plugin_name=self._use_db,
+                                            operation='insert',
+                                            collection='document',
+                                            document=document
+                                        )
 
                                 f = {
                                     "type": folders_type,
@@ -325,35 +334,50 @@ class Pipeline(object):
                                 }
 
                         else:                
-                            document = {
-                                "_id_dataset": _id_dataset,
-                                "name": file_name,
-                                "sentences": text_raw
+                            if self._use_db != None:
+                                document_document = {
+                                    "_id_dataset": _id_dataset,
+                                    "name": file_name,
+                                    "sentences": text_raw
                                 }
 
-                            PluginManager().call_plugin_db(
-                                plugin_name=self._use_db, 
-                                operation='insert', collection='document', document=document
-                            )
+                                PluginManager().call_plugin_db(
+                                    plugin_name=self._use_db, 
+                                    operation='insert', 
+                                    collection='document', 
+                                    document=document_document
+                                )
+                            else:
+                                document_document = {
+                                    "_id": RandomObjectId.gen_random_object_id(self),
+                                    "_id_dataset": _id_dataset,
+                                    "name": file_name,
+                                    "sentences": text_raw
+                                }
 
                     data.append({"doc": cont_doc})
 
-                    log_document = {
-                        "_id_dataset": _id_dataset,
-                        "info": "Save Dataset.",
-                        "data": data,
-                        "data_time": datetime.datetime.now()
-                    }
+                    if self._use_db != None:
+                        log_document = {
+                            "_id_dataset": _id_dataset,
+                            "info": "Save Dataset.",
+                            "data": data,
+                            "data_time": datetime.datetime.now()
+                        }
                 
-                PluginManager().call_plugin_db(
-                    plugin_name=self._use_db,
-                    operation='insert',
-                    collection='log',
-                    document=log_document
-                )
+                if self._use_db != None:
+                    PluginManager().call_plugin_db(
+                        plugin_name=self._use_db,
+                        operation='insert',
+                        collection='log',
+                        document=log_document
+                    )
 
         else:
             print("This path does not contain a valid directory!")
             sys.exit(0)
-
-        return _id_dataset
+        
+        if self._use_db != None:
+            return _id_dataset
+        else:
+            return [document_document]

@@ -21,6 +21,7 @@ class Execute (object):
     def run_java(self, jar_file, *args):
         try:
             import subprocess
+            
             return subprocess.check_output(['java', '-jar', jar_file, *args], shell=False)
         except Exception as err:
             print(err)
