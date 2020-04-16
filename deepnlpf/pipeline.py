@@ -10,7 +10,7 @@ from deepnlpf.util.random_object_id import RandomObjectId
 
 from deepnlpf.core.util import Util
 from deepnlpf.core.boost import Boost
-from deepnlpf.core.encoder import JSONEncoder
+from deepnlpf.util.encoder import JSONEncoder
 from deepnlpf.core.output_format import OutputFormat
 from deepnlpf.core.plugin_manager import PluginManager
 
@@ -94,7 +94,7 @@ class Pipeline(object):
                 key={"_id_dataset": ObjectId(_id_dataset)}
             )
         else:
-            self.documents = self.option_input_text_selected(self.type_input_data)
+            _id_dataset, self.documents = self.option_input_text_selected(self.type_input_data)
 
         for document in tqdm(self.documents, desc='Processing document(s)'):
 
@@ -103,7 +103,7 @@ class Pipeline(object):
                 lang=self._custom_pipeline['lang'], document=document, 
                 pipeline=self._custom_pipeline['tools'][int(index)][plugin_name]['pipeline']
                 )
-                
+
             if self._use_db != None:
                 # save annotation in db used.
                 PluginManager().call_plugin_db(
@@ -113,27 +113,34 @@ class Pipeline(object):
                     document=annotation
                 )
             else:
-                return annotation
-
-            remove_object_id = JSONEncoder().encode(annotation)
-            data_json = json.loads(remove_object_id)
-            data_formating = self.output_format(data_json)
+                remove_object_id = JSONEncoder().encode(annotation)
+                data_json = json.loads(remove_object_id)
+                data_formating = self.output_format(data_json)
             
-            return self.output(data_formating, _id_dataset)
-
+                self.output(data_formating, _id_dataset, JSONEncoder().encode(document['name']).replace('"', ''))
+                
     def output_format(self, annotation):
         if self._format == "xml":
             return OutputFormat().json2xml(annotation)
-        return annotation
+        elif self._format == "json":
+            return json.dumps(annotation, indent=4)
 
-    def output(self, annotation, _id_dataset):
+    def output(self, annotation, _id_dataset, _id_document):
         if self._output == 'terminal':
-            return annotation
+            print(annotation)
+
         elif self._output == 'file':
             EXT = '.xml' if self._format == 'xml' else '.json'
-            PATH = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)+EXT
-            print("File output:", PATH)
-            return Util().save_file(PATH, str(annotation))
+
+            # Create dir name dataset.
+            PATH_DATASET = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)
+            if not os.path.exists(PATH_DATASET):
+                os.makedirs(PATH_DATASET)
+
+            # save file document(s).
+            PATH = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)+'/'+_id_document+EXT
+            Util().save_file(PATH, str(annotation))
+
         elif self._output == 'browser':
             from flask import Flask, escape, request
             app = Flask(__name__)
@@ -221,6 +228,7 @@ class Pipeline(object):
         """
         dataset_name = ''
         _id_dataset = ''
+        list_documents = list()
 
         # check is path dir validate.
         if(os.path.isdir(path_dataset)):
@@ -355,6 +363,8 @@ class Pipeline(object):
                                     "sentences": text_raw
                                 }
 
+                                list_documents.append(document_document)
+
                     data.append({"doc": cont_doc})
 
                     if self._use_db != None:
@@ -380,4 +390,4 @@ class Pipeline(object):
         if self._use_db != None:
             return _id_dataset
         else:
-            return [document_document]
+            return _id_dataset, list_documents

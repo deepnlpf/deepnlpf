@@ -6,10 +6,6 @@
 
 import os, json, datetime
 
-from tqdm import tqdm
-
-from deepnlpf.core.boost import Boost
-
 class Util(object):
 
     def __init__(self):

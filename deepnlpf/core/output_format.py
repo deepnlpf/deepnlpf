@@ -4,7 +4,6 @@ import json
 
 from datetime import date, datetime
 from json2xml import json2xml
-from deepnlpf.core.encoder import DTEncoder
 
 class OutputFormat:
 
