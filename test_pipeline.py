@@ -8,5 +8,5 @@ path_dataset = '/home/fasr/Mestrado/Workspace/deepnlpf2/tests/data/dataset_2doc_
 
 
 # Testar agora sem o uso de banco de dados... 
-nlp = Pipeline(_input=path_dataset, pipeline=path_pipeline, _output='file')
+nlp = Pipeline(_input=path_dataset, pipeline=path_pipeline, use_db='mongodb')
 annotation = nlp.annotate()
