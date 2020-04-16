@@ -127,7 +127,7 @@ class Pipeline(object):
 
     def output(self, annotation, _id_dataset, _id_document):
         if self._output == 'terminal':
-            print(annotation)
+            return annotation
 
         elif self._output == 'file':
             EXT = '.xml' if self._format == 'xml' else '.json'
@@ -173,11 +173,10 @@ class Pipeline(object):
                 document=document, pipeline=['tokenize'])
             
             # loop - go through the json and assemble the sentences.
+            sentence = list()
             for item in self.documents[0]:
-                sentence = list()
-                for data in item:
-                    sentence.append(data['text'])
-                sentences.append(" ".join(sentence))
+                sentence.append(item['text'])
+            sentences.append(" ".join(sentence))
 
         if self._tool_base == "stanfordcorenlp":
             self.documents = PluginManager().call_plugin(
@@ -215,11 +214,19 @@ class Pipeline(object):
             PluginManager().call_plugin_db(
                 plugin_name=self._use_db, 
                 operation='insert', 
-                collection='dataset', 
+                collection='document', 
                 document=document
             )
 
-        return _id_dataset
+            return _id_dataset
+
+        _id_dataset = RandomObjectId().gen_random_object_id()
+        _id = RandomObjectId().gen_random_object_id()
+        name = names.get_first_name()
+        
+        return _id_dataset, [{'_id':_id, '_id_dataset':_id_dataset, 'name':name, 'sentences': sentences}]
+        
+
 
     def processing_path_dataset(self, path_dataset, ssplit=False):
         """
