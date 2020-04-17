@@ -71,3 +71,8 @@ Auto-Generating Documentation for an Entire Project
     pycco deepnlpf/**/*.py -p
     
     pycco deepnlpf/**/*.py -p --watch
+
+# Err
+
+## Err rpy2
+Solution: pip install epy2 

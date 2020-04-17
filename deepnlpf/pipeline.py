@@ -18,6 +18,17 @@ class Pipeline(object):
 
     def __init__(self, _input=None, pipeline=None, _output='terminal', _format='json',
         use_db=None, tool_base='stanza', boost='pathos'):
+        """[summary]
+        
+        Keyword Arguments:
+            _input {[type]} -- [description] (default: {None})
+            pipeline {[type]} -- [description] (default: {None})
+            _output {str} -- [description] (default: {'terminal'})
+            _format {str} -- [description] (default: {'json'})
+            use_db {[type]} -- [description] (default: {None})
+            tool_base {str} -- [description] (default: {'stanza'})
+            boost {str} -- [description] (default: {'pathos'})
+        """
 
         # auto select type input data.
         if _input != None:
@@ -117,13 +128,13 @@ class Pipeline(object):
                 data_json = json.loads(remove_object_id)
                 data_formating = self.output_format(data_json)
             
-                self.output(data_formating, _id_dataset, JSONEncoder().encode(document['name']).replace('"', ''))
+                return self.output(data_formating, _id_dataset, JSONEncoder().encode(document['name']).replace('"', ''))
                 
     def output_format(self, annotation):
         if self._format == "xml":
             return OutputFormat().json2xml(annotation)
         elif self._format == "json":
-            return json.dumps(annotation, indent=4)
+            return annotation
 
     def output(self, annotation, _id_dataset, _id_document):
         if self._output == 'terminal':

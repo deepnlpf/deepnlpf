@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-    Filename: statistics.py
-    Description:
-    Date: 11/07/2019
-"""
-
 
 import nltk
 import random
@@ -22,8 +16,6 @@ from bson.objectid import ObjectId
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import sent_tokenize, word_tokenize
 
-from deepnlpf.models.dataset import Dataset
-from deepnlpf.models.document import Document 
 from deepnlpf.models.statistics import Statistics as s
 from deepnlpf.modules.utils.preprocessing import PreProcessing
 

@@ -1,0 +1,14 @@
+{
+    "lang": "en",
+    "tools": [{
+        "flair": {
+            "pipeline": [
+                "fast_pos_tagging",
+                "fast_ner_4class",
+                "fast_ner_ontonotes_18class",
+                "fast_syntatic_chunking",
+                "fast_semantic_frame_detection"
+            ]
+        }
+    }]
+}
