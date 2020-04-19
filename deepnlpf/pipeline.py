@@ -3,6 +3,8 @@
 
 import os, sys, json, uuid, names, datetime
 
+import deepnlpf.log as log
+
 from tqdm import tqdm
 from bson.objectid import ObjectId
 
@@ -30,18 +32,23 @@ class Pipeline(object):
             boost {str} -- [description] (default: {'pathos'})
         """
 
+        log.logger.info("--------------------- Start ---------------------")
+
         # auto select type input data.
         if _input != None:
             if os.path.isdir(_input):
                 self.type_input_data = 'path_dataset'
+                log.logger.info("Input data type: {}".format(self.type_input_data))
             elif type(_input) ==  ObjectId:
                 self.type_input_data = 'id_dataset'
+                log.logger.info("Input data type: {}".format(self.type_input_data))
             elif type(_input) == str:
                 self.type_input_data = 'raw_text'
+                log.logger.info("Input data type: {}".format(self.type_input_data))
             
             self._input = _input
         else:
-            print("Enter a parameter from a valid dataset <path_dataset> or <id_dataset> or <raw_text> !")
+            print("Enter a parameter from a valid dataset [path_dataset|id_dataset|raw_text]")
             sys.exit(0)
 
         if pipeline != None:
@@ -49,29 +56,64 @@ class Pipeline(object):
                 _ , ext = pipeline.split('.')
                 if (ext == 'json'):
                     self._custom_pipeline = Util().openfile_json(pipeline)
+                    log.logger.info("Input pipeline type: {} file.".format(ext))
                 elif (ext == 'yaml'):
                     self._custom_pipeline = OutputFormat().yaml2json(pipeline)
+                    log.logger.info("Input pipeline type: {} file.".format(ext))
                 elif (ext == 'xml'):
                     self._custom_pipeline = OutputFormat().xml2json(pipeline)
+                    log.logger.info("Input pipeline type: {} file.".format(ext))
             else: # String Json
                 try:
                     self._custom_pipeline = json.loads(pipeline)
+                    log.logger.info("Input pipeline type: {} {}".format('json', 'string'))
                 except Exception as err:
                     print("Enter a parameter from a valid pipeline.")
         else:
             print("Enter a parameter from a valid pipeline.")
             sys.exit(0)
+        
+        log.logger.info("Pipeline selected: {}".format(pipeline))
 
         self._use_db = use_db
+        log.logger.info("Use DB: {}".format(use_db))
+
         self._output = _output
+        log.logger.info("Output: {}".format(_output))
+
         self._format = _format
+        log.logger.info("Format: {}".format(_format))
         
         self._tool_base = tool_base
+        log.logger.info("Tool base: {}".format(tool_base))
+
         self._boost = boost
+        log.logger.info("Boost: {}".format(boost))
 
         self._id_pool = ObjectId(b'foo-bar-quux')
+        log.logger.info("Pool: {}".format(self._id_pool))
+
+        self.documents = ''
+        self._id_dataset = ''
+
+
 
     def annotate(self):
+
+        if self._use_db != None:
+            # get _id_dataset
+            self._id_dataset = self.option_input_text_selected(self.type_input_data)
+
+            # get all documents.
+            self.documents = PluginManager().call_plugin_db(
+                plugin_name=self._use_db, 
+                operation='select_all_key', 
+                collection='document', 
+                key={"_id_dataset": ObjectId(self._id_dataset)}
+            )
+        else:
+            self._id_dataset, self.documents = self.option_input_text_selected(self.type_input_data)
+
         # Runs the tools using multiprocessor parallelism techniques.
         # get tools names
         self.list_tools = [','.join(tool.keys()) for tool in self._custom_pipeline['tools']]
@@ -80,7 +122,11 @@ class Pipeline(object):
         new_list_tools = [str(tool)+'-'+str(index) for index, tool in enumerate(self.list_tools)]
 
         # If True boost = pathos Else boost = ray
-        return Boost().multiprocessing(self.run, new_list_tools) if self._boost == 'pathos' else Boost().parallel(self.run, new_list_tools)
+        RESULT = Boost().multiprocessing(self.run, new_list_tools) if self._boost == 'pathos' else Boost().parallel(self.run, new_list_tools)
+        
+        log.logger.info("--------------------- End ---------------------")
+        
+        return RESULT
 
     def run(self, _tool_name):
         """
@@ -92,24 +138,11 @@ class Pipeline(object):
         """
         # extraction index number in tools, get args.
         plugin_name, index = _tool_name.split('-')
-
-        if self._use_db != None:
-            # get _id_dataset
-            _id_dataset = self.option_input_text_selected(self.type_input_data)
-
-            # get all documents.
-            self.documents = PluginManager().call_plugin_db(
-                plugin_name=self._use_db, 
-                operation='select_all_key', 
-                collection='document', 
-                key={"_id_dataset": ObjectId(_id_dataset)}
-            )
-        else:
-            _id_dataset, self.documents = self.option_input_text_selected(self.type_input_data)
+        log.logger.info("Plugin call: {}".format(plugin_name))
 
         for document in tqdm(self.documents, desc='Processing document(s)'):
 
-            annotation = PluginManager().call_plugin(
+            annotation = PluginManager().call_plugin_nlp(
                 plugin_name=plugin_name, _id_pool=self._id_pool, 
                 lang=self._custom_pipeline['lang'], document=document, 
                 pipeline=self._custom_pipeline['tools'][int(index)][plugin_name]['pipeline']
@@ -128,7 +161,12 @@ class Pipeline(object):
                 data_json = json.loads(remove_object_id)
                 data_formating = self.output_format(data_json)
             
-                return self.output(data_formating, _id_dataset, JSONEncoder().encode(document['name']).replace('"', ''))
+                return self.output(
+                    data_formating, 
+                    self._id_dataset, 
+                    JSONEncoder().encode(document['name']).replace('"', ''),
+                    plugin_name
+                )
                 
     def output_format(self, annotation):
         if self._format == "xml":
@@ -136,7 +174,7 @@ class Pipeline(object):
         elif self._format == "json":
             return annotation
 
-    def output(self, annotation, _id_dataset, _id_document):
+    def output(self, annotation, _id_dataset, _id_document, plugin_name):
         if self._output == 'terminal':
             return annotation
 
@@ -145,12 +183,18 @@ class Pipeline(object):
 
             # Create dir name dataset.
             PATH_DATASET = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)
+            PATH_DOCUMENT = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)+'/'+_id_document
+
             if not os.path.exists(PATH_DATASET):
                 os.makedirs(PATH_DATASET)
+            
+            if not os.path.exists(PATH_DOCUMENT):
+                os.makedirs(PATH_DOCUMENT)
 
             # save file document(s).
-            PATH = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)+'/'+_id_document+EXT
+            PATH = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)+'/'+_id_document+'/'+plugin_name+EXT
             Util().save_file(PATH, str(annotation))
+            log.logger.info("Output file in: {}".format(PATH))
 
         elif self._output == 'browser':
             from flask import Flask, escape, request
@@ -174,11 +218,13 @@ class Pipeline(object):
             return self.processing_path_dataset(self._input)
 
     def ssplit(self, document):
+        log.logger.info("Pre-processing: Sentence Split")
+
         sentences = list()
         
         # pre-processing tokenization and ssplit using plugin base selected.
         if self._tool_base == 'stanza':
-            self.documents = PluginManager().call_plugin(
+            self.documents = PluginManager().call_plugin_nlp(
                 plugin_name='stanza', _id_pool=self._id_pool, 
                 lang=self._custom_pipeline['lang'],
                 document=document, pipeline=['tokenize'])
@@ -190,7 +236,7 @@ class Pipeline(object):
             sentences.append(" ".join(sentence))
 
         if self._tool_base == "stanfordcorenlp":
-            self.documents = PluginManager().call_plugin(
+            self.documents = PluginManager().call_plugin_nlp(
                 plugin_name='stanfordcorenlp', _id_pool=self._id_pool,
                 lang=self._custom_pipeline['lang'], 
                 document=document, pipeline=['ssplit'])

@@ -46,7 +46,7 @@ def add_headers(response):
 
 @app.route('/get_all_plugins', methods=['POST', 'GET'])
 def get_all_plugins():
-    response = {'plugins': PluginManager().load_plugin_manifest()}
+    response = {'plugins': PluginManager().load_manifest()}
     return jsonify(response)
 
 @app.route('/get_all_datasets', methods=['POST', 'GET'])

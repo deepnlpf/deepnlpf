@@ -1,0 +1,10 @@
+{
+    "lang": "en",
+    "tools": [{
+        "semafor": {
+            "pipeline": [
+                "frame_semantic_parsing"
+            ]
+        }
+    }]
+}

@@ -1,5 +1,5 @@
 # Virtualenv
-    https://pythonacademy.com.br/blog/python-e-virtualenv-como-programar-em-ambientes-virtuais
+[Tutprial Base](https://pythonacademy.com.br/blog/python-e-virtualenv-como-programar-em-ambientes-virtuais)
 
     $ virtualenv deepnlpf
     $ source deepnlpf/bin/activate
@@ -8,61 +8,18 @@
 
     sudo lsof -t -i tcp:5000 | xargs kill -9
 
-# install package locally
+# Install package locally
     
     python setup.py install --user
 
 # create even conda
 
-    conda create -n deepnlpf2_t python=3.7 anaconda
+    conda create -n deepnlpf_env python=3 anaconda
 
-# Commit PyPI
-
-    https://python-packaging-tutorial.readthedocs.io/en/latest/uploading_pypi.html
-    https://medium.com/@thucnc/how-to-publish-your-own-python-package-to-pypi-4318868210f9
-
-
-    update
-        python setup.py install --user && python setup.py sdist bdist_wheel && twine upload dist/*
-
-# Requeriment
+# Generated Requeriment
 
     pip freeze > requirements.txt
 
-# Errors
-
-    ANACONDA
-    ImportError: cannot import name 'abc' from 'bson.py3compat'
-
-        pip uninstall bson && pip uninstall pymongo && conda install -c anaconda pymongo 
-
-# Deploy App Flask Enginx in AWS EC2 or Azure
-
-    https://www.youtube.com/watch?v=tW6jtOOGVJI&list=PL5KTLzN85O4KTCYzsWZPTP0BfRj6I_yUP&index=4
-
-    $ cd /etc/nginx/sites-available
-    $ sudo nano deepnlpf_api
-
-    server {
-        listen 80;
-        server_name http://191.232.188.105/;
-
-        location / {
-            proxy_pass http://127.0.0.1:5000;
-        }
-    }
-
-    $ sudo service nginx restart
-
-
-# Execute task backgroud server terminal
-
-    nohup <command>
-
-
-# Install Script Sample
-
-    bash <(curl -Ss https://raw.githubusercontent.com/deepnlpf/scripts-install/master/script/install_requeriments_deepnlpf.sh)
 
 # Generating Code Documentation with Pycco
 Auto-Generating Documentation for an Entire Project
@@ -71,8 +28,3 @@ Auto-Generating Documentation for an Entire Project
     pycco deepnlpf/**/*.py -p
     
     pycco deepnlpf/**/*.py -p --watch
-
-# Err
-
-## Err rpy2
-Solution: pip install epy2 

@@ -7,12 +7,13 @@
 import psutil, pathos, ray
 import pathos.pools as pp
 
+import deepnlpf.log as log
 from tqdm import tqdm
 
 class Boost(object):
 
     def __init__(self):
-        self.cpu_count = psutil.cpu_count(logical=False)
+        self.cpu_count = psutil.cpu_count() # logical=False
 
     def multithreading(self, function, args, threads=4):
         from concurrent.futures import ThreadPoolExecutor
@@ -25,8 +26,8 @@ class Boost(object):
     def multiprocessing(self, function, tools):
         pool = pp.ProcessPool(self.cpu_count)
         
-        #process = str(pathos.helpers.mp.current_process())
-        #logs.logger.info("{}, {}".format(process, tool))
+        process = str(pathos.helpers.mp.current_process())
+        log.logger.info("{}".format(process))
         #Telegram().send_message("⛏️ Processing... ForkProcess: {}, {}".format(str(process), str(tool)))
         
         return [_ for _ in tqdm(pool.map(function, tools), total=len(tools), desc='NLP Tool(s)')]
