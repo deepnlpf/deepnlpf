@@ -5,6 +5,9 @@ import os, sys, json, uuid, names, datetime
 
 import deepnlpf.log as log
 
+import psutil, pathos, ray
+import pathos.pools as pp
+
 from tqdm import tqdm
 from bson.objectid import ObjectId
 
@@ -20,17 +23,6 @@ class Pipeline(object):
 
     def __init__(self, _input=None, pipeline=None, _output='terminal', _format='json',
         use_db=None, tool_base='stanza', boost='pathos'):
-        """[summary]
-        
-        Keyword Arguments:
-            _input {[type]} -- [description] (default: {None})
-            pipeline {[type]} -- [description] (default: {None})
-            _output {str} -- [description] (default: {'terminal'})
-            _format {str} -- [description] (default: {'json'})
-            use_db {[type]} -- [description] (default: {None})
-            tool_base {str} -- [description] (default: {'stanza'})
-            boost {str} -- [description] (default: {'pathos'})
-        """
 
         log.logger.info("--------------------- Start ---------------------")
 
@@ -87,14 +79,22 @@ class Pipeline(object):
         self._tool_base = tool_base
         log.logger.info("Tool base: {}".format(tool_base))
 
-        self._boost = boost
-        log.logger.info("Boost: {}".format(boost))
-
         self._id_pool = ObjectId(b'foo-bar-quux')
         log.logger.info("Pool: {}".format(self._id_pool))
 
         self.documents = ''
         self._id_dataset = ''
+
+        self.cpu_count = psutil.cpu_count() # logical=False
+
+        self._boost = boost
+        log.logger.info("Boost: {}".format(boost))
+
+        if self._boost == 'pathos':
+            self.pool = pp.ProcessPool(self.cpu_count)
+        elif self._boost == 'ray':
+            ray.init(num_cpus=self.cpu_count)
+
 
 
 
@@ -121,8 +121,22 @@ class Pipeline(object):
         # set index number in tools.
         new_list_tools = [str(tool)+'-'+str(index) for index, tool in enumerate(self.list_tools)]
 
-        # If True boost = pathos Else boost = ray
-        RESULT = Boost().multiprocessing(self.run, new_list_tools) if self._boost == 'pathos' else Boost().parallel(self.run, new_list_tools)
+        if self._boost == 'pathos':
+            process = str(pathos.helpers.mp.current_process())
+            log.logger.info("{}".format(process))
+            #Telegram().send_message("⛏️ Processing... ForkProcess: {}, {}".format(str(process), str(tool)))
+            RESULT = [_ for _ in tqdm(self.pool.map(function, new_list_tools), total=len(new_list_tools), desc='NLP Tool(s)')]
+        elif self._boost == 'ray':
+
+            @ray.remote
+            def f(tool):
+                log.logger.info("Plugin call: {}".format(tool))
+                self.run(tool)
+            
+            #Start N task in parallel.
+            futures = [f.remote(tool) for tool in new_list_tools]
+
+            RESULT = ray.get(futures)
         
         log.logger.info("--------------------- End ---------------------")
         
@@ -138,7 +152,6 @@ class Pipeline(object):
         """
         # extraction index number in tools, get args.
         plugin_name, index = _tool_name.split('-')
-        log.logger.info("Plugin call: {}".format(plugin_name))
 
         for document in tqdm(self.documents, desc='Processing document(s)'):
 
@@ -214,7 +227,7 @@ class Pipeline(object):
         elif type_input_data == 'raw_text':
             document = json.loads(json.dumps({'sentences': [self._input]}))
             return self.ssplit(document)
-        elif type_input_data == 'path_dataset':          
+        elif type_input_data == 'path_dataset':      
             return self.processing_path_dataset(self._input)
 
     def ssplit(self, document):

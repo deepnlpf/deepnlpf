@@ -8,7 +8,7 @@ from deepnlpf.pipeline import Pipeline
 
 from deepnlpf.models.mongodb import DataBase
 
-from deepnlpf.core.encoder import JSONEncoder
+from deepnlpf.util.encoder import JSONEncoder
 from deepnlpf.core.plugin_manager import PluginManager
 
 app = Flask(__name__, instance_relative_config=True)

@@ -79,3 +79,12 @@ https://graphene-python.org/
 - [ ] Put error handling here to identify when no corpus has been selected.
 
 - [ ] Criar um Doc Code no guia do usuário no site usando Pycco
+
+
+# API
+- Configurar ip e port pelo terminal CLI.
+
+# DashBoard
+
+- Configura ip e port usando cache do navegador.
+- 
