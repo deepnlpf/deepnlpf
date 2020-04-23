@@ -1,0 +1,50 @@
+{
+    "lang": "en",
+    "tools": [{
+            "stanza": {
+                "pipeline": [
+                    "tokenize",
+                    "mwt",
+                    "pos",
+                    "lemma",
+                    "ner",
+                    "depparse"
+                ]
+            }
+        },
+        {
+            "semafor": {
+                "pipeline": [
+                    "frame_semantic_parsing"
+                ]
+            }
+        },
+        {
+            "spacy": {
+                "pipeline": [
+                    "pos",
+                    "tag",
+                    "shape",
+                    "is_alpha",
+                    "is_title",
+                    "like_num",
+                    "label"
+                ]
+            }
+        },
+        {
+            "stanfordcorenlp": {
+                "pipeline": [
+                    "tokenize",
+                    "ssplit",
+                    "pos",
+                    "lemma",
+                    "ner",
+                    "truecase",
+                    "parse",
+                    "depparse"
+                ]
+            }
+        }
+    ]
+}

@@ -9,3 +9,10 @@ dist/*
 build/*
 deepnlpf_env/*
 deepnlpf_env_tests/*
+
+rinaldo_pipeline_1.json
+rinaldo_pipeline_1.py
+rinaldo_pipeline_2.json
+rinaldo_pipeline_2.py
+rinaldo_pipeline_3.json
+rinaldo_pipeline_3.py

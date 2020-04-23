@@ -21,10 +21,12 @@ from deepnlpf.core.plugin_manager import PluginManager
 
 class Pipeline(object):
 
-    def __init__(self, _input=None, pipeline=None, _output='terminal', _format='json',
-        use_db=None, tool_base='stanza', boost='pathos'):
+    def __init__(self, _input=None, pipeline=None, _output='terminal', _format='json', use_db=None, 
+                tool_base='stanza', boost='pathos', memory=None, cpus=None, gpus=None):
 
         log.logger.info("--------------------- Start ---------------------")
+
+        self.list_temp = list()
 
         # auto select type input data.
         if _input != None:
@@ -82,38 +84,48 @@ class Pipeline(object):
         self._id_pool = ObjectId(b'foo-bar-quux')
         log.logger.info("Pool: {}".format(self._id_pool))
 
-        self.documents = ''
+        self._documents = ''
         self._id_dataset = ''
-
-        self.cpu_count = psutil.cpu_count() # logical=False
 
         self._boost = boost
         log.logger.info("Boost: {}".format(boost))
+        
+        self._memory = memory
+
+        if cpus is None:
+            self._cpus_count = psutil.cpu_count() # logical=False
+        else:
+            self._cpus_count = cpus
+        
+        self._gpus = gpus
 
         if self._boost == 'pathos':
-            self.pool = pp.ProcessPool(self.cpu_count)
+            self.pool = pp.ProcessPool(self._cpus_count)
         elif self._boost == 'ray':
-            ray.init(num_cpus=self.cpu_count)
+            ray.init(memory=self._memory, num_cpus=self._cpus_count, num_gpus=self._gpus)
+            
 
 
 
 
     def annotate(self):
 
-        if self._use_db != None:
+        if self._use_db != None: # use DB.
             # get _id_dataset
             self._id_dataset = self.option_input_text_selected(self.type_input_data)
 
             # get all documents.
-            self.documents = PluginManager().call_plugin_db(
+            self._documents = PluginManager().call_plugin_db(
                 plugin_name=self._use_db, 
                 operation='select_all_key', 
                 collection='document', 
                 key={"_id_dataset": ObjectId(self._id_dataset)}
             )
-        else:
-            self._id_dataset, self.documents = self.option_input_text_selected(self.type_input_data)
-
+        else: # no use DB.
+            self._id_dataset, self._documents = self.option_input_text_selected(self.type_input_data)
+        
+        log.logger.info("Number documents: {}".format(len(self._documents)))
+        
         # Runs the tools using multiprocessor parallelism techniques.
         # get tools names
         self.list_tools = [','.join(tool.keys()) for tool in self._custom_pipeline['tools']]
@@ -126,6 +138,7 @@ class Pipeline(object):
             log.logger.info("{}".format(process))
             #Telegram().send_message("⛏️ Processing... ForkProcess: {}, {}".format(str(process), str(tool)))
             RESULT = [_ for _ in tqdm(self.pool.map(function, new_list_tools), total=len(new_list_tools), desc='NLP Tool(s)')]
+        
         elif self._boost == 'ray':
 
             @ray.remote
@@ -142,18 +155,11 @@ class Pipeline(object):
         
         return RESULT
 
-    def run(self, _tool_name):
-        """
-            Description: Here you will execute a process for each tool. 
-                         In this function, you must integrate your new tool into the pipeline
-                         if you have added a new plugin, see documentation in case of doubts.
-
-            @param _tool_name
-        """
+    def run(self, tool):
         # extraction index number in tools, get args.
-        plugin_name, index = _tool_name.split('-')
+        plugin_name, index = tool.split('-')
 
-        for document in tqdm(self.documents, desc='Processing document(s)'):
+        for document in tqdm(self._documents, desc='Processing document(s)'):
 
             annotation = PluginManager().call_plugin_nlp(
                 plugin_name=plugin_name, _id_pool=self._id_pool, 
@@ -169,17 +175,19 @@ class Pipeline(object):
                     collection='analysi', 
                     document=annotation
                 )
-            else:
-                remove_object_id = JSONEncoder().encode(annotation)
-                data_json = json.loads(remove_object_id)
-                data_formating = self.output_format(data_json)
             
-                return self.output(
-                    data_formating, 
-                    self._id_dataset, 
-                    JSONEncoder().encode(document['name']).replace('"', ''),
-                    plugin_name
-                )
+            remove_object_id = JSONEncoder().encode(annotation)
+            data_json = json.loads(remove_object_id)
+            data_formating = self.output_format(data_json)
+        
+            self.list_temp.append(self.output(
+                data_formating, 
+                self._id_dataset, 
+                JSONEncoder().encode(document['name']).replace('"', ''),
+                plugin_name
+            ))
+        
+        return self.list_temp
                 
     def output_format(self, annotation):
         if self._format == "xml":
@@ -237,24 +245,24 @@ class Pipeline(object):
         
         # pre-processing tokenization and ssplit using plugin base selected.
         if self._tool_base == 'stanza':
-            self.documents = PluginManager().call_plugin_nlp(
+            self._documents = PluginManager().call_plugin_nlp(
                 plugin_name='stanza', _id_pool=self._id_pool, 
                 lang=self._custom_pipeline['lang'],
                 document=document, pipeline=['tokenize'])
             
             # loop - go through the json and assemble the sentences.
             sentence = list()
-            for item in self.documents[0]:
+            for item in self._documents[0]:
                 sentence.append(item['text'])
             sentences.append(" ".join(sentence))
 
         if self._tool_base == "stanfordcorenlp":
-            self.documents = PluginManager().call_plugin_nlp(
+            self._documents = PluginManager().call_plugin_nlp(
                 plugin_name='stanfordcorenlp', _id_pool=self._id_pool,
                 lang=self._custom_pipeline['lang'], 
                 document=document, pipeline=['ssplit'])
 
-            for item in self.documents[0]['sentences']:
+            for item in self._documents[0]['sentences']:
                 sentence = list()
                 for token in item['tokens']:
                     sentence.append(token['word'])

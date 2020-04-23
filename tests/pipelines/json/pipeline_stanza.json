@@ -1,0 +1,15 @@
+{
+    "lang": "en",
+    "tools": [{
+        "stanza": {
+            "pipeline": [
+                "tokenize",
+                "mwt",
+                "pos",
+                "lemma",
+                "ner",
+                "depparse"
+            ]
+        }
+    }]
+}

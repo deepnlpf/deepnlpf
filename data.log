@@ -1,19 +1,48 @@
-2020-04-19 01:12:42,585 - DeepNLPF.base - INFO - --------------------- Start ---------------------
-2020-04-19 01:12:42,585 - DeepNLPF.base - INFO - Input data type: path_dataset
-2020-04-19 01:12:42,585 - DeepNLPF.base - INFO - Input pipeline type: json file.
-2020-04-19 01:12:42,586 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/banchmarking_boost.json
-2020-04-19 01:12:42,586 - DeepNLPF.base - INFO - Use DB: None
-2020-04-19 01:12:42,586 - DeepNLPF.base - INFO - Output: file
-2020-04-19 01:12:42,586 - DeepNLPF.base - INFO - Format: json
-2020-04-19 01:12:42,586 - DeepNLPF.base - INFO - Tool base: stanza
-2020-04-19 01:12:42,586 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
-2020-04-19 01:12:42,586 - DeepNLPF.base - INFO - Boost: ray
-2020-04-19 01:12:44,480 - DeepNLPF.base - INFO - Plugin call: stanza-0
-2020-04-19 01:12:44,588 - DeepNLPF.base - INFO - Plugin call: stanfordcorenlp-3
-2020-04-19 01:12:44,697 - DeepNLPF.base - INFO - Plugin call: spacy-2
-2020-04-19 01:12:44,720 - DeepNLPF.base - INFO - Plugin call: semafor-1
-2020-04-19 01:16:28,571 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5e9bcfbbfe72c6e0c1658ccf/document.txt/spacy.json
-2020-04-19 01:38:49,404 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5e9bcfbbfe72c6e0c1658ccf/document.txt/semafor.json
-2020-04-19 01:43:39,565 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5e9bcfbbfe72c6e0c1658ccf/document.txt/stanfordcorenlp.json
-2020-04-19 02:08:45,500 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5e9bcfbbfe72c6e0c1658ccf/document.txt/stanza.json
-2020-04-19 02:08:45,611 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-22 13:20:58,895 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-22 13:20:58,896 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-22 13:20:58,896 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-22 13:20:58,896 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/rinaldo_pipeline_1.json
+2020-04-22 13:20:58,896 - DeepNLPF.base - INFO - Use DB: None
+2020-04-22 13:20:58,896 - DeepNLPF.base - INFO - Output: file
+2020-04-22 13:20:58,896 - DeepNLPF.base - INFO - Format: xml
+2020-04-22 13:20:58,896 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-22 13:20:58,896 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-22 13:20:58,896 - DeepNLPF.base - INFO - Boost: ray
+2020-04-22 13:20:59,367 - DeepNLPF.base - INFO - Number documents: 2
+2020-04-22 13:21:00,589 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-22 13:21:00,658 - DeepNLPF.base - INFO - Plugin call: semafor-1
+2020-04-22 13:21:00,784 - DeepNLPF.base - INFO - Plugin call: cogcompnlp-2
+2020-04-22 13:21:00,865 - DeepNLPF.base - INFO - Plugin call: stanfordcorenlp-3
+2020-04-22 13:34:51,211 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea06eeb5d597fafc4a23510/train.txt/spacy.xml
+2020-04-22 13:39:52,240 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea06eeb5d597fafc4a23510/test.txt/spacy.xml
+2020-04-22 13:39:52,331 - DeepNLPF.base - INFO - Plugin call: pywsd-4
+2020-04-22 13:44:33,118 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea06eeb5d597fafc4a23510/train.txt/pywsd.xml
+2020-04-22 13:45:47,759 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea06eeb5d597fafc4a23510/test.txt/pywsd.xml
+2020-04-22 13:46:31,422 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea06eeb5d597fafc4a23510/train.txt/semafor.xml
+2020-04-22 13:50:47,185 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea06eeb5d597fafc4a23510/test.txt/semafor.xml
+2020-04-22 13:56:04,019 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea06eeb5d597fafc4a23510/train.txt/stanfordcorenlp.xml
+2020-04-22 14:05:36,071 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea06eeb5d597fafc4a23510/test.txt/stanfordcorenlp.xml
+2020-04-22 14:32:27,393 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-22 14:32:27,394 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-22 14:32:27,395 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-22 14:32:27,395 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/rinaldo_pipeline_1.json
+2020-04-22 14:32:27,395 - DeepNLPF.base - INFO - Use DB: None
+2020-04-22 14:32:27,395 - DeepNLPF.base - INFO - Output: file
+2020-04-22 14:32:27,395 - DeepNLPF.base - INFO - Format: xml
+2020-04-22 14:32:27,395 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-22 14:32:27,395 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-22 14:32:27,395 - DeepNLPF.base - INFO - Boost: ray
+2020-04-22 14:32:28,427 - DeepNLPF.base - INFO - Number documents: 2
+2020-04-22 14:32:29,136 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-22 14:32:29,277 - DeepNLPF.base - INFO - Plugin call: cogcompnlp-2
+2020-04-22 14:32:29,301 - DeepNLPF.base - INFO - Plugin call: semafor-1
+2020-04-22 14:32:29,345 - DeepNLPF.base - INFO - Plugin call: stanfordcorenlp-3
+2020-04-22 14:46:25,856 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea07fac0ae96e58b6c26a23/train.txt/spacy.xml
+2020-04-22 14:51:39,609 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea07fac0ae96e58b6c26a23/test.txt/spacy.xml
+2020-04-22 14:51:39,752 - DeepNLPF.base - INFO - Plugin call: pywsd-4
+2020-04-22 14:56:23,111 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea07fac0ae96e58b6c26a23/train.txt/pywsd.xml
+2020-04-22 14:57:27,193 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea07fac0ae96e58b6c26a23/test.txt/pywsd.xml
+2020-04-22 14:58:06,776 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea07fac0ae96e58b6c26a23/train.txt/semafor.xml
+2020-04-22 15:02:29,779 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea07fac0ae96e58b6c26a23/test.txt/semafor.xml
+2020-04-22 15:07:32,211 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea07fac0ae96e58b6c26a23/train.txt/stanfordcorenlp.xml
+2020-04-22 15:16:38,026 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea07fac0ae96e58b6c26a23/test.txt/stanfordcorenlp.xml

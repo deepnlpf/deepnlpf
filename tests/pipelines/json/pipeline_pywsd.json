@@ -1,0 +1,10 @@
+{
+    "lang": "en",
+    "tools": [{
+        "pywsd": {
+            "pipeline": [
+                "wsd"
+            ]
+        }
+    }]
+}
