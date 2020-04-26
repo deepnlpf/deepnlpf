@@ -3,11 +3,11 @@
     "tools": [{
         "flair": {
             "pipeline": [
-                "fast_pos_tagging",
-                "fast_ner_4class",
-                "fast_ner_ontonotes_18class",
-                "fast_syntatic_chunking",
-                "fast_semantic_frame_detection"
+                "pos-fast",
+                "ner-fast",
+                "ner-ontonotes-fast",
+                "chunk-fast",
+                "frame-fast"
             ]
         }
     }]

@@ -92,3 +92,5 @@ https://graphene-python.org/
 
 # PluginManager
 - Instalação de plugins de forma automática. Quando o plugin for adcionado ao pipeline, ele é altomaticamente instalado para o usuário.
+
+- Install pip plugin via bash file. Isso evita o passo do usuário instalar a ferramenta.
