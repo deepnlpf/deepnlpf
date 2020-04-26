@@ -88,3 +88,7 @@ https://graphene-python.org/
 
 - Configura ip e port usando cache do navegador.
 - 
+
+
+# PluginManager
+- Instalação de plugins de forma automática. Quando o plugin for adcionado ao pipeline, ele é altomaticamente instalado para o usuário.
