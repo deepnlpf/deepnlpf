@@ -5,31 +5,13 @@ import json
 
 from deepnlpf.pipeline import Pipeline
 
-
-custom_pipeline_string = """
-{
-    "lang": "en",
-    "tools": [{
-        "stanza": {
-            "pipeline": [
-                "tokenize",
-                "mwt",
-                "pos",
-                "lemma",
-                "ner",
-                "depparse"
-            ]
-        }
-    }]
-}
-    """
-
 sentence = "I went to the bank to deposit my money."
+path_pipeline = '/home/fasr/Mestrado/Workspace/deepnlpf2/tests/data/dataset_1doc_1sent'
 
-def main():
-  nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline_string)
-  annotation = nlp.annotate()
-  print(json.dumps(annotation))
+nlp = Pipeline(
+    _input=sentence, 
+    pipeline=path_pipeline, 
+    _output='file',
+    boost='ray')
 
-if __name__ == "__main__":
-    main()
+annotation = nlp.annotate()

@@ -246,14 +246,18 @@ class Pipeline(object):
         # pre-processing tokenization and ssplit using plugin base selected.
         if self._tool_base == 'stanza':
             self._documents = PluginManager().call_plugin_nlp(
-                plugin_name='stanza', _id_pool=self._id_pool, 
+                plugin_name='stanza', 
+                _id_pool=self._id_pool, 
                 lang=self._custom_pipeline['lang'],
-                document=document, pipeline=['tokenize'])
+                document=document, 
+                pipeline=['tokenize'])
             
             # loop - go through the json and assemble the sentences.
             sentence = list()
+
             for item in self._documents[0]:
                 sentence.append(item['text'])
+
             sentences.append(" ".join(sentence))
 
         if self._tool_base == "stanfordcorenlp":
