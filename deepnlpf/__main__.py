@@ -6,6 +6,8 @@ import argparse, re, json
 from os import path
 from codecs import open
 
+from deepnlpf._version as v
+
 HERE = path.abspath(path.dirname(__file__))
 
 '''
@@ -59,9 +61,8 @@ def main():
         epilog='🐙 Enjoy the program! :)'
     )
 
-    version_file_contents = open(path.join(HERE, '_version.py'), encoding='utf-8').read()
-    VERSION = re.compile('__version__ = \"(.*)\"').search(version_file_contents).group(1)
-    my_parser.version = '🐙 DeepNLPF v' + VERSION
+
+    my_parser.version = '🐙 DeepNLPF V-' + v.__version__
 
     my_parser.add_argument('-v', '--version',
                            help='show version.',

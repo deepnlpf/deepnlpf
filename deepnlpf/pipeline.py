@@ -136,8 +136,7 @@ class Pipeline(object):
         if self._boost == 'pathos':
             process = str(pathos.helpers.mp.current_process())
             log.logger.info("{}".format(process))
-            #Telegram().send_message("⛏️ Processing... ForkProcess: {}, {}".format(str(process), str(tool)))
-            RESULT = [_ for _ in tqdm(self.pool.map(function, new_list_tools), total=len(new_list_tools), desc='NLP Tool(s)')]
+            RESULT = [_ for _ in tqdm(self.pool.map(self.run, new_list_tools), total=len(new_list_tools), desc='NLP Tool(s)')]
         
         elif self._boost == 'ray':
 

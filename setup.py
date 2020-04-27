@@ -1,26 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
-import re
+import os, re
 
 from os import path
 from codecs import open
 from setuptools import setup, Extension, find_packages
+import deepnlpf._version as v
 
-here = path.abspath(path.dirname(__file__))
+HERE = path.abspath(path.dirname(__file__))
 HOME = os.environ['HOME']
 
-# read the version from deepnlpf/_version.py
-version_file_contents = open(
-    path.join(here, 'deepnlpf/_version.py'), encoding='utf-8').read()
-VERSION = re.compile(
-    '__version__ = \"(.*)\"').search(version_file_contents).group(1)
+VERSION = v.__version__
+print(VERSION)
 
 # Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
+with open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
     README = f.read()
 
-with open(path.join(here, 'requirements.txt')) as fp:
+with open(path.join(HERE, 'requirements.txt')) as fp:
     REQUIRED = fp.read().splitlines()
 
 # This call to setup() does all the work
@@ -60,7 +57,7 @@ setup(
         'Topic :: Software Development',
         'Topic :: Software Development :: Libraries',
 
-        # Specify the Python versions you support here. In particular, ensure
+        # Specify the Python versions you support HERE. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
         'Programming Language :: Python :: 3.7',
     ],

@@ -1,0 +1,26 @@
+2020-04-27 18:17:29,064 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-27 18:17:29,064 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-27 18:17:29,064 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-27 18:17:29,064 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/stanza.json
+2020-04-27 18:17:29,064 - DeepNLPF.base - INFO - Use DB: None
+2020-04-27 18:17:29,064 - DeepNLPF.base - INFO - Output: file
+2020-04-27 18:17:29,064 - DeepNLPF.base - INFO - Format: json
+2020-04-27 18:17:29,065 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-27 18:17:29,065 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-27 18:17:29,065 - DeepNLPF.base - INFO - Boost: pathos
+2020-04-27 18:17:29,084 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-27 18:17:29,084 - DeepNLPF.base - INFO - <_MainProcess name='MainProcess' parent=None started>
+2020-04-27 18:18:19,222 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-27 18:18:19,222 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-27 18:18:19,222 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-27 18:18:19,222 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/stanza.json
+2020-04-27 18:18:19,222 - DeepNLPF.base - INFO - Use DB: None
+2020-04-27 18:18:19,222 - DeepNLPF.base - INFO - Output: file
+2020-04-27 18:18:19,222 - DeepNLPF.base - INFO - Format: json
+2020-04-27 18:18:19,222 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-27 18:18:19,223 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-27 18:18:19,223 - DeepNLPF.base - INFO - Boost: pathos
+2020-04-27 18:18:19,239 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-27 18:18:19,240 - DeepNLPF.base - INFO - <_MainProcess name='MainProcess' parent=None started>
+2020-04-27 18:18:24,637 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea74c1b076846d8e876d3bd/document_test.txt/stanza.json
+2020-04-27 18:18:24,642 - DeepNLPF.base - INFO - --------------------- End ---------------------
