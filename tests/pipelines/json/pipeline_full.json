@@ -45,6 +45,13 @@
                     "depparse"
                 ]
             }
+        },
+        {
+            "pywsd": {
+                "pipeline": [
+                    "wsd"
+                ]
+            }
         }
     ]
 }

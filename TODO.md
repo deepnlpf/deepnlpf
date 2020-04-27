@@ -1,5 +1,5 @@
 # Pipeline
-- Adicionar suporte a um pipeline mais simples, construido com base em um arquivo .ini .
+- Add input file .ini .
 
 # PreProcessing
 - Durante a tokenization das sentenças adicionar um id para cada uma.
