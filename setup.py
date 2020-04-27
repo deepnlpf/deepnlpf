@@ -95,7 +95,7 @@ setup(
     ],
 
     # List required Python versions.
-    python_requires='>=3.7',
+    python_requires='>=3',
 
     entry_points={
         "console_scripts": [
