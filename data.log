@@ -1,0 +1,354 @@
+2020-04-28 10:17:08,159 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 10:17:08,159 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 10:17:08,159 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/pipeline_flair.json
+2020-04-28 10:17:08,159 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 10:17:08,159 - DeepNLPF.base - INFO - Output: file
+2020-04-28 10:17:08,159 - DeepNLPF.base - INFO - Format: json
+2020-04-28 10:17:08,159 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 10:17:08,159 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 10:17:08,159 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 10:17:09,202 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 10:18:25,504 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 10:18:25,504 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 10:18:25,504 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 10:18:25,505 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/flair.json
+2020-04-28 10:18:25,505 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 10:18:25,505 - DeepNLPF.base - INFO - Output: file
+2020-04-28 10:18:25,505 - DeepNLPF.base - INFO - Format: json
+2020-04-28 10:18:25,505 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 10:18:25,505 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 10:18:25,505 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 10:18:26,515 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 10:18:27,194 - DeepNLPF.base - INFO - Plugin call: flair-0
+2020-04-28 10:18:40,250 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea82d22208fbecfa7df81c7/document_test.txt/flair.json
+2020-04-28 10:18:40,258 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 10:22:52,833 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 10:22:52,834 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 10:22:52,834 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 10:22:52,834 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/flair.json
+2020-04-28 10:22:52,834 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 10:22:52,834 - DeepNLPF.base - INFO - Output: file
+2020-04-28 10:22:52,834 - DeepNLPF.base - INFO - Format: json
+2020-04-28 10:22:52,834 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 10:22:52,834 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 10:22:52,834 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 10:22:53,330 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 10:22:54,495 - DeepNLPF.base - INFO - Plugin call: flair-0
+2020-04-28 10:23:05,957 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea82e2d202ec03ae834a5ec/document_test.txt/flair.json
+2020-04-28 10:23:05,961 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 10:29:52,269 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 10:29:52,269 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 10:29:52,270 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 10:29:52,270 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/flair.json
+2020-04-28 10:29:52,270 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 10:29:52,270 - DeepNLPF.base - INFO - Output: file
+2020-04-28 10:29:52,270 - DeepNLPF.base - INFO - Format: json
+2020-04-28 10:29:52,270 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 10:29:52,270 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 10:29:52,270 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 10:29:53,291 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 10:29:53,899 - DeepNLPF.base - INFO - Plugin call: flair-0
+2020-04-28 10:30:03,760 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea82fd10e7209efb3df7a89/document_test.txt/flair.json
+2020-04-28 10:30:03,774 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 11:02:26,767 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 11:02:26,768 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 11:02:26,768 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 11:02:26,768 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/flair.json
+2020-04-28 11:02:26,768 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 11:02:26,768 - DeepNLPF.base - INFO - Output: file
+2020-04-28 11:02:26,768 - DeepNLPF.base - INFO - Format: json
+2020-04-28 11:02:26,769 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 11:02:26,769 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 11:02:26,769 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 11:02:27,723 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 11:02:28,435 - DeepNLPF.base - INFO - Plugin call: flair-0
+2020-04-28 11:02:37,788 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea837730ca758e1e88a4c4e/document_test.txt/flair.json
+2020-04-28 11:02:37,790 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 11:08:47,913 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 11:08:47,913 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 11:08:47,913 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 11:08:47,913 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/flair.json
+2020-04-28 11:08:47,913 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 11:08:47,913 - DeepNLPF.base - INFO - Output: file
+2020-04-28 11:08:47,913 - DeepNLPF.base - INFO - Format: json
+2020-04-28 11:08:47,913 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 11:08:47,913 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 11:08:47,914 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 11:08:48,398 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 11:08:49,584 - DeepNLPF.base - INFO - Plugin call: flair-0
+2020-04-28 11:08:58,819 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea838f07a84eefe0990511e/document_test.txt/flair.json
+2020-04-28 11:08:58,823 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 11:55:18,837 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 11:55:18,837 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 11:55:18,837 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 11:55:18,837 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/flair.json
+2020-04-28 11:55:18,837 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 11:55:18,837 - DeepNLPF.base - INFO - Output: file
+2020-04-28 11:55:18,838 - DeepNLPF.base - INFO - Format: json
+2020-04-28 11:55:18,838 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 11:55:18,838 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 11:55:18,838 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 11:55:19,304 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 11:55:20,619 - DeepNLPF.base - INFO - Plugin call: flair-0
+2020-04-28 11:56:15,256 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 11:56:15,256 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 11:56:15,257 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 11:56:15,257 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/flair.json
+2020-04-28 11:56:15,257 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 11:56:15,257 - DeepNLPF.base - INFO - Output: file
+2020-04-28 11:56:15,257 - DeepNLPF.base - INFO - Format: json
+2020-04-28 11:56:15,257 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 11:56:15,257 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 11:56:15,257 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 11:56:15,782 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 11:56:17,029 - DeepNLPF.base - INFO - Plugin call: flair-0
+2020-04-28 11:56:25,998 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea8440fec2ce3af7aa6e8ca/document_test.txt/flair.json
+2020-04-28 11:56:26,002 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 11:58:07,703 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 11:58:07,703 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 11:58:07,703 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 11:58:07,703 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/flair.json
+2020-04-28 11:58:07,703 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 11:58:07,704 - DeepNLPF.base - INFO - Output: file
+2020-04-28 11:58:07,704 - DeepNLPF.base - INFO - Format: json
+2020-04-28 11:58:07,704 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 11:58:07,704 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 11:58:07,705 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 11:58:08,140 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 11:58:09,404 - DeepNLPF.base - INFO - Plugin call: flair-0
+2020-04-28 11:58:18,515 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea84480c9fb7a0a0d013102/document_test.txt/flair.json
+2020-04-28 11:58:18,519 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 11:59:15,551 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 11:59:15,551 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 11:59:15,552 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 11:59:15,552 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/flair.json
+2020-04-28 11:59:15,552 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 11:59:15,552 - DeepNLPF.base - INFO - Output: file
+2020-04-28 11:59:15,552 - DeepNLPF.base - INFO - Format: json
+2020-04-28 11:59:15,552 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 11:59:15,552 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 11:59:15,552 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 11:59:16,024 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 11:59:17,177 - DeepNLPF.base - INFO - Plugin call: flair-0
+2020-04-28 11:59:25,817 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea844c44b121a8c5c5f648e/document_test.txt/flair.json
+2020-04-28 11:59:25,819 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 14:10:21,977 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:10:21,977 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:10:21,978 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:10:21,978 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:10:21,978 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:10:21,978 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:10:21,978 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:10:21,978 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:10:21,978 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:10:21,978 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:10:22,454 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:10:23,626 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:13:57,530 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:13:57,530 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:13:57,530 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:13:57,530 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:13:57,530 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:13:57,530 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:13:57,530 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:13:57,530 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:13:57,531 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:13:57,531 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:13:57,944 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:13:59,207 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:14:00,095 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea8645581da37a1eacae1cb/document_test.txt/spacy.json
+2020-04-28 14:14:00,097 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 14:26:29,552 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:26:29,552 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:26:29,552 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:26:29,552 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:26:29,552 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:26:29,552 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:26:29,552 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:26:29,552 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:26:29,553 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:26:29,553 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:26:30,001 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:26:31,322 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:27:19,177 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:27:19,177 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:27:19,177 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:27:19,178 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:27:19,178 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:27:19,178 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:27:19,178 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:27:19,178 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:27:19,178 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:27:19,178 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:27:19,623 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:27:20,846 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:27:48,658 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:27:48,658 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:27:48,658 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:27:48,658 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:27:48,658 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:27:48,658 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:27:48,658 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:27:48,658 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:27:48,658 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:27:48,659 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:27:49,135 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:27:50,791 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:29:44,644 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:29:44,644 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:29:44,644 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:29:44,644 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:29:44,644 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:29:44,644 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:29:44,644 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:29:44,644 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:29:44,644 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:29:44,645 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:29:45,109 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:29:46,331 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:30:02,960 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:30:02,960 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:30:02,960 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:30:02,960 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:30:02,960 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:30:02,960 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:30:02,960 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:30:02,960 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:30:02,960 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:30:02,960 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:30:03,544 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:30:05,090 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:30:29,235 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:30:29,235 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:30:29,235 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:30:29,235 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:30:29,235 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:30:29,235 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:30:29,235 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:30:29,235 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:30:29,235 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:30:29,235 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:30:29,694 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:30:30,970 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:30:58,604 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:30:58,605 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:30:58,605 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:30:58,605 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:30:58,605 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:30:58,605 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:30:58,605 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:30:58,605 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:30:58,605 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:30:58,605 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:30:59,030 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:31:00,249 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:31:01,179 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea86853719039adf1eb6c47/document_test.txt/spacy.json
+2020-04-28 14:31:01,182 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 14:32:07,055 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:32:07,056 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:32:07,056 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:32:07,056 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:32:07,056 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:32:07,056 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:32:07,056 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:32:07,056 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:32:07,056 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:32:07,056 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:32:07,539 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:32:08,803 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:32:09,666 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea8689718aabcb8dd666806/document_test.txt/spacy.json
+2020-04-28 14:32:09,668 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 14:36:01,174 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:36:01,174 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:36:01,174 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:36:01,174 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:36:01,174 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:36:01,174 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:36:01,174 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:36:01,174 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:36:01,175 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:36:01,175 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:36:01,635 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:36:03,069 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:37:26,003 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:37:26,003 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:37:26,003 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:37:26,004 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:37:26,004 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:37:26,004 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:37:26,004 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:37:26,004 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:37:26,004 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:37:26,004 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:37:26,477 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:37:27,681 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:37:28,633 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea869d66df5d545e1cc12c7/document_test.txt/spacy.json
+2020-04-28 14:37:28,639 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 14:39:16,991 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:39:16,991 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:39:16,992 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:39:16,992 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:39:16,992 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:39:16,992 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:39:16,992 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:39:16,992 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:39:16,992 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:39:16,992 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:39:17,435 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:39:18,679 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:39:19,657 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea86a456bae80395da92d3b/document_test.txt/spacy.json
+2020-04-28 14:39:19,660 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 14:43:24,723 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:43:24,723 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:43:24,724 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:43:24,724 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:43:24,724 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:43:24,724 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:43:24,724 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:43:24,724 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:43:24,724 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:43:24,724 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:43:25,170 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:43:26,543 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:43:46,508 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:43:46,508 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:43:46,508 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:43:46,509 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:43:46,509 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:43:46,509 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:43:46,509 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:43:46,509 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:43:46,509 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:43:46,509 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:43:46,973 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:43:48,647 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:43:49,678 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea86b52f132e5780c2b7975/document_test.txt/spacy.json
+2020-04-28 14:43:49,680 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 14:43:56,862 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:43:56,862 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:43:56,863 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:43:56,863 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:43:56,863 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:43:56,863 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:43:56,863 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:43:56,863 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:43:56,863 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:43:56,863 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:43:57,341 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:43:58,550 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:43:59,563 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea86b5de660f3155f2f094f/document_test.txt/spacy.json
+2020-04-28 14:43:59,565 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-04-28 14:45:52,121 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-04-28 14:45:52,121 - DeepNLPF.base - INFO - Input data type: path_dataset
+2020-04-28 14:45:52,122 - DeepNLPF.base - INFO - Input pipeline type: json file.
+2020-04-28 14:45:52,122 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json
+2020-04-28 14:45:52,122 - DeepNLPF.base - INFO - Use DB: None
+2020-04-28 14:45:52,122 - DeepNLPF.base - INFO - Output: file
+2020-04-28 14:45:52,122 - DeepNLPF.base - INFO - Format: json
+2020-04-28 14:45:52,122 - DeepNLPF.base - INFO - Tool base: stanza
+2020-04-28 14:45:52,122 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-04-28 14:45:52,122 - DeepNLPF.base - INFO - Boost: ray
+2020-04-28 14:45:52,572 - DeepNLPF.base - INFO - Number documents: 1
+2020-04-28 14:45:54,020 - DeepNLPF.base - INFO - Plugin call: spacy-0
+2020-04-28 14:45:54,960 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/5ea86bd0e5ef3c4006c029e0/document_test.txt/spacy.json
+2020-04-28 14:45:54,964 - DeepNLPF.base - INFO - --------------------- End ---------------------

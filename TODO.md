@@ -9,12 +9,7 @@
 e agrupa em um único arquivo estruturado por camadas níveis de análise lingítica (léxico, sintático e semântico).
 
 # Database
-Da suporte a armazenamento de dados do tipo documento no formato XML e JSON.
-Para isso, será usado a arquitetura de plugins, onde terá plugins construidos 
-para banco de dados especificos.
-
-- Plugin: BaseX http://basex.org/
-- Plugin: MongoDB
+- Create plugin BaseX http://basex.org/
 
 # Documentation
 - Gerar o Diagrama de Classes Completo do DeepNLPF utilizando a ferramenta: https://gojs.net/latest/samples/umlClass.html

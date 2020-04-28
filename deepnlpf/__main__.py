@@ -6,7 +6,7 @@ import argparse, re, json
 from os import path
 from codecs import open
 
-from deepnlpf._version as v
+import deepnlpf._version as v
 
 HERE = path.abspath(path.dirname(__file__))
 

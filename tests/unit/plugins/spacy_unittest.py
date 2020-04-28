@@ -1,37 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-import json
-
 from deepnlpf.pipeline import Pipeline
 
-custom_pipeline_string = """
-{
-    "lang": "en",
-    "tools": [
-        {
-            "spacy": {
-                "pipeline": [
-                    "pos",
-                    "tag",
-                    "shape",
-                    "is_alpha",
-                    "is_title",
-                    "like_num",
-                    "label"
-                ]
-            }
-        }
-    ]
-}
-"""
+path_dataset = "/home/fasr/Mestrado/Workspace/deepnlpf2/tests/data/dataset_1doc_1sent"
+path_pipeline = "/home/fasr/Mestrado/Workspace/deepnlpf2/tests/pipelines/json/spacy.json"
 
-sentence = "I went to the bank to deposit my money."
-
-def main():
-  nlp = Pipeline(raw_text=sentence, json_string=custom_pipeline_string)
-  annotation = nlp.annotate()
-  print(json.dumps(annotation))
-
-if __name__ == "__main__":
-    main()
+nlp = Pipeline(_input=path_dataset, pipeline=path_pipeline, _output='file', boost='ray')
+annotation = nlp.annotate()
