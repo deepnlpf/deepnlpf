@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, sys, json, uuid, names, datetime
+import os, sys, json, uuid, datetime
 
 import deepnlpf.log as log
 
@@ -274,7 +274,7 @@ class Pipeline(object):
         if self._use_db != None:
             # insert dataset in database.
             dataset_document = {
-                "name": names.get_first_name(),
+                "name": 'document_'+RandomObjectId().gen_random_object_id(),
                 "data_time": OutputFormat.data_time(self)
             }
 
@@ -288,7 +288,7 @@ class Pipeline(object):
             # insert document(s) in database.
             document = {
                 "_id_dataset": _id_dataset,
-                "name": names.get_first_name(),
+                "name": 'dataset_'+RandomObjectId().gen_random_object_id(),
                 "sentences": [sentence for sentence in sentences]
             }
 
@@ -303,7 +303,7 @@ class Pipeline(object):
 
         _id_dataset = RandomObjectId().gen_random_object_id()
         _id = RandomObjectId().gen_random_object_id()
-        name = names.get_first_name()
+        name = 'dataset_'+RandomObjectId().gen_random_object_id()
         
         return _id_dataset, [{'_id':_id, '_id_dataset':_id_dataset, 'name':name, 'sentences': sentences}]
         

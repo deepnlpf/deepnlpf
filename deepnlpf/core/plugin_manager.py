@@ -88,6 +88,15 @@ class PluginManager:
             fantasy_zip = zipfile.ZipFile(PATH_DOWNLOAD_PLUGIN)
             fantasy_zip.extractall(self.PLUGIN_PATH)
             fantasy_zip.close()
+
+            # Check in plugin file requirements.sh exist.
+            if os.path.exists(self.PLUGIN_PATH + plugin_name + '/requeriments.sh'):
+                # Install requeriments.sh
+                try:
+                    os.popen(self.PLUGIN_PATH + plugin_name + '/requeriments.sh')
+                except Exception as err:
+                    print("Error when executing the requeriments.sh plugin file!")
+                    print(err)
         except Exception as err:
             os.remove(PATH_DOWNLOAD_PLUGIN) # clear file zip.
             print("Plugin not found!")
@@ -117,6 +126,3 @@ class PluginManager:
         # Path for save plugin.
         FOLDER_PLUGINS = '/deepnlpf_data/plugins/'
         pass
-                
-
-
