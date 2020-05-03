@@ -49,17 +49,17 @@ class PluginManager:
         plugin = self.load_plugin(plugin_name)
         log.logger.info("Plugin call: {}".format(plugin_name))
 
-        if operation is 'insert':
+        if operation == 'insert':
             result = plugin.Plugin().insert(collection, document)
-        elif operation is 'select_one':
+        elif operation == 'select_one':
             result = plugin.Plugin().select_one(collection, key)
-        elif operation is 'select_all':
+        elif operation == 'select_all':
             result = plugin.Plugin().select_all(collection)
-        elif operation is 'select_all_key':
+        elif operation == 'select_all_key':
             result = plugin.Plugin().select_all_key(collection, key)
-        elif operation is 'update':
+        elif operation == 'update':
             result = plugin.Plugin().update(collection, key, document)
-        elif operation is 'delete':
+        elif operation == 'delete':
             result = plugin.Plugin().delete(collection, key)
 
         return result
@@ -128,8 +128,8 @@ class PluginManager:
 
     def uninstall(self, plugin_name):
         # Path for save plugin.
-        FOLDER_PLUGINS = '/deepnlpf_data/plugins/'
-        PATH_DOWNLOAD_PLUGIN = self.HOME + FOLDER_PLUGINS + plugin_name
+        self.PLUGIN_PATH = '/deepnlpf_data/plugins/'
+        PATH_DOWNLOAD_PLUGIN = self.HOME + self.PLUGIN_PATH + plugin_name
 
         try:
             print("Uninstall plugin", plugin_name, "..")
