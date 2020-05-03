@@ -128,7 +128,6 @@ class PluginManager:
 
     def uninstall(self, plugin_name):
         # Path for save plugin.
-        self.PLUGIN_PATH = '/deepnlpf_data/plugins/'
         PATH_DOWNLOAD_PLUGIN = self.HOME + self.PLUGIN_PATH + plugin_name
 
         try:
@@ -141,5 +140,4 @@ class PluginManager:
 
     def listplugins(self):
         # Path for save plugin.
-        FOLDER_PLUGINS = '/deepnlpf_data/plugins/'
         pass
