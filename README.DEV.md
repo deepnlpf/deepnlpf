@@ -28,3 +28,6 @@ Auto-Generating Documentation for an Entire Project
     pycco deepnlpf/**/*.py -p
     
     pycco deepnlpf/**/*.py -p --watch
+
+# Emoji
+https://getemoji.com/

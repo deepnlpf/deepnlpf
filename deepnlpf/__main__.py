@@ -75,7 +75,7 @@ def main():
 
     my_parser.add_argument('-uninstall', '--uninstall',
                     help="Command for uninstall plugin.",
-                    type=install,
+                    type=uninstall,
                     action='store')
 
     my_parser.add_argument('-listplugins', '--listplugins',

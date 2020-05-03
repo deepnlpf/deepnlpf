@@ -202,8 +202,8 @@ class Pipeline(object):
             EXT = '.xml' if self._format == 'xml' else '.json'
 
             # Create dir name dataset.
-            PATH_DATASET = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)
-            PATH_DOCUMENT = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)+'/'+_id_document
+            PATH_DATASET = os.environ['HOME'] + '/deepnlpf_data/output/dataset_'+str(_id_dataset)
+            PATH_DOCUMENT = os.environ['HOME'] + '/deepnlpf_data/output/dataset_'+str(_id_dataset)+'/'+_id_document
 
             if not os.path.exists(PATH_DATASET):
                 os.makedirs(PATH_DATASET)
@@ -212,7 +212,7 @@ class Pipeline(object):
                 os.makedirs(PATH_DOCUMENT)
 
             # save file document(s).
-            PATH = os.environ['HOME'] + '/deepnlpf_data/output/'+str(_id_dataset)+'/'+_id_document+'/'+plugin_name+EXT
+            PATH = os.environ['HOME'] + '/deepnlpf_data/output/dataset_'+str(_id_dataset)+'/'+_id_document+'/'+plugin_name+EXT
             Util().save_file(PATH, str(annotation))
             log.logger.info("Output file in: {}".format(PATH))
 
@@ -274,7 +274,7 @@ class Pipeline(object):
         if self._use_db != None:
             # insert dataset in database.
             dataset_document = {
-                "name": 'document_'+RandomObjectId().gen_random_object_id(),
+                "name": 'document_'+RandomObjectId().gen_random_object_id_string(),
                 "data_time": OutputFormat.data_time(self)
             }
 
@@ -288,7 +288,7 @@ class Pipeline(object):
             # insert document(s) in database.
             document = {
                 "_id_dataset": _id_dataset,
-                "name": 'dataset_'+RandomObjectId().gen_random_object_id(),
+                "name": 'document_'+RandomObjectId().gen_random_object_id_string(),
                 "sentences": [sentence for sentence in sentences]
             }
 
@@ -303,7 +303,7 @@ class Pipeline(object):
 
         _id_dataset = RandomObjectId().gen_random_object_id()
         _id = RandomObjectId().gen_random_object_id()
-        name = 'dataset_'+RandomObjectId().gen_random_object_id()
+        name = 'document_'+RandomObjectId().gen_random_object_id_string()
         
         return _id_dataset, [{'_id':_id, '_id_dataset':_id_dataset, 'name':name, 'sentences': sentences}]
         
