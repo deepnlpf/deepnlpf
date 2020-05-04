@@ -40,7 +40,7 @@ class OutputFormat:
         import yaml
 
         with open(yaml_file) as file:
-            doc = json.dumps(yaml.load(file))
+            doc = json.dumps(yaml.safe_load(file))
 
         return json.loads(doc)
 

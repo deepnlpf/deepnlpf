@@ -1,22 +1,11 @@
 ---
-    lang: en
-    tools:
-    - stanfordcorenlp:
-        pipeline:
-        - tokenize
-        - ssplit
-        - pos
-        - lemma
-        - ner
-        - truecase
-        - parse
-        - depparse
-    - spacy:
-        pipeline:
-        - pos
-        - tag
-        - shape
-        - is_alpha
-        - is_title
-        - like_num
-        - label
+lang: en
+tools:
+- stanza:
+    pipeline:
+    - tokenize
+    - mwt
+    - pos
+    - lemma
+    - ner
+    - depparse
