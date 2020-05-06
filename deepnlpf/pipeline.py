@@ -28,7 +28,7 @@ class Pipeline(object):
         pipeline=None,
         _output="terminal",
         _format="json",
-        use_db=None,
+        use_db=False,
         tool_base="stanza",
         boost="pathos",
         memory=None,
@@ -124,7 +124,7 @@ class Pipeline(object):
 
     def annotate(self):
 
-        if self._use_db != None:  # use DB.
+        if self._use_db == True:  # use DB.
             # get _id_dataset
             self._id_dataset = self.option_input_text_selected(self.type_input_data)
 
@@ -197,7 +197,7 @@ class Pipeline(object):
                 ],
             )
 
-            if self._use_db != None:
+            if self._use_db == True:
                 # save annotation in db used.
                 PluginManager().call_plugin_db(
                     plugin_name=self._use_db,
@@ -326,7 +326,7 @@ class Pipeline(object):
                     sentence.append(token["word"])
                 sentences.append(" ".join(sentence))
 
-        if self._use_db != None:
+        if self._use_db != True:
             # insert dataset in database.
             dataset_document = {
                 "name": "document_" + RandomObjectId().gen_random_object_id_string(),
@@ -391,7 +391,7 @@ class Pipeline(object):
                 # get name dataset.
                 dataset_name = os.path.basename(os.path.normpath(path_dataset))
 
-                if self._use_db != None:
+                if self._use_db == True:
                     dataset_document = {
                         "name": dataset_name,
                         "data_time": datetime.datetime.now(),
@@ -477,7 +477,7 @@ class Pipeline(object):
 
                                     # Boost().multiprocessing(self.run, new_list_tools)
 
-                                    if self._use_db != None:
+                                    if self._use_db ==True:
                                         PluginManager().call_plugin_db(
                                             plugin_name=self._use_db,
                                             operation="insert",
@@ -522,7 +522,7 @@ class Pipeline(object):
                             }
 
                         else:
-                            if self._use_db != None:
+                            if self._use_db != True:
                                 document_document = {
                                     "_id_dataset": _id_dataset,
                                     "name": file_name,
@@ -547,7 +547,7 @@ class Pipeline(object):
 
                     data.append({"doc": cont_doc})
 
-                    if self._use_db != None:
+                    if self._use_db != True:
                         log_document = {
                             "_id_dataset": _id_dataset,
                             "info": "Save Dataset.",
@@ -555,7 +555,7 @@ class Pipeline(object):
                             "data_time": datetime.datetime.now(),
                         }
 
-                if self._use_db != None:
+                if self._use_db != True:
                     PluginManager().call_plugin_db(
                         plugin_name=self._use_db,
                         operation="insert",
@@ -567,7 +567,7 @@ class Pipeline(object):
             print("This path does not contain a valid directory!")
             sys.exit(0)
 
-        if self._use_db != None:
+        if self._use_db != True:
             return _id_dataset
         else:
             return _id_dataset, list_documents

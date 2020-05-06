@@ -13,10 +13,12 @@ from deepnlpf.models.mongodb import DataBase
 from deepnlpf.util.encoder import JSONEncoder
 from deepnlpf.core.plugin_manager import PluginManager
 
+from enum import Enum
+
 from fastapi import FastAPI
 
-app = FastAPI()
 
+app = FastAPI()
 
 
 @app.get("/")
@@ -45,23 +47,18 @@ def datasets():
 
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
-
-
 @app.get("/processing/{_input}/{pipeline}")
 def processing(
     _input: str, 
-    pipeline: str,
-    _output='terminal', 
-    _format='json',
-    use_db=None,
-    tool_base='stanza', 
-    boost='pathos', 
-    memory=None, 
-    cpus=None, 
-    gpus=None):    
+    pipeline:str,
+    _output:str='terminal', 
+    _format:str='json',
+    use_db:bool=False,
+    tool_base:str='stanza',
+    boost:str='ray', 
+    memory:int=None, 
+    cpus:int=None, 
+    gpus:int=None):    
     
     try:
         nlp = Pipeline(
