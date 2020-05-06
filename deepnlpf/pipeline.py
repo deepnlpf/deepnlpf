@@ -88,7 +88,7 @@ class Pipeline(object):
         self._id_dataset = ''
 
         self._boost = boost
-        log.logger.info("Boost: {}".format(boost))
+        log.logger.info("🚀Boost: {}".format(boost))
         
         self._memory = memory
 

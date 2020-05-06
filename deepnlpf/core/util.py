@@ -13,8 +13,8 @@ class Util(object):
 
     def openfile_json(self, path_file):
         try:
-            with open(path_file, 'r') as file:
-                return json.load(file)
+            with open(path_file, 'r') as data:
+                return json.load(data)
         except Exception as err:
             return "Error loading file!" + err
 
@@ -22,8 +22,8 @@ class Util(object):
         data_temp = []
         
         try:
-            with open(path_file) as file:
-                for line in file:
+            with open(path_file) as data:
+                for line in data:
                     data_temp.append(line.strip())
                 return data_temp
         except Exception as err:
@@ -40,11 +40,11 @@ class Util(object):
         except Exception as err:
             print(err)
 
-    def save_json(self, path_file, corpus):
+    def save_json(self, path_file, dataset):
         try:
             temp_file = open(path_file, 'w')
         
-            for line in corpus:
+            for line in dataset:
                 temp_file.write(line+"\n")
 
             temp_file.close()

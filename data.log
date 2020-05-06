@@ -546,3 +546,20 @@
 2020-05-04 16:46:21,147 - DeepNLPF.base - INFO - Plugin call: stanza-0
 2020-05-04 16:46:28,258 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/dataset_5eb0710c02769d5ec301b423/document_5eb0710c1302c925efd0a871/stanza.json
 2020-05-04 16:46:28,262 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-05-04 16:54:49,733 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-05-04 16:54:49,734 - DeepNLPF.base - INFO - Input data type: raw_text
+2020-05-04 16:54:49,744 - DeepNLPF.base - INFO - Input pipeline type: yaml file.
+2020-05-04 16:54:49,745 - DeepNLPF.base - INFO - Pipeline selected: /home/fasr/Developer/deepnlpf/deepnlpf/tests/pipelines/yaml/custom_pipeline.yaml
+2020-05-04 16:54:49,745 - DeepNLPF.base - INFO - Use DB: None
+2020-05-04 16:54:49,745 - DeepNLPF.base - INFO - Output: file
+2020-05-04 16:54:49,745 - DeepNLPF.base - INFO - Format: json
+2020-05-04 16:54:49,745 - DeepNLPF.base - INFO - Tool base: stanza
+2020-05-04 16:54:49,745 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-05-04 16:54:49,745 - DeepNLPF.base - INFO - Boost: ray
+2020-05-04 16:54:50,681 - DeepNLPF.base - INFO - Pre-processing: Sentence Split
+2020-05-04 16:54:51,837 - DeepNLPF.base - INFO - Number documents: 1
+2020-05-04 16:54:51,933 - DeepNLPF.base - INFO - Plugin call: spacy-1
+2020-05-04 16:54:51,956 - DeepNLPF.base - INFO - Plugin call: stanza-0
+2020-05-04 16:54:53,092 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/dataset_5eb0730bd8a556967538befc/document_5eb0730b7a5913a30ef7b37c/spacy.json
+2020-05-04 16:54:56,030 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/dataset_5eb0730bd8a556967538befc/document_5eb0730b7a5913a30ef7b37c/stanza.json
+2020-05-04 16:54:56,032 - DeepNLPF.base - INFO - --------------------- End ---------------------

@@ -31,7 +31,7 @@ class PluginManager:
     def load_manifest(self):
         file_manifest = 'manifest'
         plugins = []
-
+        
         for plugin in os.listdir(self.PLUGIN_PATH):
             location = os.path.join(self.PLUGIN_PATH, plugin)
             if not os.path.isdir(location) or not file_manifest + ".json" in os.listdir(location):
@@ -40,6 +40,8 @@ class PluginManager:
             plugins.append(Util().openfile_json(path))
 
         return plugins
+
+
 
     def call_plugin_nlp(self, plugin_name, _id_pool, lang, document, pipeline, **args):
         plugin = self.load_plugin(plugin_name)

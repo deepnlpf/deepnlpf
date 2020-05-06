@@ -9,7 +9,6 @@
     Date: 23/03/2019
 """
 from deepnlpf.config import database
-from deepnlpf.modules.utils import log
 
 from pymongo import MongoClient
 from mongoengine import *
@@ -39,8 +38,7 @@ class ConnectMongoDB(object):
             _id = collection.insert_one(document).inserted_id
             return _id
         except Exception as err:
-            log.logging.error(err)
-            return log.logging.error(err)
+            return err
 
     def select_document(self, collection_name, key):
         """
@@ -56,8 +54,7 @@ class ConnectMongoDB(object):
             else:
                 return False
         except Exception as err:
-            log.logging.error(err)
-            return result
+            return err
 
     def select_document_all_key(self, collection_name, key):
         """
@@ -76,8 +73,7 @@ class ConnectMongoDB(object):
 
             return annotations
         except Exception as err:
-            log.logging.error(err)
-            return result
+            return err
 
     def select_document_all(self, collection_name):
         try:
@@ -89,8 +85,7 @@ class ConnectMongoDB(object):
 
             return item
         except Exception as err:
-            log.logging.error(err)
-            return False
+            return err
 
     def update(self, collection_name, key, document):
         """
@@ -105,8 +100,7 @@ class ConnectMongoDB(object):
             result = collection.update_one(key, document)
             return result
         except Exception as err:
-            log.logging.error(err)
-            return result
+            return err
 
     def delete(self, collection_name, key):
         """
@@ -119,5 +113,4 @@ class ConnectMongoDB(object):
             result = collection.delete_one(key)
             return result
         except Exception as err:
-            log.logging.error(err)
-            return result
+            return err
