@@ -1,6 +1,6 @@
 __pycache__
 
-.log
+data.log
 .vscode/*
 
 deepnlpf.egg-info/*
