@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, sys, json, uuid, datetime
+import os
+import sys
+import json
+import uuid
+import datetime
 
 import deepnlpf.log as log
 
-import psutil, pathos, ray
+import psutil
+import pathos
+import ray
 import pathos.pools as pp
 
 from tqdm import tqdm
@@ -21,7 +27,6 @@ from deepnlpf.core.plugin_manager import PluginManager
 
 
 class Pipeline(object):
-    
     def __init__(
         self,
         _input=None,
@@ -326,7 +331,7 @@ class Pipeline(object):
                     sentence.append(token["word"])
                 sentences.append(" ".join(sentence))
 
-        if self._use_db != True:
+        if self._use_db == True:
             # insert dataset in database.
             dataset_document = {
                 "name": "document_" + RandomObjectId().gen_random_object_id_string(),
@@ -477,7 +482,7 @@ class Pipeline(object):
 
                                     # Boost().multiprocessing(self.run, new_list_tools)
 
-                                    if self._use_db ==True:
+                                    if self._use_db == True:
                                         PluginManager().call_plugin_db(
                                             plugin_name=self._use_db,
                                             operation="insert",
@@ -522,7 +527,7 @@ class Pipeline(object):
                             }
 
                         else:
-                            if self._use_db != True:
+                            if self._use_db == True:
                                 document_document = {
                                     "_id_dataset": _id_dataset,
                                     "name": file_name,
@@ -555,7 +560,7 @@ class Pipeline(object):
                             "data_time": datetime.datetime.now(),
                         }
 
-                if self._use_db != True:
+                if self._use_db == True:
                     PluginManager().call_plugin_db(
                         plugin_name=self._use_db,
                         operation="insert",
