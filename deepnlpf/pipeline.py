@@ -27,18 +27,21 @@ from deepnlpf.core.plugin_manager import PluginManager
 
 
 class Pipeline(object):
+    
+    RESULT = ''
+    
     def __init__(
         self,
-        _input=None,
-        pipeline=None,
-        _output="terminal",
-        _format="json",
-        use_db=False,
-        tool_base="stanza",
-        boost="pathos",
-        memory=None,
-        cpus=None,
-        gpus=None,
+        _input:str=None,
+        pipeline:str=None,
+        _output:str="terminal",
+        _format:str="json",
+        use_db:str=None,
+        tool_base:str="stanza",
+        boost:str="pathos",
+        memory:int=None,
+        cpus:int=None,
+        gpus:int=None,
     ):
 
         log.logger.info("--------------------- Start ---------------------")
@@ -129,7 +132,7 @@ class Pipeline(object):
 
     def annotate(self):
 
-        if self._use_db == True:  # use DB.
+        if self._use_db != None:  # use DB especific [mongo|basex].
             # get _id_dataset
             self._id_dataset = self.option_input_text_selected(self.type_input_data)
 
@@ -161,7 +164,8 @@ class Pipeline(object):
         if self._boost == "pathos":
             process = str(pathos.helpers.mp.current_process())
             log.logger.info("{}".format(process))
-            RESULT = [
+            
+            self.RESULT = [
                 _
                 for _ in tqdm(
                     self.pool.map(self.run, new_list_tools),
@@ -180,11 +184,14 @@ class Pipeline(object):
             # Start N task in parallel.
             futures = [f.remote(tool) for tool in new_list_tools]
 
-            RESULT = ray.get(futures)
+            self.RESULT = ray.get(futures)
 
         log.logger.info("--------------------- End ---------------------")
-
-        return RESULT
+        
+        if self._output == "file":
+            return {"results": os.environ["HOME"] + "/deepnlpf_data/output/dataset_"+str(self._id_dataset)}
+        else:
+            return self.RESULT
 
     def run(self, tool):
         # extraction index number in tools, get args.
@@ -202,7 +209,7 @@ class Pipeline(object):
                 ],
             )
 
-            if self._use_db == True:
+            if self._use_db != None:
                 # save annotation in db used.
                 PluginManager().call_plugin_db(
                     plugin_name=self._use_db,
@@ -213,10 +220,10 @@ class Pipeline(object):
 
             remove_object_id = JSONEncoder().encode(annotation)
             data_json = json.loads(remove_object_id)
-            data_formating = self.type_file(data_json)
+            data_formating = self.type_output_file(data_json)
 
             self.list_temp.append(
-                self.output(
+                self.type_output_results(
                     data_formating,
                     self._id_dataset,
                     JSONEncoder().encode(document["name"]).replace('"', ""),
@@ -226,13 +233,13 @@ class Pipeline(object):
 
         return self.list_temp
 
-    def type_file(self, annotation):
+    def type_output_file(self, annotation):
         if self._format == "xml":
             return OutputFormat().json2xml(annotation)
         elif self._format == "json":
             return annotation
 
-    def output(self, annotation, _id_dataset, _id_document, plugin_name):
+    def type_output_results(self, annotation, _id_dataset, _id_document, plugin_name):
         if self._output == "terminal":
             return annotation
 
@@ -331,7 +338,7 @@ class Pipeline(object):
                     sentence.append(token["word"])
                 sentences.append(" ".join(sentence))
 
-        if self._use_db == True:
+        if self._use_db != None:
             # insert dataset in database.
             dataset_document = {
                 "name": "document_" + RandomObjectId().gen_random_object_id_string(),
@@ -396,7 +403,7 @@ class Pipeline(object):
                 # get name dataset.
                 dataset_name = os.path.basename(os.path.normpath(path_dataset))
 
-                if self._use_db == True:
+                if self._use_db != None:
                     dataset_document = {
                         "name": dataset_name,
                         "data_time": datetime.datetime.now(),
@@ -482,7 +489,7 @@ class Pipeline(object):
 
                                     # Boost().multiprocessing(self.run, new_list_tools)
 
-                                    if self._use_db == True:
+                                    if self._use_db != None:
                                         PluginManager().call_plugin_db(
                                             plugin_name=self._use_db,
                                             operation="insert",
@@ -527,7 +534,7 @@ class Pipeline(object):
                             }
 
                         else:
-                            if self._use_db == True:
+                            if self._use_db != None:
                                 document_document = {
                                     "_id_dataset": _id_dataset,
                                     "name": file_name,
@@ -560,7 +567,7 @@ class Pipeline(object):
                             "data_time": datetime.datetime.now(),
                         }
 
-                if self._use_db == True:
+                if self._use_db != None:
                     PluginManager().call_plugin_db(
                         plugin_name=self._use_db,
                         operation="insert",

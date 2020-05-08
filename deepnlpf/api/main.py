@@ -45,17 +45,17 @@ async def datasets():
 
 
 @app.get("/processing")
-def processing(
+async def processing(
     _input: str,
     pipeline: str,
-    _output: str = "terminal",
-    _format: str = "json",
-    use_db: bool = False,
-    tool_base: str = "stanza",
-    boost: str = "ray",
-    memory: int = None,
-    cpus: int = None,
-    gpus: int = None,
+    _output: str="terminal",
+    _format: str="json",
+    use_db: str=None,
+    tool_base: str="stanza",
+    boost: str="ray",
+    memory: int=None,
+    cpus: int=None,
+    gpus: int=None,
 ):
     try:
         nlp = Pipeline(
@@ -70,7 +70,7 @@ def processing(
             cpus=cpus,
             gpus=gpus,
         )
-        
+
         results = nlp.annotate()
 
         return results

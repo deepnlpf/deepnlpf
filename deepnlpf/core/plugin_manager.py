@@ -49,7 +49,6 @@ class PluginManager:
     def call_plugin_db(
         self, plugin_name, operation, collection, document=None, key=None
     ):
-        print(">>>>>>> 2", plugin_name)
         plugin = self.load_plugin(plugin_name)
         log.logger.info("Plugin call: {}".format(plugin_name))
 
