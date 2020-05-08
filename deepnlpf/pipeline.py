@@ -49,13 +49,13 @@ class Pipeline(object):
         if _input != None:
             if os.path.isdir(_input):
                 self.type_input_data = "path_dataset"
-                log.logger.info("Input data type: {}".format(self.type_input_data))
+                log.logger.info("📤 Input data type: {}".format(self.type_input_data))
             elif type(_input) == ObjectId:
                 self.type_input_data = "id_dataset"
-                log.logger.info("Input data type: {}".format(self.type_input_data))
+                log.logger.info("📤 Input data type: {}".format(self.type_input_data))
             elif type(_input) == str:
                 self.type_input_data = "raw_text"
-                log.logger.info("Input data type: {}".format(self.type_input_data))
+                log.logger.info("📤 Input data type: {}".format(self.type_input_data))
 
             self._input = _input
         else:
@@ -69,18 +69,18 @@ class Pipeline(object):
                 _, ext = pipeline.split(".")
                 if ext == "json":
                     self._custom_pipeline = Util().openfile_json(pipeline)
-                    log.logger.info("Input pipeline type: {} file.".format(ext))
+                    log.logger.info("📤 Input pipeline type: {} file.".format(ext))
                 elif ext == "yaml":
                     self._custom_pipeline = OutputFormat().yaml2json(pipeline)
-                    log.logger.info("Input pipeline type: {} file.".format(ext))
+                    log.logger.info("📤 Input pipeline type: {} file.".format(ext))
                 elif ext == "xml":
                     self._custom_pipeline = OutputFormat().xml2json(pipeline)
-                    log.logger.info("Input pipeline type: {} file.".format(ext))
+                    log.logger.info("📤 Input pipeline type: {} file.".format(ext))
             else:  # String Json
                 try:
                     self._custom_pipeline = json.loads(pipeline)
                     log.logger.info(
-                        "Input pipeline type: {} {}".format("json", "string")
+                        "📤 Input pipeline type: {} {}".format("json", "string")
                     )
                 except Exception as err:
                     print("Enter a parameter from a valid pipeline.")
@@ -94,16 +94,16 @@ class Pipeline(object):
         log.logger.info("Use DB: {}".format(use_db))
 
         self._output = _output
-        log.logger.info("Output: {}".format(_output))
+        log.logger.info("📥 Output: {}".format(_output))
 
         self._format = _format
-        log.logger.info("Format: {}".format(_format))
+        log.logger.info("📄 Format: {}".format(_format))
 
         self._tool_base = tool_base
-        log.logger.info("Tool base: {}".format(tool_base))
+        log.logger.info("⛏ Tool base: {}".format(tool_base))
 
         self._id_pool = ObjectId(b"foo-bar-quux")
-        log.logger.info("Pool: {}".format(self._id_pool))
+        log.logger.info("🔗 Pool: {}".format(self._id_pool))
 
         self._documents = ""
         self._id_dataset = ""
@@ -213,7 +213,7 @@ class Pipeline(object):
 
             remove_object_id = JSONEncoder().encode(annotation)
             data_json = json.loads(remove_object_id)
-            data_formating = self.output_format(data_json)
+            data_formating = self.type_file(data_json)
 
             self.list_temp.append(
                 self.output(
@@ -226,7 +226,7 @@ class Pipeline(object):
 
         return self.list_temp
 
-    def output_format(self, annotation):
+    def type_file(self, annotation):
         if self._format == "xml":
             return OutputFormat().json2xml(annotation)
         elif self._format == "json":
