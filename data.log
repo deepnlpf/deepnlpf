@@ -28,3 +28,38 @@
 2020-05-15 10:14:50,880 - DeepNLPF.base - INFO - Plugin Tool: stanfordcorenlp
 2020-05-15 10:15:50,470 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/dataset_5ebe95cac6bf6343d2ec2681/document_5ebe95cab56b43a1acff7454/stanfordcorenlp.json
 2020-05-15 10:15:50,513 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-05-15 16:58:50,116 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:01:57,673 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:04:04,183 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:06:51,259 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:07:30,023 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:09:40,766 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:11:16,046 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:18:15,556 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:19:12,998 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:34:41,975 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:41:00,924 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:46:53,773 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:49:01,883 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:52:18,501 - DeepNLPF.base - INFO - Plugin installed: stanza
+2020-05-15 17:58:29,385 - DeepNLPF.base - INFO - Plugin installed: preprocessing
+2020-05-15 18:03:24,826 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-05-15 18:03:24,826 - DeepNLPF.base - INFO - Input data type: raw_text
+2020-05-15 18:03:24,826 - DeepNLPF.base - INFO - Input pipeline type format: json
+2020-05-15 18:03:24,827 - DeepNLPF.base - INFO - Custom Pipeline: {'lang': 'en', 'tools': {'stanza': {'processors': ['tokenize', 'mwt', 'pos', 'lemma', 'ner', 'depparse']}}}
+2020-05-15 18:03:24,827 - DeepNLPF.base - INFO - Use DB: None
+2020-05-15 18:03:24,827 - DeepNLPF.base - INFO - Output: file
+2020-05-15 18:03:24,827 - DeepNLPF.base - INFO - Format: json
+2020-05-15 18:03:24,827 - DeepNLPF.base - INFO - Tool NLP base: stanza
+2020-05-15 18:03:24,827 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-05-15 18:03:24,827 - DeepNLPF.base - INFO - Boost: ray
+2020-05-15 18:03:39,693 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-05-15 18:03:39,693 - DeepNLPF.base - INFO - Input data type: raw_text
+2020-05-15 18:03:39,693 - DeepNLPF.base - INFO - Input pipeline type format: json
+2020-05-15 18:03:39,693 - DeepNLPF.base - INFO - Custom Pipeline: {'lang': 'en', 'tools': {'stanza': {'processors': ['tokenize', 'mwt', 'pos', 'lemma', 'ner', 'depparse']}}}
+2020-05-15 18:03:39,693 - DeepNLPF.base - INFO - Use DB: None
+2020-05-15 18:03:39,693 - DeepNLPF.base - INFO - Output: file
+2020-05-15 18:03:39,693 - DeepNLPF.base - INFO - Format: json
+2020-05-15 18:03:39,693 - DeepNLPF.base - INFO - Tool NLP base: stanza
+2020-05-15 18:03:39,693 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-05-15 18:03:39,694 - DeepNLPF.base - INFO - Boost: ray

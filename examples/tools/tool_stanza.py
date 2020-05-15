@@ -23,5 +23,3 @@ nlp = Pipeline(
 )
 
 results = nlp.annotate()
-
-print(results)
