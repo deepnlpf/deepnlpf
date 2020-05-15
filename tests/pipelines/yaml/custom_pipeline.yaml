@@ -2,7 +2,7 @@
 lang: en
 tools:
 - stanza:
-    pipeline:
+    processors:
     - tokenize
     - mwt
     - pos
@@ -10,7 +10,7 @@ tools:
     - ner
     - depparse
 - spacy:
-    pipeline:
+    processors:
     - pos
     - tag
     - shape

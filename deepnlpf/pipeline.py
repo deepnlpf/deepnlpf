@@ -1,175 +1,253 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import datetime
 import os
 import sys
-import json
-import uuid
-import datetime
 
-import deepnlpf.log as log
-
-import psutil
-import pathos
-import ray
-import pathos.pools as pp
-
-from tqdm import tqdm
 from bson.objectid import ObjectId
+import pathos
+import pathos.pools as pp
+import psutil
+import ray
+from tqdm import tqdm
 
-from deepnlpf.util.random_object_id import RandomObjectId
-
-from deepnlpf.core.util import Util
 from deepnlpf.core.boost import Boost
-from deepnlpf.util.encoder import JSONEncoder
 from deepnlpf.core.output_format import OutputFormat
 from deepnlpf.core.plugin_manager import PluginManager
+from deepnlpf.core.util import Util
+from deepnlpf.global_parameters import *
+import deepnlpf.log as log
+from deepnlpf.util.encoder import JSONEncoder
+from deepnlpf.util.random_object_id import RandomObjectId
 
 
 class Pipeline(object):
-    
-    RESULT = ''
-    
+
+    RESULT = ""
+
+    ID_DATASET = ""
+    DOCUMENTS = ""
+    DOCUMENTS_ANNOTATED = list()
+
+    CPUS_COUNT: int = 0
+    GPUS_COUNT: float = 0
+
     def __init__(
         self,
-        _input:str=None,
-        pipeline:str=None,
-        _output:str="terminal",
-        _format:str="json",
-        use_db:str=None,
-        tool_base:str="stanza",
-        boost:str="pathos",
-        memory:int=None,
-        cpus:int=None,
-        gpus:int=None,
+        _input: str,
+        pipeline: str,
+        _output: str = "terminal",
+        _format: str = "json",
+        use_db: str = None,
+        tool_base: str = "stanza",
+        boost: str = "ray",
+        memory: int = None,
+        num_cpus: int = 0,
+        num_gpus: float = 0,
     ):
 
         log.logger.info("--------------------- Start ---------------------")
 
-        self.list_temp = list()
+        self._input = _input
+        self._input_type = self.check_input_type_dataset(_input)
 
-        # auto select type input data.
-        if _input != None:
-            if os.path.isdir(_input):
-                self.type_input_data = "path_dataset"
-                log.logger.info("📤 Input data type: {}".format(self.type_input_data))
-            elif type(_input) == ObjectId:
-                self.type_input_data = "id_dataset"
-                log.logger.info("📤 Input data type: {}".format(self.type_input_data))
-            elif type(_input) == str:
-                self.type_input_data = "raw_text"
-                log.logger.info("📤 Input data type: {}".format(self.type_input_data))
-
-            self._input = _input
-        else:
-            print(
-                "Enter a parameter from a valid dataset [path_dataset|id_dataset|raw_text]"
-            )
-            sys.exit(0)
-
-        if pipeline != None:
-            if os.path.isfile(pipeline):
-                _, ext = pipeline.split(".")
-                if ext == "json":
-                    self._custom_pipeline = Util().openfile_json(pipeline)
-                    log.logger.info("📤 Input pipeline type: {} file.".format(ext))
-                elif ext == "yaml":
-                    self._custom_pipeline = OutputFormat().yaml2json(pipeline)
-                    log.logger.info("📤 Input pipeline type: {} file.".format(ext))
-                elif ext == "xml":
-                    self._custom_pipeline = OutputFormat().xml2json(pipeline)
-                    log.logger.info("📤 Input pipeline type: {} file.".format(ext))
-            else:  # String Json
-                try:
-                    self._custom_pipeline = json.loads(pipeline)
-                    log.logger.info(
-                        "📤 Input pipeline type: {} {}".format("json", "string")
-                    )
-                except Exception as err:
-                    print("Enter a parameter from a valid pipeline.")
-        else:
-            print("Enter a parameter from a valid pipeline.")
-            sys.exit(0)
-
-        log.logger.info("Pipeline selected: {}".format(pipeline))
+        self._pipeline = pipeline
+        self._pipeline_type = self.check_input_format_pipeline(pipeline)
+        self._custom_pipeline = self.load_file_pipeline(
+            self._pipeline, self._pipeline_type
+        )
 
         self._use_db = use_db
         log.logger.info("Use DB: {}".format(use_db))
 
         self._output = _output
-        log.logger.info("📥 Output: {}".format(_output))
+        log.logger.info("Output: {}".format(_output))
 
         self._format = _format
-        log.logger.info("📄 Format: {}".format(_format))
+        log.logger.info("Format: {}".format(_format))
 
         self._tool_base = tool_base
-        log.logger.info("⛏ Tool base: {}".format(tool_base))
+        log.logger.info("Tool NLP base: {}".format(tool_base))
 
         self._id_pool = ObjectId(b"foo-bar-quux")
-        log.logger.info("🔗 Pool: {}".format(self._id_pool))
-
-        self._documents = ""
-        self._id_dataset = ""
+        log.logger.info("Pool: {}".format(self._id_pool))
 
         self._boost = boost
-        log.logger.info("🚀Boost: {}".format(boost))
+        log.logger.info("Boost: {}".format(boost))
 
         self._memory = memory
 
-        if cpus is None:
-            self._cpus_count = psutil.cpu_count()  # logical=False
+        self.init_cpus(num_cpus)
+        self.init_boost()
+
+        self.GPUS_COUNT = num_gpus
+
+    def init_cpus(self, cpus):
+        """Initializes the CPUs
+
+        Arguments:
+            cpus {int} -- When this parameter is not defined [0], DeepNLP selects all 
+                          CPUs present in the computer. Otherwise, select only the 
+                          number of CPUs reported by the user.
+        """
+        if cpus == 0:
+            self.CPUS_COUNT = psutil.cpu_count()  # get quant cpus device machine.
         else:
-            self._cpus_count = cpus
+            self.CPUS_COUNT = cpus  # define quant cpus info user.
 
-        self._gpus = gpus
-
+    def init_boost(self):
+        """Starts the selected boost with the default or specified settings.
+        """
         if self._boost == "pathos":
-            self.pool = pp.ProcessPool(self._cpus_count)
+            self._id_pool = pp.ProcessPool(self.CPUS_COUNT)
         elif self._boost == "ray":
             ray.init(
-                memory=self._memory, num_cpus=self._cpus_count, num_gpus=self._gpus
+                memory=self._memory, num_cpus=self.CPUS_COUNT, num_gpus=self.GPUS_COUNT
             )
+
+    def check_input_type_dataset(self, _input: str) -> str:
+        """Checks how the dataset is entered. [path_dataset|id_dataset|raw_text].
+
+        Arguments:
+            _input {str} -- The entry can be the dataset path, the dataset id or any text.
+
+        Returns:
+            str -- returns one of the following options: [path_dataset|id_dataset|raw_text]
+        """
+        try:
+            result = ""
+
+            if os.path.isdir(_input):
+                result = INPUT_FORMAT_DATASET[0]  # path_dataset
+            elif type(_input) == ObjectId:
+                self.ID_DATASET = _input
+                result = INPUT_FORMAT_DATASET[1]  # id_dataset
+            elif type(_input) is str:
+                result = INPUT_FORMAT_DATASET[2]  # raw_text
+            else:
+                print(
+                    "Enter a parameter from a valid dataset [path_dataset|id_dataset|raw_text] ."
+                )
+                sys.exit(0)
+
+            log.logger.info("Input data type: {}".format(result))
+            return result
+        except Exception as error:
+            print(error)
+            sys.exit(0)
+
+    def check_input_format_pipeline(self, pipeline: str) -> str:
+        """Checks the file type of the pipeline.
+
+        Arguments:
+            pipeline {str} -- Pipeline file path.
+
+        Returns:
+            str -- File extension.
+        """
+
+        result = ""
+
+        try:
+            if os.path.isfile(pipeline):  # check is file.
+                file_name, ext = pipeline.split(".")
+                result = (
+                    ext.lower()
+                )  # if the file extension was in capital letters it reduces to lower case.
+            else:
+                print(
+                    "Enter a parameter from a valid pipeline {}.".format(
+                        INPUT_FORMAT_PIPELINE
+                    )
+                )
+                sys.exit(0)
+
+            log.logger.info("Input pipeline type format: {}".format(result))
+
+            return result
+        except Exception as error:
+            print(error)
+            sys.exit(0)
+
+    def load_file_pipeline(self, pipeline: str, pipeline_type: str):
+        """Load and convert the sent pipeline to Json..
+
+        Arguments:
+            pipeline {str} -- Path of the file containing the pipeline.
+            pipeline_type {str} -- File type: [json, yaml, xml]
+
+        Returns:
+            {json} -- [The pipeline is always returned in Json format.]
+        """
+        try:
+            result = ""
+
+            if pipeline_type == "json":
+                result = Util().openfile_json(pipeline)
+            elif pipeline_type == "yaml":
+                result = OutputFormat().yaml2json(pipeline)
+            elif pipeline_type == "xml":
+                result = OutputFormat().xml2json(pipeline)
+
+            log.logger.info("Custom Pipeline: {}".format(result))
+            return result
+        except Exception as error:
+            print(error)
+            sys.exit(0)
+
+    def load_dataset(self, _input_type):
+        """Loads data from the dataset.
+
+        Arguments:
+            _input_type {string} -- If _input_type [path_dataset] it is understood that 
+                                    the data are in text files and must be accurately checked, 
+                                    preprocessed and organized before processing.
+
+                                    If _input_type [id_dataset] it is understood that the data 
+                                    must be loaded from a local database.
+
+                                    iF _input_type [raw_text] it is understood that the data to 
+                                    be loaded is any text and needs to be checked, pre-processed 
+                                    and organized before processing.
+
+        Returns:
+            {list} -- returns a list containing the dataset id, and the documents to be processed.
+        """
+
+        # path_dataset
+        if _input_type == INPUT_FORMAT_DATASET[0]:
+            return self.prepare_dataset()
+        # id_dataset
+        elif _input_type == INPUT_FORMAT_DATASET[1]:
+            return self.load_database(
+                database_name=self._use_db, id_dataset=self._input
+            )
+        # raw_text
+        elif _input_type == INPUT_FORMAT_DATASET[2]:
+            documents = self.prepare_raw_text(self._input)
+            return documents
 
     def annotate(self):
 
-        if self._use_db != None:  # use DB especific [mongo|basex].
-            # get _id_dataset
-            self._id_dataset = self.option_input_text_selected(self.type_input_data)
+        self.DOCUMENTS = self.load_dataset(self._input_type)
 
-            # get all documents.
-            self._documents = PluginManager().call_plugin_db(
-                plugin_name=self._use_db,
-                operation="select_all_key",
-                collection="document",
-                key={"_id_dataset": ObjectId(self._id_dataset)},
-            )
-        else:  # no use DB.
-            self._id_dataset, self._documents = self.option_input_text_selected(
-                self.type_input_data
-            )
+        log.logger.info(
+            "Number of documents to process: {}".format(len(self.DOCUMENTS))
+        )
 
-        log.logger.info("Number documents: {}".format(len(self._documents)))
-
-        # Runs the tools using multiprocessor parallelism techniques.
         # get tools names
-        self.list_tools = [
-            ",".join(tool.keys()) for tool in self._custom_pipeline["tools"]
-        ]
-
-        # set index number in tools.
-        new_list_tools = [
-            str(tool) + "-" + str(index) for index, tool in enumerate(self.list_tools)
-        ]
+        list_tools = [tool for tool, _ in self._custom_pipeline["tools"].items()]
 
         if self._boost == "pathos":
             process = str(pathos.helpers.mp.current_process())
             log.logger.info("{}".format(process))
-            
+
             self.RESULT = [
                 _
                 for _ in tqdm(
-                    self.pool.map(self.run, new_list_tools),
-                    total=len(new_list_tools),
+                    self._id_pool.map(self.run, list_tools),
+                    total=len(list_tools),
                     desc="NLP Tool(s)",
                 )
             ]
@@ -178,35 +256,33 @@ class Pipeline(object):
 
             @ray.remote
             def f(tool):
-                log.logger.info("Plugin call: {}".format(tool))
+                log.logger.info("Plugin Tool: {}".format(tool))
                 self.run(tool)
 
             # Start N task in parallel.
-            futures = [f.remote(tool) for tool in new_list_tools]
+            futures = [f.remote(tool) for tool in list_tools]
 
             self.RESULT = ray.get(futures)
 
         log.logger.info("--------------------- End ---------------------")
-        
+
         if self._output == "file":
-            return {"results": os.environ["HOME"] + "/deepnlpf_data/output/dataset_"+str(self._id_dataset)}
+            return {
+                "results": os.environ["HOME"]
+                + "/deepnlpf_data/output/dataset_"
+                + str(self.ID_DATASET)
+            }
         else:
             return self.RESULT
 
     def run(self, tool):
-        # extraction index number in tools, get args.
-        plugin_name, index = tool.split("-")
 
-        for document in tqdm(self._documents, desc="Processing document(s)"):
+        for document in tqdm(self.DOCUMENTS, desc="Processing document(s)"):
 
-            annotation = PluginManager().call_plugin_nlp(
-                plugin_name=plugin_name,
-                _id_pool=self._id_pool,
-                lang=self._custom_pipeline["lang"],
-                document=document,
-                pipeline=self._custom_pipeline["tools"][int(index)][plugin_name][
-                    "pipeline"
-                ],
+            annotated_document = PluginManager().call_plugin_nlp(
+                plugin_name=tool,
+                document=document["sentences"],
+                pipeline=self._custom_pipeline,
             )
 
             if self._use_db != None:
@@ -215,23 +291,38 @@ class Pipeline(object):
                     plugin_name=self._use_db,
                     operation="insert",
                     collection="analysi",
-                    document=annotation,
+                    document={"sentences": annotated_document},
                 )
 
-            remove_object_id = JSONEncoder().encode(annotation)
-            data_json = json.loads(remove_object_id)
-            data_formating = self.type_output_file(data_json)
+            data_formating = {"sentences": annotated_document}
 
-            self.list_temp.append(
+            # add document annotated in list documents.
+            self.DOCUMENTS_ANNOTATED.append(
                 self.type_output_results(
-                    data_formating,
-                    self._id_dataset,
-                    JSONEncoder().encode(document["name"]).replace('"', ""),
-                    plugin_name,
+                    data_formating, self.ID_DATASET, document["name"], tool,
                 )
             )
 
-        return self.list_temp
+        return self.DOCUMENTS_ANNOTATED
+
+    def load_database(self, database_name, id_dataset):
+        """Load documents from a database.
+
+        Arguments:
+            database_name {str} -- Name of the database being used.
+            id_dataset {str} -- Dataset id saved in the database.
+
+        Returns:
+            [type] -- A list of documents to be processed.
+        """
+        results = PluginManager().call_plugin_db(
+            plugin_name=database_name,
+            operation="select_all_key",
+            collection="document",
+            key={"_id_dataset": ObjectId(id_dataset)},
+        )
+
+        return results
 
     def type_output_file(self, annotation):
         if self._format == "xml":
@@ -250,6 +341,7 @@ class Pipeline(object):
             PATH_DATASET = (
                 os.environ["HOME"] + "/deepnlpf_data/output/dataset_" + str(_id_dataset)
             )
+
             PATH_DOCUMENT = (
                 os.environ["HOME"]
                 + "/deepnlpf_data/output/dataset_"
@@ -290,165 +382,174 @@ class Pipeline(object):
 
             app.run(debug=True)
 
-    def option_input_text_selected(self, type_input_data):
-        # check type input data selected.
-        if type_input_data == "id_dataset":
-            return self._input
-        elif type_input_data == "raw_text":
-            document = json.loads(json.dumps({"sentences": [self._input]}))
-            return self.ssplit(document)
-        elif type_input_data == "path_dataset":
-            return self.processing_path_dataset(self._input)
+    def prepare_raw_text(self, raw_text):
+        log.logger.info("Pre-processing - Execute Sentence Split in texto raw.")
 
-    def ssplit(self, document):
-        log.logger.info("Pre-processing: Sentence Split")
-
-        sentences = list()
+        list_sentences = list()
 
         # pre-processing tokenization and ssplit using plugin base selected.
         if self._tool_base == "stanza":
-            self._documents = PluginManager().call_plugin_nlp(
-                plugin_name="stanza",
-                _id_pool=self._id_pool,
-                lang=self._custom_pipeline["lang"],
-                document=document,
-                pipeline=["tokenize"],
+            doc_annotation = PluginManager().call_plugin_nlp(
+                plugin_name="preprocessing",
+                document=raw_text,
+                pipeline={
+                    "lang": self._custom_pipeline["lang"],
+                    "tools": {"stanza": {"processors": ["tokenize"]}},
+                },
             )
 
-            # loop - go through the json and assemble the sentences.
-            sentence = list()
-
-            for item in self._documents[0]:
-                sentence.append(item["text"])
-
-            sentences.append(" ".join(sentence))
+            # join tokens.
+            for sentence in doc_annotation.sentences:
+                list_tokens = list()
+                for token in sentence.tokens:
+                    list_tokens.append(token.text)
+                list_sentences.append(" ".join(list_tokens))
 
         if self._tool_base == "stanfordcorenlp":
-            self._documents = PluginManager().call_plugin_nlp(
-                plugin_name="stanfordcorenlp",
-                _id_pool=self._id_pool,
-                lang=self._custom_pipeline["lang"],
-                document=document,
-                pipeline=["ssplit"],
+            doc_annotation = PluginManager().call_plugin_nlp(
+                plugin_name="preprocessing",
+                document=raw_text,
+                pipeline={
+                    "lang": self._custom_pipeline["lang"],
+                    "tools": {"stanfordcorenlp": {"processors": ["ssplit"]}},
+                },
             )
 
-            for item in self._documents[0]["sentences"]:
+            for item in doc_annotation[0]["sentences"]:
                 sentence = list()
                 for token in item["tokens"]:
                     sentence.append(token["word"])
-                sentences.append(" ".join(sentence))
+                list_sentences.append(" ".join(sentence))
 
+        # If using database.
         if self._use_db != None:
             # insert dataset in database.
-            dataset_document = {
-                "name": "document_" + RandomObjectId().gen_random_object_id_string(),
-                "data_time": OutputFormat.data_time(self),
-            }
-
-            _id_dataset = PluginManager().call_plugin_db(
+            self.ID_DATASET = PluginManager().call_plugin_db(
                 plugin_name=self._use_db,
                 operation="insert",
                 collection="dataset",
-                document=dataset_document,
+                document={
+                    "name": "dataset_" + RandomObjectId().gen_random_object_id_string(),
+                    "data_time": OutputFormat().data_time(),
+                },
             )
 
             # insert document(s) in database.
-            document = {
-                "_id_dataset": _id_dataset,
-                "name": "document_" + RandomObjectId().gen_random_object_id_string(),
-                "sentences": [sentence for sentence in sentences],
-            }
-
             PluginManager().call_plugin_db(
                 plugin_name=self._use_db,
                 operation="insert",
                 collection="document",
-                document=document,
+                document={
+                    "_id_dataset": self.ID_DATASET,
+                    "name": "document_"
+                    + RandomObjectId().gen_random_object_id_string(),
+                    "sentences": [sentence for sentence in list_sentences],
+                },
             )
 
-            return _id_dataset
+            return self.get_all_documents_database()
 
-        _id_dataset = RandomObjectId().gen_random_object_id()
-        _id = RandomObjectId().gen_random_object_id()
-        name = "document_" + RandomObjectId().gen_random_object_id_string()
+        # Not using database.
+        else:
+            # generates a document id.
+            _id = RandomObjectId().gen_random_object_id()
 
-        return (
-            _id_dataset,
-            [
-                {
-                    "_id": _id,
-                    "_id_dataset": _id_dataset,
-                    "name": name,
-                    "sentences": sentences,
-                }
-            ],
+            # generate an id for the dataset.
+            self.ID_DATASET = RandomObjectId().gen_random_object_id()
+
+            # generates a name for the document.
+            name = "document_" + RandomObjectId().gen_random_object_id_string()
+
+            document = {
+                "_id": _id,
+                "_id_dataset": self.ID_DATASET,
+                "name": name,
+                "sentences": list_sentences,
+            }
+
+            return [document]
+
+    def get_all_documents_database(self):
+        self.DOCUMENTS = PluginManager().call_plugin_db(
+            plugin_name=self._use_db,
+            operation="select_all_key",
+            collection="document",
+            key={"_id_dataset": ObjectId(self.ID_DATASET)},
         )
+        return self.DOCUMENTS
 
-    def processing_path_dataset(self, path_dataset, ssplit=False):
+    def prepare_dataset(self):
+        """Prepare the supplied dataset to be processed.
+
+        Returns:
+            {list} -- Returns a list of documents to be processed.
         """
-            Get the path of the informed dataset, go through the entire directory tree, 
-            checking the files to be saved in the database.
-        """
+
+        path_dataset = self._input
         dataset_name = ""
-        _id_dataset = ""
         list_documents = list()
+        log_document = ""
 
-        # check is path dir validate.
+        # check is path directory validate.
         if os.path.isdir(path_dataset):
-
-            # check if folder empty.
+            # check whether the directory is empty.
             if os.listdir(path_dataset) == []:
-                print("Folder empty!")
+                print("Directory empty!")
+                sys.exit(0)
+            # if the directory is not empty.
             else:
-                # get name dataset.
+                # takes the name of the directory and names the dataset.
                 dataset_name = os.path.basename(os.path.normpath(path_dataset))
 
+                # if using database save dataset.
                 if self._use_db != None:
-                    dataset_document = {
-                        "name": dataset_name,
-                        "data_time": datetime.datetime.now(),
-                    }
-
-                    _id_dataset = PluginManager().call_plugin_db(
+                    self.ID_DATASET = PluginManager().call_plugin_db(
                         plugin_name=self._use_db,
                         operation="insert",
                         collection="dataset",
-                        document=dataset_document,
+                        document={
+                            "name": dataset_name,
+                            "data_time": datetime.datetime.now(),
+                        },
                     )
+                # if you are not using a database, generate an id for the dataset.
                 else:
-                    _id_dataset = RandomObjectId.gen_random_object_id(self)
+                    self.ID_DATASET = RandomObjectId().gen_random_object_id()
 
-                # get all files' and folders' names in the current directory.
-                dirContents = os.listdir(path_dataset)
+                # get all files' and directorys' names in the current directory.
+                dirrectory_contents = os.listdir(path_dataset)
 
-                files = []
-                subfolders = []  # train or test.
+                list_files = []
+                list_sub_directory = []  # train or test.
 
-                for filename in dirContents:
-                    # check whether the current object is a folder or not.
-                    if os.path.isdir(
-                        os.path.join(os.path.abspath(path_dataset), filename)
-                    ):
-                        subfolders.append(filename)
+                # check all directory contents
+                for item in dirrectory_contents:
+                    # check whether the current item is a sub directory and add the list sub directory.
+                    if os.path.isdir(os.path.join(os.path.abspath(path_dataset), item)):
+                        list_sub_directory.append(item)
+                    # make sure the current item is a file and add the file list.
                     elif os.path.isfile(
-                        os.path.join(os.path.abspath(path_dataset), filename)
+                        os.path.join(os.path.abspath(path_dataset), item)
                     ):
-                        files.append(filename)
+                        list_files.append(item)
 
-                if subfolders:  # check exist folders
+                # check exist sub directory.
+                if list_sub_directory != []:
                     data = []
 
-                    for folders_type in subfolders:
-                        print("├── {}:".format(folders_type))
+                    for directory_type in list_sub_directory:
+                        print("├── {}:".format(directory_type))
 
-                        folders_labels = os.listdir(path_dataset + "/" + folders_type)
+                        folders_labels = os.listdir(path_dataset + "/" + directory_type)
 
                         for _label in folders_labels:
                             cont_doc = 0
 
                             if os.path.isdir(
                                 os.path.join(
-                                    os.path.abspath(path_dataset + "/" + folders_type),
+                                    os.path.abspath(
+                                        path_dataset + "/" + directory_type
+                                    ),
                                     _label,
                                 )
                             ):
@@ -457,7 +558,7 @@ class Pipeline(object):
                                     os.listdir(
                                         path_dataset
                                         + "/"
-                                        + folders_type
+                                        + directory_type
                                         + "/"
                                         + _label
                                         + "/"
@@ -469,25 +570,20 @@ class Pipeline(object):
                                     text_raw = Util().open_txt(
                                         path_dataset
                                         + "/"
-                                        + folders_type
+                                        + directory_type
                                         + "/"
                                         + _label
                                         + "/"
                                         + file_name
                                     )
 
-                                    # Sentence Split.
-                                    # sentences = PreProcessing('ssplit', text_raw).run()
-
                                     document = {
-                                        "_id_dataset": _id_dataset,
+                                        "_id_dataset": self.ID_DATASET,
                                         "name": file_name,
-                                        "type": folders_type,
+                                        "type": directory_type,
                                         "label": _label,
                                         "sentences": text_raw,
                                     }
-
-                                    # Boost().multiprocessing(self.run, new_list_tools)
 
                                     if self._use_db != None:
                                         PluginManager().call_plugin_db(
@@ -498,7 +594,7 @@ class Pipeline(object):
                                         )
 
                                 f = {
-                                    "type": folders_type,
+                                    "type": directory_type,
                                     "label": _label,
                                     "doc": cont_doc,
                                 }
@@ -506,13 +602,13 @@ class Pipeline(object):
                                 data.append(f)
 
                     log = {
-                        "_id_dataset": _id_dataset,
+                        "_id_dataset": self.ID_DATASET,
                         "info": "Save Dataset.",
                         "data": data,
                         "data_time": datetime.datetime.now(),
                     }
 
-                elif files:
+                elif list_files != []:
                     data = []
                     cont_doc = 0
 
@@ -524,19 +620,20 @@ class Pipeline(object):
                         # open file
                         text_raw = Util().open_txt(path_dataset + "/" + file_name)
 
-                        if ssplit:
-                            text_raw = self.ssplit(text_raw)
+                        # if text raw.
+                        if self._input_type == INPUT_FORMAT_DATASET[2]:
+                            text_raw = self.prepare_raw_text(text_raw)
 
                             item = {
-                                "_id_dataset": _id_dataset,
+                                "_id_dataset": self.ID_DATASET,
                                 "name": file_name,
                                 "sentences": [sentence for sentence in text_raw],
                             }
-
+                        # is file.
                         else:
                             if self._use_db != None:
                                 document_document = {
-                                    "_id_dataset": _id_dataset,
+                                    "_id_dataset": self.ID_DATASET,
                                     "name": file_name,
                                     "sentences": text_raw,
                                 }
@@ -548,20 +645,20 @@ class Pipeline(object):
                                     document=document_document,
                                 )
                             else:
-                                document_document = {
-                                    "_id": RandomObjectId.gen_random_object_id(self),
-                                    "_id_dataset": _id_dataset,
-                                    "name": file_name,
-                                    "sentences": text_raw,
-                                }
-
-                                list_documents.append(document_document)
+                                list_documents.append(
+                                    {
+                                        "_id": RandomObjectId().gen_random_object_id_string(),
+                                        "_id_dataset": self.ID_DATASET,
+                                        "name": file_name,
+                                        "sentences": text_raw,
+                                    }
+                                )
 
                     data.append({"doc": cont_doc})
 
-                    if self._use_db != True:
+                    if self._use_db != None:
                         log_document = {
-                            "_id_dataset": _id_dataset,
+                            "_id_dataset": self.ID_DATASET,
                             "info": "Save Dataset.",
                             "data": data,
                             "data_time": datetime.datetime.now(),
@@ -579,7 +676,4 @@ class Pipeline(object):
             print("This path does not contain a valid directory!")
             sys.exit(0)
 
-        if self._use_db != True:
-            return _id_dataset
-        else:
-            return _id_dataset, list_documents
+        return list_documents

@@ -31,3 +31,31 @@ Auto-Generating Documentation for an Entire Project
 
 # Emoji
 https://getemoji.com/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                _id_pool=self._id_pool,
+                _id_dataset=self._document["_id_dataset"],
+                _id_document=self._document["_id"],
+                tool="stanfordcorenlp",
+                annotation=annotation,

@@ -41,3 +41,7 @@ e agrupa em um único arquivo estruturado por camadas níveis de análise lingí
 
 # Notification
 - Notification Speech: https://github.com/desbma/GoogleSpeech
+
+# Otimização de desempenho
+
+    subistituir json por [orjson](https://pypi.org/project/orjson/) 

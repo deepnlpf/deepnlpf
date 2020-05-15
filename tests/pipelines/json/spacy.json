@@ -1,8 +1,8 @@
 {
     "lang": "en",
-    "tools": [{
+    "tools": {
         "spacy": {
-            "pipeline": [
+            "processors": [
                 "pos",
                 "tag",
                 "shape",
@@ -13,5 +13,5 @@
                 "noun_chunks"
             ]
         }
-    }]
+    }
 }

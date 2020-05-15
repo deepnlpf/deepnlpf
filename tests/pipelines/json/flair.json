@@ -1,8 +1,8 @@
 {
     "lang": "en",
-    "tools": [{
+    "tools": {
         "flair": {
-            "pipeline": [
+            "processors": [
                 "pos-fast",
                 "ner-fast",
                 "ner-ontonotes-fast",
@@ -10,5 +10,5 @@
                 "frame-fast"
             ]
         }
-    }]
+    }
 }

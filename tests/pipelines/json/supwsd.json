@@ -1,10 +1,10 @@
 {
     "lang": "en",
-    "tools": [{
+    "tools": {
         "supwsd": {
-            "pipeline": [
+            "processors": [
                 "wsd"
             ]
         }
-    }]
+    }
 }

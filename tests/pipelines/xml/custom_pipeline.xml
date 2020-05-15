@@ -4,19 +4,19 @@
    <tools>
       <element>
          <stanza>
-            <pipeline>
+            <processors>
                <element>tokenize</element>
                <element>mwt</element>
                <element>pos</element>
                <element>lemma</element>
                <element>ner</element>
                <element>depparse</element>
-            </pipeline>
+            </processors>
          </stanza>
       </element>
       <element>
          <spacy>
-            <pipeline>
+            <processors>
                <element>pos</element>
                <element>tag</element>
                <element>shape</element>
@@ -24,7 +24,7 @@
                <element>is_title</element>
                <element>like_num</element>
                <element>label</element>
-            </pipeline>
+            </processors>
          </spacy>
       </element>
    </tools>

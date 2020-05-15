@@ -1,0 +1,18 @@
+{
+    "lang": "en",
+    "tools": {
+        "stanfordcorenlp": {
+            "processors": [
+                "tokenize",
+                "ssplit",
+                "pos",
+                "lemma",
+                "ner",
+                "truecase",
+                "parse",
+                "depparse",
+                "coref"
+            ]
+        }
+    }
+}

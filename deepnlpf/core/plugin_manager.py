@@ -42,9 +42,9 @@ class PluginManager:
 
         return plugins
 
-    def call_plugin_nlp(self, plugin_name, _id_pool, lang, document, pipeline, **args):
+    def call_plugin_nlp(self, plugin_name, document, pipeline):
         plugin = self.load_plugin(plugin_name)
-        return plugin.Plugin(_id_pool, lang, document, pipeline).run()
+        return plugin.Plugin(document, pipeline).run()
 
     def call_plugin_db(
         self, plugin_name, operation, collection, document=None, key=None

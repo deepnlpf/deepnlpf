@@ -8,9 +8,6 @@ from bson.objectid import ObjectId
 
 class RandomObjectId(object):
 
-    def __init__(self):
-        pass
-
     def gen_random_object_id_string(self):
         timestamp = '{0:x}'.format(int(time.time()))
         rest = binascii.b2a_hex(os.urandom(8)).decode('ascii')
