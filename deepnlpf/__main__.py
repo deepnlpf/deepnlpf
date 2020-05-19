@@ -6,16 +6,13 @@ import os
 
 import deepnlpf._version as v
 from deepnlpf.global_parameters import FILE_CONFIG
+from deepnlpf.config import Config
 
-
-def config(args):
-    from configparser import ConfigParser
-
-    config = ConfigParser()
-    config.read(FILE_CONFIG)
-
-    debug = config.get("debug", "is_enabled")
-
+def set_toast(args):
+    config = Config()
+    config.set_notification_toast(args)
+    status = config.get_notification_toast()
+    print("Toast notification define:", status)
 
 def install(args):
     if args:
@@ -95,12 +92,11 @@ def main():
     )
 
     my_parser.add_argument(
-        "-c",
-        "--config",
-        help="Command config.",
-        type=config,
-        action="store",
-        default=[]
+        "-st",
+        "--settoast",
+        help="Define status notification toast. [true|false]",
+        type=set_toast,
+        action="store"
     )
 
     args = my_parser.parse_args()
