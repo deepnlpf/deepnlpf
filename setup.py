@@ -1,31 +1,34 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os, re
 
-from os import path
 from codecs import open
-from setuptools import setup, Extension, find_packages
+import os
+from os import path
+
+from setuptools import find_packages, setup
+
 import deepnlpf._version as v
 
 HERE = path.abspath(path.dirname(__file__))
 HOME = os.environ['HOME']
 
 VERSION = v.__version__
-print(VERSION)
 
-# Get the long description from the README file
-with open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
-    README = f.read()
+def readme():
+    with open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
+        README = f.read()
+    return README
 
-with open(path.join(HERE, 'requirements.txt')) as fp:
-    REQUIRED = fp.read().splitlines()
+def requirements():
+    with open(path.join(HERE, 'requirements.txt')) as fp:
+        REQUIRED = fp.read().splitlines()
+    return REQUIRED
 
-# This call to setup() does all the work
 setup(
     name="deepnlpf",
     version=VERSION,
     description="A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.",
-    long_description=README,
+    long_description=readme(),
     long_description_content_type="text/markdown",
     url="https://deepnlpf.github.io/site",
     author="RodriguesFAS",
@@ -64,15 +67,17 @@ setup(
 
     packages=find_packages(
         exclude=(
-            "deepnlpf_env",
-            "deepnlpf_env_tests"
             "docker",
             "images",
-            "tests"
+            "tests",
+            "examples",
+            "scripts"
         )
     ),
 
     include_package_data=True,
+    
+    package_data = {'deepnlpf': ['config.ini']},
 
     # Create dir.
     data_files=[
@@ -81,32 +86,9 @@ setup(
         (HOME+'/deepnlpf_data/output', [])
     ],
 
-    #install_requires=REQUIRED,
 
-    install_requires=[
-        'bson==0.5.9', 
-        'Flask==1.1.2', 
-        'gogo==1.1.1', 
-        'google==2.0.3', 
-        'homura==0.1.5',
-        'isodate==0.6.0', 
-        'Jinja2==2.11.1', 
-        'json2xml==3.3.2',
-        'pandas==1.0.3', 
-        'path==13.2.0', 
-        'pathos==0.2.5', 
-        'plotly==4.6.0',
-        'psutil==5.7.0', 
-        'pygogo==0.12.0',
-        'requests==2.23.0', 
-        'tqdm==4.45.0', 
-        'PyYAML==5.3.1', 
-        'ray==0.8.4',
-        'fastapi', 
-        'uvicorn'
-    ],
+    install_requires=requirements(),
 
-    # List required Python versions.
     python_requires='>=3',
 
     entry_points={

@@ -1,28 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import argparse, os
+import argparse
+import os
 
 import deepnlpf._version as v
+from deepnlpf.global_parameters import FILE_CONFIG
 
-from os import path
 
+def config(args):
+    from configparser import ConfigParser
 
-HERE = path.abspath(path.dirname(__file__))
+    config = ConfigParser()
+    config.read(FILE_CONFIG)
 
-"""
-def get_config():
-    print(">>>>>>>", path.join(HERE, 'config.txt'))
-    with open(path.join(HERE, 'config.txt')) as json_file:
-        data = json.load(json_file)
-        print(">>>>>>", data['host'], data['port'], data['debug'])
-        return data['host'], data['port'], data['debug']
-"""
+    debug = config.get("debug", "is_enabled")
 
 
 def install(args):
     if args:
         from deepnlpf.core.plugin_manager import PluginManager
+
         PluginManager().install(args)
     else:
         print("❗️Wrong command!")
@@ -32,6 +30,7 @@ def install(args):
 def uninstall(args):
     if args:
         from deepnlpf.core.plugin_manager import PluginManager
+
         PluginManager().uninstall(args)
     else:
         print("❗️Wrong command!")
@@ -41,6 +40,7 @@ def uninstall(args):
 def listplugins(args):
     if args:
         from deepnlpf.core.plugin_manager import PluginManager
+
         PluginManager().listplugins(args)
     else:
         print("❗️Wrong command!")
@@ -48,7 +48,7 @@ def listplugins(args):
 
 
 def api(args):
-    if args == 'start':
+    if args == "start":
         os.system("cd deepnlpf/api && uvicorn main:app --reload")
     else:
         print("❗️Wrong command!")
@@ -67,7 +67,7 @@ def main():
     my_parser.add_argument("-v", "--version", help="show version.", action="version")
 
     my_parser.add_argument(
-        "-install",
+        "-i",
         "--install",
         help="Command for install plugin.",
         type=install,
@@ -75,7 +75,7 @@ def main():
     )
 
     my_parser.add_argument(
-        "-uninstall",
+        "-u",
         "--uninstall",
         help="Command for uninstall plugin.",
         type=uninstall,
@@ -83,7 +83,7 @@ def main():
     )
 
     my_parser.add_argument(
-        "-listplugins",
+        "-lp",
         "--listplugins",
         help="Command for listplugins plugin.",
         type=listplugins,
@@ -91,7 +91,16 @@ def main():
     )
 
     my_parser.add_argument(
-        "-api", "--api", help="Command run api.", type=api, action="store"
+        "-a", "--api", help="Command run api.", type=api, action="store"
+    )
+
+    my_parser.add_argument(
+        "-c",
+        "--config",
+        help="Command config.",
+        type=config,
+        action="store",
+        default=[]
     )
 
     args = my_parser.parse_args()

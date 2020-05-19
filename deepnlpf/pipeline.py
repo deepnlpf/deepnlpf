@@ -12,14 +12,14 @@ import psutil
 import ray
 from tqdm import tqdm
 
-from deepnlpf.core.boost import Boost
 from deepnlpf.core.output_format import OutputFormat
 from deepnlpf.core.plugin_manager import PluginManager
 from deepnlpf.core.util import Util
 from deepnlpf.global_parameters import *
 import deepnlpf.log as log
-from deepnlpf.util.encoder import JSONEncoder
 from deepnlpf.util.random_object_id import RandomObjectId
+
+from deepnlpf.notifications.toast import Toast
 
 
 class Pipeline(object):
@@ -47,7 +47,10 @@ class Pipeline(object):
         num_gpus: float = 0,
     ):
 
+        self.toast = Toast()
+
         log.logger.info("--------------------- Start ---------------------")
+        self.toast.run('success', "Success", "Start processing!")
 
         self._input = _input
         self._input_type = self.check_input_type_dataset(_input)
@@ -265,6 +268,7 @@ class Pipeline(object):
             self.RESULT = ray.get(futures)
 
         log.logger.info("--------------------- End ---------------------")
+        self.toast.run('success', "Success", "End processing!")
 
         if self._output == "file":
             return {
@@ -286,12 +290,16 @@ class Pipeline(object):
             )
 
             if self._use_db != None:
-                # save annotation in db used.
                 PluginManager().call_plugin_db(
                     plugin_name=self._use_db,
                     operation="insert",
                     collection="analysi",
-                    document={"sentences": annotated_document},
+                    document={
+                        "_id_dataset": self.ID_DATASET,
+                        "_id_document": "",
+                        "_id_pool": self._id_pool,
+                        "annotation": ""
+                    },
                 )
 
             data_formating = {"sentences": annotated_document}
