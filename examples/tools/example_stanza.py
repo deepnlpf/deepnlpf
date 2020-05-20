@@ -17,7 +17,7 @@ id_dataset = ""
 path_pipeline = "/home/fasr/Mestrado/deepnlpf/examples/pipelines/json/stanza.json"
 
 nlp = Pipeline(
-    _input=sentence,
+    _input=raw_text,
     pipeline=path_pipeline,
     _output="file"
 )
