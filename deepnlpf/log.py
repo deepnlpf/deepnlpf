@@ -13,17 +13,19 @@
     https://github.com/reubano/pygogo
 """
 
-# Quando for salvar os logs na base de dados usar isso: 
-# https://github.com/reubano/pygogo#json-formatter 
+# Quando for salvar os logs na base de dados usar isso:
+# https://github.com/reubano/pygogo#json-formatter
 
-import os, sys, logging
+import logging
 import pygogo as gogo
 
-log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 formatter = logging.Formatter(log_format)
 
-logger = gogo.Gogo('DeepNLPF',
-    low_hdlr=gogo.handlers.file_hdlr('data.log'),
+logger = gogo.Gogo(
+    "DeepNLPF",
+    low_hdlr=gogo.handlers.file_hdlr("data.log"),
     low_formatter=formatter,
-    high_level='error',
-    high_formatter=formatter).logger
+    high_level="error",
+    high_formatter=formatter,
+).logger

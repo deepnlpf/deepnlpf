@@ -268,7 +268,7 @@ class Pipeline(object):
             self.RESULT = ray.get(futures)
 
         log.logger.info("--------------------- End ---------------------")
-        self.toast.show('success', "Success", "End processing!")
+        self.toast.show('success', "DeepNLPF", "End processing.")
 
         if self._output == "file":
             return {
@@ -281,7 +281,7 @@ class Pipeline(object):
 
     def run(self, tool):
 
-        for document in tqdm(self.DOCUMENTS, desc="Processing document(s)"):
+        for document in tqdm(self.DOCUMENTS, desc="Document(s)"):
 
             annotated_document = PluginManager().call_plugin_nlp(
                 plugin_name=tool,
@@ -296,9 +296,9 @@ class Pipeline(object):
                     collection="analysi",
                     document={
                         "_id_dataset": self.ID_DATASET,
-                        "_id_document": "",
+                        "_id_document": document['_id'],
                         "_id_pool": self._id_pool,
-                        "annotation": ""
+                        "sentences": annotated_document
                     },
                 )
 
@@ -429,7 +429,6 @@ class Pipeline(object):
                     sentence.append(token["word"])
                 list_sentences.append(" ".join(sentence))
 
-        # If using database.
         if self._use_db != None:
             # insert dataset in database.
             self.ID_DATASET = PluginManager().call_plugin_db(
