@@ -18,13 +18,14 @@
 
 import logging
 import pygogo as gogo
+from deepnlpf.global_parameters import HERE
 
 log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 formatter = logging.Formatter(log_format)
 
 logger = gogo.Gogo(
     "DeepNLPF",
-    low_hdlr=gogo.handlers.file_hdlr("data.log"),
+    low_hdlr=gogo.handlers.file_hdlr(HERE+"/data.log"),
     low_formatter=formatter,
     high_level="error",
     high_formatter=formatter,
