@@ -14,6 +14,30 @@ def set_toast(args):
     status = config.get_notification_toast()
     print("Toast notification define:", status)
 
+def set_email_smtp(args):
+    config = Config()
+    config.set_notification_email_smtp(args)
+    result = config.get_notification_email_smtp()
+    print("Email SMTP define:", result)
+
+def set_email_port(args):
+    config = Config()
+    config.set_notification_email_port(args)
+    result = config.get_notification_email_port()
+    print("Email port define:", result)
+
+def set_email_address(args):
+    config = Config()
+    config.set_notification_email_address(args)
+    result = config.get_notification_email_address()
+    print("Email address define:", result)
+
+def set_email_password(args):
+    config = Config()
+    config.set_notification_email_pass(args)
+    results = config.get_notification_email_pass()
+    print("Email password:", results)
+
 def install(args):
     if args:
         from deepnlpf.core.plugin_manager import PluginManager
@@ -37,8 +61,7 @@ def uninstall(args):
 def listplugins(args):
     if args:
         from deepnlpf.core.plugin_manager import PluginManager
-
-        PluginManager().listplugins(args)
+        PluginManager().listplugins()
     else:
         print("❗️Wrong command!")
         print("⌨️ Try the command: deepnlpf --listplugins all")
@@ -96,6 +119,38 @@ def main():
         "--settoast",
         help="Define status notification toast. [true|false]",
         type=set_toast,
+        action="store"
+    )
+
+    my_parser.add_argument(
+        "-sesmtp",
+        "--setemailsmtp",
+        help="Define Email SMTP.",
+        type=set_email_smtp,
+        action="store"
+    )
+
+    my_parser.add_argument(
+        "-sep",
+        "--setemailport",
+        help="Define Email Port.",
+        type=set_email_port,
+        action="store"
+    )
+
+    my_parser.add_argument(
+        "-sea",
+        "--setemailaddress",
+        help="Define Email Adderss.",
+        type=set_email_address,
+        action="store"
+    )
+
+    my_parser.add_argument(
+        "-sepass",
+        "--setemailpassword",
+        help="Define Email Password.",
+        type=set_email_password,
         action="store"
     )
 

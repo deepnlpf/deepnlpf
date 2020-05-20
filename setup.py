@@ -77,7 +77,7 @@ setup(
 
     include_package_data=True,
     
-    package_data = {'deepnlpf': ['config.ini']},
+    package_data = {'deepnlpf': ['config.ini', 'data.log']},
 
     # Create dir.
     data_files=[

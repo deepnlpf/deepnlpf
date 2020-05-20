@@ -10,7 +10,7 @@ class Email(object):
     def __init__(self) -> None:
         self.smtp = Config().get_notification_email_smtp()
         self.port = Config().get_notification_email_port()
-        self.email_address = Config().get_notification_email_email_address()
+        self.email_address = Config().get_notification_email_address()
         self.password = Config().get_notification_email_pass()
 
     def send(self):

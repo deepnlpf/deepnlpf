@@ -37,12 +37,12 @@ class Config(object):
         return self.config.set("notification", "email.port", port)
 
 
-    def get_notification_email_email_address(self):
+    def get_notification_email_address(self):
         value = self.config.get("notification", "email.email_address")
         return str(value)
 
-    def set_notification_email_email_address(self, email_address: str):
-        return self.config.set("notification", "email.user", email_address)
+    def set_notification_email_address(self, email_address: str):
+        return self.config.set("notification", "email.email_address", email_address)
 
 
     def get_notification_email_pass(self):
