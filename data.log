@@ -612,3 +612,21 @@
 2020-05-19 22:36:51,751 - DeepNLPF.base - INFO - Plugin Tool: stanza
 2020-05-19 22:36:55,871 - DeepNLPF.base - INFO - Output file in: /home/fasr/deepnlpf_data/output/dataset_5ec489b314ddb2704fd675a2/document_5ec489b3c5106b117464626d/stanza.json
 2020-05-19 22:36:55,873 - DeepNLPF.base - INFO - --------------------- End ---------------------
+2020-05-19 22:41:29,705 - DeepNLPF.base - INFO - --------------------- Start ---------------------
+2020-05-19 22:41:29,739 - DeepNLPF.base - INFO - Input data type: raw_text
+2020-05-19 22:41:29,739 - DeepNLPF.base - INFO - Input pipeline type format: json
+2020-05-19 22:41:29,739 - DeepNLPF.base - INFO - Custom Pipeline: {'lang': 'en', 'tools': {'stanza': {'processors': ['tokenize', 'mwt', 'pos', 'lemma', 'ner', 'depparse']}}}
+2020-05-19 22:41:29,740 - DeepNLPF.base - INFO - Use DB: mongodb
+2020-05-19 22:41:29,740 - DeepNLPF.base - INFO - Output: terminal
+2020-05-19 22:41:29,740 - DeepNLPF.base - INFO - Format: json
+2020-05-19 22:41:29,740 - DeepNLPF.base - INFO - Tool NLP base: stanza
+2020-05-19 22:41:29,740 - DeepNLPF.base - INFO - Pool: 666f6f2d6261722d71757578
+2020-05-19 22:41:29,740 - DeepNLPF.base - INFO - Boost: ray
+2020-05-19 22:41:30,190 - DeepNLPF.base - INFO - Pre-processing - Execute Sentence Split in texto raw.
+2020-05-19 22:41:32,268 - DeepNLPF.base - INFO - Plugin call: mongodb
+2020-05-19 22:41:32,339 - DeepNLPF.base - INFO - Plugin call: mongodb
+2020-05-19 22:41:32,356 - DeepNLPF.base - INFO - Plugin call: mongodb
+2020-05-19 22:41:32,375 - DeepNLPF.base - INFO - Number of documents to process: 1
+2020-05-19 22:41:32,464 - DeepNLPF.base - INFO - Plugin Tool: stanza
+2020-05-19 22:41:36,793 - DeepNLPF.base - INFO - Plugin call: mongodb
+2020-05-19 22:41:36,848 - DeepNLPF.base - INFO - --------------------- End ---------------------
