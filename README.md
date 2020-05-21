@@ -2,6 +2,8 @@
 
 <h2 align="center">DeepNLPF: A Framework for Integrating Linguistic Analysis and Semantic Annotation of Text Documents.</h2>
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/deepnlpf/deepnlpf/branch)
+
 <div align="center">
     <a href="#">
         <img alt="License" src="https://img.shields.io/github/license/deepnlpf/deepnlpf">

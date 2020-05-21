@@ -48,7 +48,7 @@ class Pipeline(object):
         self.toast = Toast()
 
         log.logger.info("--------------------- Start ---------------------")
-        self.toast.show("success", "DeepNLPF", "Start processing!")
+        #self.toast.show("success", "DeepNLPF", "Start processing!")
 
         self._input = _input
         self._input_type = self.check_input_type_dataset(_input)
@@ -266,7 +266,7 @@ class Pipeline(object):
             self.RESULT = ray.get(futures)
 
         log.logger.info("--------------------- End ---------------------")
-        self.toast.show("success", "DeepNLPF", "End processing.")
+        #self.toast.show("success", "DeepNLPF", "End processing.")
 
         if self._output == "file":
             return {
