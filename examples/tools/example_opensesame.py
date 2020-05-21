@@ -5,7 +5,6 @@ import json
 
 from deepnlpf.pipeline import Pipeline
 
-
 custom_pipeline_string = """
 {
     "lang": "en",

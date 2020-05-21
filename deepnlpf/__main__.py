@@ -5,8 +5,8 @@ import argparse
 import os
 
 import deepnlpf._version as v
-from deepnlpf.global_parameters import FILE_CONFIG
 from deepnlpf.config import Config
+
 
 def set_toast(args):
     config = Config()

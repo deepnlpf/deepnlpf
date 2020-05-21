@@ -2,24 +2,22 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import os
-import sys
 
-from bson.objectid import ObjectId
 import pathos
 import pathos.pools as pp
 import psutil
 import ray
+from bson.objectid import ObjectId
 from tqdm import tqdm
 
+import deepnlpf.log as log
 from deepnlpf.core.output_format import OutputFormat
 from deepnlpf.core.plugin_manager import PluginManager
 from deepnlpf.core.util import Util
 from deepnlpf.global_parameters import *
-import deepnlpf.log as log
-from deepnlpf.util.random_object_id import RandomObjectId
-
 from deepnlpf.notifications.toast import Toast
+from deepnlpf.templates.schema import *
+from deepnlpf.util.random_object_id import RandomObjectId
 
 
 class Pipeline(object):
@@ -50,7 +48,7 @@ class Pipeline(object):
         self.toast = Toast()
 
         log.logger.info("--------------------- Start ---------------------")
-        self.toast.show('success', "DeepNLPF", "Start processing!")
+        self.toast.show("success", "DeepNLPF", "Start processing!")
 
         self._input = _input
         self._input_type = self.check_input_type_dataset(_input)
@@ -136,8 +134,8 @@ class Pipeline(object):
 
             log.logger.info("Input data type: {}".format(result))
             return result
-        except Exception as error:
-            print(error)
+        except Exception as err:
+            log.logger.error(err)
             sys.exit(0)
 
     def check_input_format_pipeline(self, pipeline: str) -> str:
@@ -169,8 +167,8 @@ class Pipeline(object):
             log.logger.info("Input pipeline type format: {}".format(result))
 
             return result
-        except Exception as error:
-            print(error)
+        except Exception as err:
+            log.logger.error(err)
             sys.exit(0)
 
     def load_file_pipeline(self, pipeline: str, pipeline_type: str):
@@ -195,8 +193,8 @@ class Pipeline(object):
 
             log.logger.info("Custom Pipeline: {}".format(result))
             return result
-        except Exception as error:
-            print(error)
+        except Exception as err:
+            log.logger.error(err)
             sys.exit(0)
 
     def load_dataset(self, _input_type):
@@ -268,7 +266,7 @@ class Pipeline(object):
             self.RESULT = ray.get(futures)
 
         log.logger.info("--------------------- End ---------------------")
-        self.toast.show('success', "DeepNLPF", "End processing.")
+        self.toast.show("success", "DeepNLPF", "End processing.")
 
         if self._output == "file":
             return {
@@ -289,6 +287,9 @@ class Pipeline(object):
                 pipeline=self._custom_pipeline,
             )
 
+            # validates document annotated by the tool.
+            validate_annotation(annotated_document)
+
             if self._use_db != None:
                 PluginManager().call_plugin_db(
                     plugin_name=self._use_db,
@@ -296,9 +297,9 @@ class Pipeline(object):
                     collection="analysi",
                     document={
                         "_id_dataset": self.ID_DATASET,
-                        "_id_document": document['_id'],
+                        "_id_document": document["_id"],
                         "_id_pool": self._id_pool,
-                        "sentences": annotated_document
+                        "sentences": annotated_document,
                     },
                 )
 

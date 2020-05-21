@@ -2,9 +2,12 @@
 # -*- coding: utf-8 -*-
 # Credits: https://github.com/mxr/random-object-id
 
-import binascii, os, time
+import binascii
+import os
+import time
 
 from bson.objectid import ObjectId
+
 
 class RandomObjectId(object):
 

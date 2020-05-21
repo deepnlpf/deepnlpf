@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""
-    Date 16/08/2019
-"""
+import deepnlpf.log as log
 
 class Execute (object):
     """ Execute Scripts External in Outher Language Programation. """
@@ -24,4 +22,4 @@ class Execute (object):
             
             return subprocess.check_output(['java', '-jar', jar_file, *args], shell=False)
         except Exception as err:
-            print(err)
+            log.logger.error(err)

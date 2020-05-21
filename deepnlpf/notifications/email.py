@@ -1,8 +1,8 @@
 import smtplib
 
+import deepnlpf.log as log
 from deepnlpf.config import Config
 from deepnlpf.core.util import Util
-import deepnlpf.log as log
 from deepnlpf.global_parameters import HERE
 
 

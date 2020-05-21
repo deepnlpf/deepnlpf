@@ -17,7 +17,9 @@
 # https://github.com/reubano/pygogo#json-formatter
 
 import logging
+
 import pygogo as gogo
+
 from deepnlpf.global_parameters import HERE
 
 log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

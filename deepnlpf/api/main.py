@@ -6,17 +6,13 @@
 
 import json
 
-import deepnlpf._version as version
-
-from deepnlpf.pipeline import Pipeline
-from deepnlpf.models.mongodb import DataBase
-from deepnlpf.util.encoder import JSONEncoder
-from deepnlpf.core.plugin_manager import PluginManager
-
-from enum import Enum
-
 from fastapi import FastAPI
 
+import deepnlpf._version as version
+from deepnlpf.core.plugin_manager import PluginManager
+from deepnlpf.models.mongodb import DataBase
+from deepnlpf.pipeline import Pipeline
+from deepnlpf.util.encoder import JSONEncoder
 
 app = FastAPI()
 
@@ -110,8 +106,6 @@ def processing():
                 t, a = item["name"].split("-")
                 if tool == t:
                     analyze["pipeline"].append(a)
-
-    # print(">>> AQUI!")
 
     # config properties.
     item = {tool: analyze}

@@ -1,23 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import json
-import requests
-
-from flask import render_template, request, jsonify, Response, send_file
-
-from app import app
-
-import plotly
-import plotly.graph_objs as go
-from plotly.graph_objs import *
-
-from collections import Counter
 
 import pandas as pd
-import numpy as np
-
+import plotly
+import plotly.graph_objs as go
+import requests
+from app import app
+from flask import render_template, request, jsonify, Response
+from plotly.graph_objs import *
 
 # TODO remover o IP da qui e colocar em um arquivo de configuração.
 server = 'http://127.0.0.1:5000'

@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import nltk
 import random
-
-from nltk.corpus import stopwords
-
-import plotly
-import plotly.graph_objs as go
-import plotly.graph_objects as go
-
-from plotly.offline import plot
 from collections import Counter
-from bson.objectid import ObjectId
 
+import nltk
+import plotly
+import plotly.graph_objects as go
+from bson.objectid import ObjectId
+from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.tokenize import word_tokenize
+from plotly.offline import plot
 
 from deepnlpf.models.statistics import Statistics as s
 from deepnlpf.modules.utils.preprocessing import PreProcessing

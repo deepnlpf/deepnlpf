@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from codecs import open
 import os
+from codecs import open
 from os import path
 
 from setuptools import find_packages, setup

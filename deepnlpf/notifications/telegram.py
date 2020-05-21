@@ -7,8 +7,9 @@
     Tutorial: https://www.marcodena.it/blog/telegram-logging-handler-for-python-java-bash/
 '''
 
-import requests
 import deepnlpf.config.notification as setting
+import requests
+
 
 class Telegram(object):
 

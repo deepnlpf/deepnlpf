@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
 from deepnlpf.pipeline import Pipeline
 
 sentence = "The human brain is quite proficient at word-sense disambiguation."

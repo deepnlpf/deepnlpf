@@ -4,10 +4,8 @@
     https://realpython.com/python-concurrency/
 """
 
-import psutil, pathos, ray
-import pathos.pools as pp
+import psutil
 
-import deepnlpf.log as log
 from tqdm import tqdm
 
 class Boost(object):

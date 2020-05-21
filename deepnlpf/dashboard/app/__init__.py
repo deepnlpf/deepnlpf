@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import numpy as np
+import json
+import os
 import pandas as pd
+import plotly
 import plotly.graph_objs as go
-import requests, zipfile, json, sys, os, plotly, tempfile
-
-from deepnlpf.config import config
-from collections import Counter
-from plotly.graph_objs import *
-from flask import render_template, request, jsonify, Response, send_file
+import requests
+import zipfile
 from flask import Flask, flash, redirect
+from flask import render_template, request, jsonify, Response
+from plotly.graph_objs import *
 from werkzeug.utils import secure_filename
 
 ALLOWED_EXTENSIONS = set(['zip'])

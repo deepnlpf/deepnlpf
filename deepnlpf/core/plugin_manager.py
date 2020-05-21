@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os, sys, subprocess
-import deepnlpf.log as log
+import os
+import sys
 
+import deepnlpf.log as log
 from deepnlpf.core.util import Util
 
 
@@ -97,7 +98,7 @@ class PluginManager:
             download(url=URL, path=PATH_DOWNLOAD_PLUGIN)
         except Exception as err:
             print("❗️Plugin no found!")
-            print(err)
+            log.logger.error(err)
             sys.exit(0)
 
         # Extracting files plugin.
@@ -107,7 +108,7 @@ class PluginManager:
             fantasy_zip.close()
         except Exception as err:
             print("❗️Error extracting files!")
-            print(err)
+            log.logger.error(err)
             sys.exit(0)
 
         # Config dir name plugin.
@@ -118,7 +119,7 @@ class PluginManager:
             )
         except Exception as err:
             print("❗️Error config directory plugin!")
-            print(err)
+            log.logger.error(err)
             sys.exit(0)
 
         # Install requirements.
@@ -136,7 +137,7 @@ class PluginManager:
                 )
         except Exception as err:
             print("❗Error when executing the requeriments.sh plugin file!")
-            print(err)
+            log.logger.error(err)
             sys.exit(0)
 
         os.remove(PATH_DOWNLOAD_PLUGIN)  # clear file zip.
@@ -155,6 +156,7 @@ class PluginManager:
             print("Plugin", plugin_name, "unistalled!")
             log.logger.info("Plugin unistalled: {}".format(plugin_name))
         except Exception as err:
+            log.logger.error(err)
             print("Plugin not found!")
 
     def listplugins(self):

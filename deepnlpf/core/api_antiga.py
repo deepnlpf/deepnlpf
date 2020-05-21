@@ -5,30 +5,26 @@
     Description: 
     Date: 13/02/2019
 """
-import os, sys, json, datetime
+import datetime
+import json
+import os
 
-from bson import json_util
-from bson.json_util import dumps
 from bson.objectid import ObjectId
-
+from deepnlpf.models.analysis import Analysis
+from deepnlpf.models.dataset import Dataset
+from deepnlpf.models.document import Document
+from deepnlpf.models.logs import Logs
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO, emit
 
-#import sys
-#sys.path.append('../deepnlpf')
-
+from deepnlpf.core.plugin_manager import PluginManager
+from deepnlpf.core.util import Util
+from deepnlpf.models.mongodb import DataBase
+from deepnlpf.mongoflask import MongoJSONEncoder, ObjectIdConverter
 from deepnlpf.pipeline import Pipeline
 
-from deepnlpf.core.util import Util
-from deepnlpf.core.plugin_manager import PluginManager
-
-from deepnlpf.models.logs import Logs
-from deepnlpf.models.mongodb import DataBase
-from deepnlpf.models.dataset import Dataset
-from deepnlpf.models.document import Document
-from deepnlpf.models.analysis import Analysis
-
-from deepnlpf.mongoflask import MongoJSONEncoder, ObjectIdConverter
+# import sys
+# sys.path.append('../deepnlpf')
 
 # Initialize the app.
 app = Flask(__name__, instance_relative_config=True)

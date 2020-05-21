@@ -8,10 +8,10 @@
     Description:
     Date: 23/03/2019
 """
-from deepnlpf.config import database
-
-from pymongo import MongoClient
 from mongoengine import *
+from pymongo import MongoClient
+
+from deepnlpf.config import database
 
 
 class ConnectMongoDB(object):

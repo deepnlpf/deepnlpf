@@ -1,6 +1,7 @@
 #https://jiffyclub.github.io/snakeviz/
 
-import os, pathlib
+import os
+import pathlib
 
 PATH_BASE = str(pathlib.Path.cwd())
 

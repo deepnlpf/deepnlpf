@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import json
+from datetime import datetime
 
-from datetime import date, datetime
 from json2xml import json2xml
+
 
 class OutputFormat:
 
@@ -31,9 +32,6 @@ class OutputFormat:
 
         with open(xml_file) as file:
             doc = xmltodict.parse(file.read())
-
-        print(json.dumps(doc))
-
         return json.dumps(doc)
 
     def yaml2json(self, yaml_file):

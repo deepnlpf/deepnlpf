@@ -7,10 +7,12 @@
 """
 
 import os
-# import config.settings as config
 
 from deepnlpf.conn.mongodb import ConnectMongoDB
 from requests.structures import CaseInsensitiveDict
+
+
+# import config.settings as config
 
 
 class MyGate(object):

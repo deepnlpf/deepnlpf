@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import deepnlpf.log as log
-
 import json
+
+import deepnlpf.log as log
 
 
 class Util(object):
