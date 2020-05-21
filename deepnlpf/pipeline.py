@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
+import urllib.request
 import datetime
+import validators
 
 import pathos
 import pathos.pools as pp
@@ -151,11 +154,18 @@ class Pipeline(object):
         result = ""
 
         try:
-            if os.path.isfile(pipeline):  # check is file.
+            # check is file.
+            if os.path.isfile(pipeline):
                 file_name, ext = pipeline.split(".")
                 result = (
                     ext.lower()
                 )  # if the file extension was in capital letters it reduces to lower case.
+            # check is url.
+            elif validators.url(pipeline):
+                result = "url"
+            # check is json str
+            elif json.loads(pipeline):
+                result = "json_str"
             else:
                 print(
                     "Enter a parameter from a valid pipeline {}.".format(
@@ -190,6 +200,11 @@ class Pipeline(object):
                 result = OutputFormat().yaml2json(pipeline)
             elif pipeline_type == "xml":
                 result = OutputFormat().xml2json(pipeline)
+            elif pipeline_type == "url":
+                with urllib.request.urlopen(pipeline) as url:
+                    result = json.loads(url.read().decode())
+            elif pipeline_type == "json_str":
+                result = json.loads(pipeline)
 
             log.logger.info("Custom Pipeline: {}".format(result))
             return result

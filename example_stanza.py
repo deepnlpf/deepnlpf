@@ -16,9 +16,31 @@ id_dataset = ""
 
 path_pipeline = "/home/fasr/Mestrado/deepnlpf/examples/pipelines/json/stanza.json"
 
+pipeline_json_string = """
+{
+    "lang": "en",
+    "tools": {
+        "stanza": {
+            "processors": [
+                "tokenize",
+                "mwt",
+                "pos",
+                "lemma",
+                "ner",
+                "depparse"
+            ]
+        }
+    }
+}
+"""
+
+pipeline_json_url = "https://raw.githubusercontent.com/deepnlpf/deepnlpf/master/examples/pipelines/json/stanza.json"
+pipeline_yaml_url = "https://raw.githubusercontent.com/deepnlpf/deepnlpf/master/examples/pipelines/yaml/stanza.yaml"
+
+
 nlp = Pipeline(
     _input=sentence,
-    pipeline=path_pipeline,
+    pipeline=pipeline_json_url,
     _output="file"
 )
 
