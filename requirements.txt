@@ -13,7 +13,6 @@ plotly==4.6.0
 psutil==5.7.0 
 pygogo==0.12.0
 requests==2.23.0
-tqdm==4.45.0 
 PyYAML==5.3.1 
 ray==0.8.4
 fastapi
