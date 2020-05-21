@@ -299,6 +299,7 @@ class Pipeline(object):
                         "_id_dataset": self.ID_DATASET,
                         "_id_document": document["_id"],
                         "_id_pool": self._id_pool,
+                        "tool": tool,
                         "sentences": annotated_document,
                     },
                 )

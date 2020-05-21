@@ -14,5 +14,4 @@ SCHEMA_OUPUT_PLUGIN = {
 def validate_annotation(doc_annotated):
     result = validate(instance=doc_annotated, schema=SCHEMA_OUPUT_PLUGIN)
     if result != None:
-        print(result)
         sys.exit(0)

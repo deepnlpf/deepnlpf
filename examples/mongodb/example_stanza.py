@@ -23,7 +23,7 @@ id_dataset = ""
 path_pipeline = "/home/fasr/Mestrado/deepnlpf/examples/pipelines/json/stanza.json"
 
 nlp = Pipeline(
-    _input=raw_text, pipeline=path_pipeline, _output="file", use_db="mongodb"
+    _input=sentence, pipeline=path_pipeline, _output="file", use_db="mongodb"
 )
 
 results = nlp.annotate()
