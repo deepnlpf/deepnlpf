@@ -5,6 +5,7 @@ data.log
 
 .idea/*
 .venv/*
+.venv_tests/*
 .vscode/*
 
 build/*

@@ -46,6 +46,7 @@ class Pipeline(object):
         memory: int = None,
         num_cpus: int = 0,
         num_gpus: float = 0,
+        use_cluster: bool = False
     ):
 
         self.toast = Toast()
@@ -77,15 +78,18 @@ class Pipeline(object):
         self._id_pool = ObjectId(b"foo-bar-quux")
         log.logger.info("Pool: {}".format(self._id_pool))
 
-        self._boost = boost
-        log.logger.info("Boost: {}".format(boost))
+        if use_cluster == False:
+            self._boost = boost
+            log.logger.info("Boost: {}".format(boost))
 
-        self._memory = memory
+            self._memory = memory
 
-        self.init_cpus(num_cpus)
-        self.init_boost()
+            self.init_cpus(num_cpus)
+            self.init_local()
 
-        self.GPUS_COUNT = num_gpus
+            self.GPUS_COUNT = num_gpus
+        else:
+            self.init_cluster()
 
     def init_cpus(self, cpus):
         """Initializes the CPUs
@@ -100,15 +104,17 @@ class Pipeline(object):
         else:
             self.CPUS_COUNT = cpus  # define quant cpus info user.
 
-    def init_boost(self):
-        """Starts the selected boost with the default or specified settings.
-        """
+    def init_local(self):
+        """Starts the selected boost with the default or specified settings."""
         if self._boost == "pathos":
             self._id_pool = pp.ProcessPool(self.CPUS_COUNT)
         elif self._boost == "ray":
             ray.init(
                 memory=self._memory, num_cpus=self.CPUS_COUNT, num_gpus=self.GPUS_COUNT
             )
+
+    def init_cluster(self):
+        ray.init(address='auto')
 
     def check_input_type_dataset(self, _input: str) -> str:
         """Checks how the dataset is entered. [path_dataset|id_dataset|raw_text].
