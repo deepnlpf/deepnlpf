@@ -1,5 +1,5 @@
 # Pipeline
-- Add input file .ini .
+- Adicionar arquivo do típo .ini
 
 # PreProcessing
 - Durante a tokenization das sentenças adicionar um id para cada uma.
@@ -9,16 +9,15 @@
 e agrupa em um único arquivo estruturado por camadas níveis de análise lingítica (léxico, sintático e semântico).
 
 # Database
+- Testar processamento utilizando banco de dados.
 - Create plugin BaseX http://basex.org/
 
 # Documentation
-- Gerar o Diagrama de Classes Completo do DeepNLPF utilizando a ferramenta: https://gojs.net/latest/samples/umlClass.html
+- Gerar o Diagrama de Classes Completo do DeepNLPF utilizando a ferramenta: 
+https://gojs.net/latest/samples/umlClass.html
 
 # Output
 - Saída dos dados processados no navegador.
-
-# Erro no armazenamento das anotações
-- ERROR: BSON document too large (25507068 bytes) - the connected server supports BSON document sizes up to 16793598 bytes.
 
 # API
 - Configurar ip e port pelo terminal CLI.
@@ -35,7 +34,7 @@ e agrupa em um único arquivo estruturado por camadas níveis de análise lingí
     - http://spyysalo.github.io/conllu.js/
 
 # PluginManager
-- Instalação de plugins de forma automática. Quando o plugin for adcionado ao pipeline, ele é altomaticamente instalado para o usuário.
+- Instalação de plugins de forma automática. Quando o plugin for adcionado ao pipeline, ele é automaticamente instalado para o usuário.
 
 - Install pip plugin via bash file. Isso evita o passo do usuário instalar a ferramenta.
 

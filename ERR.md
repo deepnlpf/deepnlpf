@@ -9,7 +9,7 @@
 
 
 - Err in rpy2
-- Possible solition:
+- Possible solution:
 
 # Anaconda env
 
@@ -17,4 +17,8 @@
     ImportError: cannot import name 'abc' from 'bson.py3compat'
 
 - Posible solition: 
-    pip uninstall bson && pip uninstall pymongo && conda install -c anaconda pymongo 
+    pip uninstall bson && pip uninstall pymongo && conda install -c anaconda pymongo
+
+# Erro no armazenamento das anotações
+
+- ERROR: BSON document too large (25507068 bytes) - the connected server supports BSON document sizes up to 16793598 bytes.
