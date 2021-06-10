@@ -11,7 +11,7 @@ colorama==0.4.3
 decorator==4.4.2
 dicttoxml==1.7.4
 dill==0.3.2
-fastapi==0.58.0
+fastapi==0.65.2
 filelock==3.0.12
 Flask==1.1.2
 future==0.18.2
