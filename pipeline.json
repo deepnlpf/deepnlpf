@@ -1,0 +1,15 @@
+{
+    "lang": "en",
+    "tools": {
+        "stanza": {
+            "processors": [
+                "tokenize",
+                "mwt",
+                "pos",
+                "lemma",
+                "ner",
+                "depparse"
+            ]
+        }
+    }
+}

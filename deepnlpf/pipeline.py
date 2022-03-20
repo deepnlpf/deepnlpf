@@ -81,7 +81,7 @@ class Pipeline(object):
         if use_cluster == False:
             self._boost = boost
             log.logger.info("Boost: {}".format(boost))
-
+            
             self._memory = memory
 
             self.init_cpus(num_cpus)
@@ -109,9 +109,15 @@ class Pipeline(object):
         if self._boost == "pathos":
             self._id_pool = pp.ProcessPool(self.CPUS_COUNT)
         elif self._boost == "ray":
-            ray.init(
-                memory=self._memory, num_cpus=self.CPUS_COUNT, num_gpus=self.GPUS_COUNT
+            if(self._memory!=None):
+                ray.init(
+                    memory=self._memory, num_cpus=self.CPUS_COUNT, num_gpus=self.GPUS_COUNT
+                )
+            else:
+                ray.init(
+                    num_cpus=self.CPUS_COUNT, num_gpus=self.GPUS_COUNT
             )
+                
 
     def init_cluster(self):
         ray.init(address='auto')
