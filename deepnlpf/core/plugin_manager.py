@@ -9,6 +9,7 @@ from deepnlpf.core.util import Util
 
 
 class PluginManager:
+    
     def __init__(self):
         self.HOME = os.environ["HOME"]
         self.PLUGIN_SERVER = "https://github.com/deepnlpf/"

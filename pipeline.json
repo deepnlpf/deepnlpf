@@ -1,14 +1,9 @@
 {
     "lang": "en",
     "tools": {
-        "stanza": {
+        "ace": {
             "processors": [
-                "tokenize",
-                "mwt",
-                "pos",
-                "lemma",
-                "ner",
-                "depparse"
+                "parsing"
             ]
         }
     }

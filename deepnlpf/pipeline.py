@@ -257,7 +257,6 @@ class Pipeline(object):
             return documents
 
     def annotate(self):
-
         self.DOCUMENTS = self.load_dataset(self._input_type)
 
         log.logger.info(
@@ -426,6 +425,7 @@ class Pipeline(object):
 
         # pre-processing tokenization and ssplit using plugin base selected.
         if self._tool_base == "stanza":
+            
             doc_annotation = PluginManager().call_plugin_nlp(
                 plugin_name="preprocessing",
                 document=raw_text,
