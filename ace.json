@@ -1,0 +1,12 @@
+{
+    "SENT": "The quick brown fox jumped over the lazy dog.",
+    "NOTE": [
+        {
+            "LTOP": "h0 [ h ]"
+        },
+        {
+            "INDEX": "e1 [ e SF: prop TENSE: past MOOD: indicative PROG: - PERF: - ]"
+        }
+        
+    ]
+}
