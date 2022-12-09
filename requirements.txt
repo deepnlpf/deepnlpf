@@ -1,6 +1,6 @@
 attrs==21.4.0
 bson==0.5.10
-certifi==2021.5.30
+certifi==2022.12.7
 charset-normalizer==2.0.6
 click==8.0.4
 decorator==5.1.1
